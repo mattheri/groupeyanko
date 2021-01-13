@@ -1,0 +1,33 @@
+@use '../../styles/variables.scss' as v;
+
+.button {
+    padding: 0.5rem 0.8rem;
+    @include v.fontHeading();
+    transition: transform .3s, background-color .2s, color .2s, outline .2s;
+    width: fit-content;
+
+    // &:hover {
+    //     transform: scale(1.1);
+    // }
+}
+
+.primary {
+    background-color: v.$colorAccent;
+    color: white;
+
+    &:hover {
+        background-color: v.$colorPrimary;
+    }
+}
+
+.secondary {
+    outline: v.$colorAccent 1px solid;
+    background-color: white;
+    color: v.$colorAccent;
+
+    &:hover {
+        outline: v.$colorPrimary 1px solid;
+        color: v.$colorPrimary;
+        background-color: white;
+    }
+}

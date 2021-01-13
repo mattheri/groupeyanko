@@ -1,5 +1,7 @@
 import Head from 'next/head'
-import styles from '../styles/Home.module.css'
+import { Button } from '../components/Button/Button'
+import { Container } from '../components/Container/Container'
+import styles from '../styles/Home.module.scss'
 
 export default function Home() {
   return (
@@ -19,7 +21,7 @@ export default function Home() {
           <code className={styles.code}>pages/index.js</code>
         </p>
 
-        <div className={styles.grid}>
+        <Container grid={{ gap: 15, maxCol: 2 }}>
           <a href="https://nextjs.org/docs" className={styles.card}>
             <h3>Documentation &rarr;</h3>
             <p>Find in-depth information about Next.js features and API.</p>
@@ -47,7 +49,7 @@ export default function Home() {
               Instantly deploy your Next.js site to a public URL with Vercel.
             </p>
           </a>
-        </div>
+        </Container>
       </main>
 
       <footer className={styles.footer}>

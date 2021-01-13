@@ -1,3 +1,5 @@
+@use './variables.scss' as v;
+
 .container {
   min-height: 100vh;
   padding: 0 0.5rem;
@@ -72,12 +74,13 @@
 }
 
 .grid {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-  max-width: 800px;
-  margin-top: 3rem;
+  // display: flex;
+  // align-items: center;
+  // justify-content: center;
+  // flex-wrap: wrap;
+  // max-width: 800px;
+  // margin-top: 3rem;
+  @include v.flex;
 }
 
 .card {
