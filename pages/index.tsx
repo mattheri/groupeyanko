@@ -1,67 +1,66 @@
-import Head from 'next/head'
-import { Button } from '../components/Button/Button'
-import { Container } from '../components/Container/Container'
-import styles from '../styles/Home.module.scss'
+import React from 'react';
+import Head from 'next/head';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import { AppContext } from '../components/Context/AppContext';
+import { GetStaticProps } from 'next';
+import axios from 'axios';
+import { Category } from '../next-env';
+import { Card } from '../components/Card/Card';
 
-export default function Home() {
+type Props = {
+  response: Category[]
+}
+
+export default function Home({ response }: Props) {
+  const [appState] = React.useContext(AppContext);
+  console.log(response.filter(category => !category._links.up));
+
+  const text = {
+    fr: {
+      title: 'Proaxion - Catalogue'
+    },
+    en: {
+      title: 'Proaxion - Catalog'
+    }
+  }
+
   return (
-    <div className={styles.container}>
+    <>
       <Head>
-        <title>Create Next App</title>
+        <title>{text[appState.locale].title}</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
-
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
-
-        <Container grid={{ gap: 15, maxCol: 2 }}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
+      <Container fluid as="main">
+        <Container>
+          <Row>
+          {response.filter(category => !category._links.up).map(category =>
+            <Col key={category.id} xs={12} md={6} lg={4}>
+              <Card
+              id={category.id}
+              description={category.description ? category.description : category.name}
+              alt={category.image.alt}
+              src={category.image.src} />
+            </Col>)}
+          </Row>
         </Container>
-      </main>
-
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-        </a>
-      </footer>
-    </div>
+      </Container>
+    </>
   )
+}
+
+export const getStaticProps: GetStaticProps = async () => {
+
+  const response = await axios.get(`${process.env.API_ENDPOINT}products/categories?per_page=100&hide_empty=true`, {
+    auth: {
+      username: process.env.API_KEY,
+      password: process.env.API_SECRET
+    }
+  });
+  return {
+    props: {
+        response: response.data
+      }
+    }
 }

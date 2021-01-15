@@ -1,4 +1,5 @@
 import React from "react";
+import { windowObject } from "../../utils/utils";
 import { useGetAuthCookie } from "../Hooks/useGetAuthCookie";
 
 export const AppContext = React.createContext(null);
@@ -12,8 +13,11 @@ export type User = {
 
 export type AppContextState = {
     connected: boolean,
-    user: User
+    user: User,
+    locale: 'fr' | 'en'
 }
+
+export type AppContextTuple = [AppContextState, React.Dispatch<React.SetStateAction<AppContextState>>];
 
 /**
  * Context that contains the state of the user. It will automatically try to detect
@@ -28,7 +32,8 @@ export function AppContextProvider<T>(props: React.PropsWithChildren<T>) {
 
     const [appState, setAppState] = React.useState<AppContextState>({
         connected: user ? user.connected : false,
-        user: user ? user.user : {}
+        user: user ? user.user : {},
+        locale: user ? user.language : 'fr'
     });
 
     return (

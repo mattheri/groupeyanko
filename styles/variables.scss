@@ -1,8 +1,9 @@
 @use './typography.scss' as t;
 
 $colorPrimary: #1f285d;
-$colorAccent: #0073aa;
+$colorAccent: #5065AB;
 $colorDark: #111111;
+$colorBlack: #000000;
 $colorGrayNeutral: #7a7a7a;
 
 @mixin fontHeading {

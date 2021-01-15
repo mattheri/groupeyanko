@@ -1,0 +1,1 @@
+export const windowObject = () => typeof window !== 'undefined' && window;

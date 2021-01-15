@@ -10,12 +10,14 @@ export type ButtonProps = {
     text: string,
     primary?: boolean,
     secondary?: boolean,
+    tertiary?: boolean,
     onClick?: (e: React.MouseEvent<HTMLAnchorElement>) => void
 } | {
     href?: string,
     text: string,
     primary?: boolean,
     secondary?: boolean,
+    tertiary?: boolean,
     onClick: (e: React.MouseEvent<HTMLAnchorElement>) => void
 }
 
@@ -28,6 +30,7 @@ export type ButtonProps = {
  * @param text string the text to show on the button
  * @param primary boolean enables primary styling. This is enabled by default
  * @param secondary boolean enables secondary styling
+ * @param tertiary boolean enables tertiary styling
  * @param onClick void function. Optional only if an href is provided otherwise it is required.
  */
 export function Button({
@@ -35,6 +38,7 @@ export function Button({
     text,
     primary,
     secondary,
+    tertiary,
     onClick
 }: ButtonProps) {
     const router = useRouter();
@@ -46,8 +50,9 @@ export function Button({
         <Link href={onClick ? path : href} shallow={onClick ? true : false}>
             <a onClick={onClick} className={cn({
                 [styles.button]: true,
-                [styles.primary]: !primary || !secondary ? true : primary,
-                [styles.secondary]: secondary
+                [styles.primary]: !primary || !secondary || !tertiary ? true : primary,
+                [styles.secondary]: secondary,
+                [styles.tertiary]: tertiary
             })}>
                 {text}
             </a>

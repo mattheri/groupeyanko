@@ -1,0 +1,28 @@
+@use '../../styles/variables.scss' as v;
+
+.card {
+    background-color: v.$colorPrimary;
+    width: 18rem;
+    height: 23rem;
+    display: flex;
+    flex-direction: column;
+    padding: 0.3rem;
+    margin: 1rem 0;
+
+    &:hover {
+        text-decoration: none;
+    }
+
+    .image {
+        width: 100%;
+        height: auto;
+        background-color: white;
+    }
+
+    .description {
+        text-align: center;
+        color: white;
+        font-weight: 600;
+        margin-top: auto;
+    }
+}

@@ -1,0 +1,25 @@
+@use '../../styles/variables.scss' as v;
+
+.cart {
+    width: fit-content;
+    cursor: pointer;
+    position: relative;
+
+    svg {
+        width: 2rem;
+        height: 2rem;
+        color: white;
+    }
+
+    article {
+        background-color: v.$colorAccent;
+        color: white;
+        border-radius: 50%;
+        width: 20px;
+        height: 20px;
+        @include v.flexcenter;
+        position: absolute;
+        right: -3px;
+        bottom: 3px;
+    }
+}

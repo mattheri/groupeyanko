@@ -3,12 +3,14 @@
 .button {
     padding: 0.5rem 0.8rem;
     @include v.fontHeading();
-    transition: transform .3s, background-color .2s, color .2s, outline .2s;
+    transition: transform .3s, background-color .2s, color .2s;
     width: fit-content;
+    max-height: 2.5rem;
+    text-decoration: none;
 
-    // &:hover {
-    //     transform: scale(1.1);
-    // }
+    &:hover {
+        text-decoration: none;
+    }
 }
 
 .primary {
@@ -17,17 +19,30 @@
 
     &:hover {
         background-color: v.$colorPrimary;
+        color: white;
     }
 }
 
 .secondary {
-    outline: v.$colorAccent 1px solid;
-    background-color: white;
-    color: v.$colorAccent;
+    outline: v.$colorAccent 2px solid;
+    background-color: transparent;
+    color: white;
 
     &:hover {
-        outline: v.$colorPrimary 1px solid;
-        color: v.$colorPrimary;
-        background-color: white;
+        outline: v.$colorAccent 2px solid;
+        color: white;
+        background-color: v.$colorAccent;
+    }
+}
+
+.tertiary {
+    background-color: transparent;
+    outline: none;
+    color: white;
+
+    &:hover {
+        outline: v.$colorAccent 2px solid;
+        background-color: transparent;
+        color: white;
     }
 }
