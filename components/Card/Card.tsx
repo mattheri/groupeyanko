@@ -6,15 +6,21 @@ import Link from 'next/link';
 export type CardProps = {
     src: string,
     description: string,
-    alt: string,
-    id: number
+    url: string
 }
 
-export function Card({ id, src, description, alt }: CardProps) {
+/**
+ * A card component that uses next Link component for page prefetching. See https://nextjs.org/docs/api-reference/next/link
+ * 
+ * @param url string. required
+ * @param src string. The image source. It is used in a background image.
+ * @param description string. Description of the product/category
+ */
+export function Card({ url, src, description }: CardProps) {
     return (
-        <Link href={`/category/${id}`}>
+        <Link href={url}>
             <a className={styles.card}>
-                <Image alt={alt} className={styles.image} src={src} width={100} height={100} layout='responsive' />
+                <article className={styles.image} style={{ backgroundImage: `url(${src})` }}></article>
                 <div className={styles.description}>
                     <p>{description}</p>
                 </div>

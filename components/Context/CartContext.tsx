@@ -1,17 +1,26 @@
 import React from "react";
+import { Product } from "../../next-env";
 import { useGetAuthCookie } from "../Hooks/useGetAuthCookie";
 import { useGetCartCookie } from "../Hooks/useGetCartCookie";
 import { AppContext, AppContextTuple } from './AppContext';
 
 export const CartContext = React.createContext(null);
 
-export type CartContextState = {
+interface NumberOfItems {
+    number: number
+}
+
+interface Cart extends Product, NumberOfItems { };
+
+export interface CartContextState {
     id: string,
     /**
      * Key is the product id,
      * number is the number of times it is requested
      */
-    cart: { [key: string]: number }
+    cart: {
+        [key: string]: Cart
+    }
 }
 
 export type CartContextTuple = [CartContextState, React.Dispatch<React.SetStateAction<CartContextState>>];

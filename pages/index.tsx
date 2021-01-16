@@ -5,9 +5,9 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { AppContext } from '../components/Context/AppContext';
 import { GetStaticProps } from 'next';
-import axios from 'axios';
 import { Category } from '../next-env';
 import { Card } from '../components/Card/Card';
+import { GET } from '../utils/utils';
 
 type Props = {
   response: Category[]
@@ -15,8 +15,7 @@ type Props = {
 
 export default function Home({ response }: Props) {
   const [appState] = React.useContext(AppContext);
-  console.log(response.filter(category => !category._links.up));
-
+  
   const text = {
     fr: {
       title: 'Proaxion - Catalogue'
@@ -38,9 +37,8 @@ export default function Home({ response }: Props) {
           {response.filter(category => !category._links.up).map(category =>
             <Col key={category.id} xs={12} md={6} lg={4}>
               <Card
-              id={category.id}
+              url={`/category/${category.id}`}
               description={category.description ? category.description : category.name}
-              alt={category.image.alt}
               src={category.image.src} />
             </Col>)}
           </Row>
@@ -52,15 +50,11 @@ export default function Home({ response }: Props) {
 
 export const getStaticProps: GetStaticProps = async () => {
 
-  const response = await axios.get(`${process.env.API_ENDPOINT}products/categories?per_page=100&hide_empty=true`, {
-    auth: {
-      username: process.env.API_KEY,
-      password: process.env.API_SECRET
-    }
-  });
+  const response = await GET('products/categories?per_page=100&hide_empty=true');
   return {
     props: {
         response: response.data
-      }
+    },
+    revalidate: 1
     }
 }

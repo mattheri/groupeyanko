@@ -15,14 +15,14 @@ export function Navbar() {
     const text = {
         fr: {
             home: 'Accueil',
-            categories: 'Catégories',
+            catalog: 'Catalogue',
             contact: 'Nous joindre',
             login: 'Connexion',
             locale: 'English'
         },
         en: {
             home: 'Home',
-            categories: 'Categories',
+            catalog: 'Catalog',
             contact: 'Contact',
             login: 'Log In',
             locale: 'Français'
@@ -42,10 +42,10 @@ export function Navbar() {
             </a>
             <div className={cn(styles.links, styles.desktop)}>
                 <Button href="https://proaxion.ca/en/home/" tertiary text={text[appState.locale].home} />
+                <Button href="/" tertiary text={text[appState.locale].catalog} />
                 <Button href="/contact" tertiary text={text[appState.locale].contact} />
                 <Cart />
                 <Button href='/' text={text[appState.locale].login} />
-                <Button tertiary onClick={handleChangeLocale} text={text[appState.locale].locale} />
             </div>
             <div className={cn(styles.cartMobile, styles.mobile)}>
                 <Cart />
@@ -59,7 +59,8 @@ export function Navbar() {
                 [styles.show]: show
             })}>
                 <a href="https://proaxion.ca/en/home/">{text[appState.locale].home}</a>
-                <a href='#' onClick={handleChangeLocale}>{text[appState.locale].locale}</a>
+                <Link href='/contact'><a>{text[appState.locale].contact}</a></Link>
+                <Link href='/'><a>{text[appState.locale].catalog}</a></Link>
                 <Button href='/' text={text[appState.locale].login} />
             </div>
         </nav>

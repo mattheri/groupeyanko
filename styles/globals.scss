@@ -12,6 +12,10 @@ a {
   text-decoration: none;
 }
 
+.container, .container-fluid {
+  background-color: black;
+}
+
 * {
   box-sizing: content-box;
 }

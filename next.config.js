@@ -1,5 +1,5 @@
 module.exports = {
     images: {
-        domains: ['www.groupeyanco.com']
+        domains: ['www.groupeyanco.com', 'i0.wp.com']
     }
 }

@@ -2,8 +2,6 @@ import React from 'react';
 import Link from "next/link";
 import styles from "./button.module.scss";
 import cn from "classnames";
-import { useRouter } from 'next/router';
-import { motion } from 'framer-motion';
 
 export type ButtonProps = {
     href: string,
@@ -41,13 +39,9 @@ export function Button({
     tertiary,
     onClick
 }: ButtonProps) {
-    const router = useRouter();
-
-    // Fix for storybook. Cannot load router so I need to provide default path instead.
-    const path: string = router ? router.pathname : '/';
 
     return (
-        <Link href={onClick ? path : href} shallow={onClick ? true : false}>
+        <Link href={onClick ? '' : href} shallow={onClick ? true : false}>
             <a onClick={onClick} className={cn({
                 [styles.button]: true,
                 [styles.primary]: !primary || !secondary || !tertiary ? true : primary,
