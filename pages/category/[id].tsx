@@ -41,11 +41,11 @@ export default function ProductCategory({ products }: ProductCategoryProps) {
     }
 
     return (
-        <Container fluid as="main">
+        <Container fluid as="main" className='no-gutters'>
             <Container>
                 <Row>
                 {paginatedItems[pagination].map(product =>
-                    <Col key={product.id} xs={12} md={6} lg={4}>
+                    <Col key={product.id} xs={12} md={6} lg={4} className='d-flex justify-content-center'>
                     <Card
                         url={`/product/${product.id}`}
                         description={product.name}
