@@ -31,18 +31,16 @@ export default function Home({ response }: Props) {
         <title>Proaxion - Catalogue</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Container fluid as="main">
-        <Container>
-          <Row>
-          {response.filter(category => !category._links.up).map(category =>
-            <Col key={category.id} xs={12} md={6} lg={4} className='d-flex justify-content-center p-0'>
-              <Card
-              url={`/category/${category.id}`}
-              description={category.description ? category.description : category.name}
-              src={category.image.src} />
-            </Col>)}
-          </Row>
-        </Container>
+      <Container>
+        <Row>
+        {response.filter(category => !category._links.up).map(category =>
+          <Col key={category.id} xs={12} md={6} lg={4} className='d-flex justify-content-center p-0'>
+            <Card
+            url={`/category/${category.id}`}
+            description={category.description ? category.description : category.name}
+            src={category.image.src} />
+          </Col>)}
+        </Row>
       </Container>
     </>
   )

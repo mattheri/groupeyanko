@@ -26,22 +26,20 @@ export default function ProductCategory({ products }: ProductCategoryProps) {
         }
 
         return (
-            <Container fluid>
-                <Container>
-                    <Row>
-                        {skeletonItems.map(skeleton => (
-                            <Col>
-                                <Skeleton />
-                            </Col>
-                        ))}
-                    </Row>
-                </Container>
+            <Container>
+                <Row>
+                    {skeletonItems.map(skeleton => (
+                        <Col>
+                            <Skeleton />
+                        </Col>
+                    ))}
+                </Row>
             </Container>
         );
     }
 
     return (
-        <Container fluid as="main" className='no-gutters'>
+        <>
             <Container>
                 <Row>
                 {paginatedItems[pagination].map(product =>
@@ -54,7 +52,7 @@ export default function ProductCategory({ products }: ProductCategoryProps) {
                 </Row>
             </Container>
             <Pagination {...paginationProps} />
-        </Container>
+        </>
     )
 }
 

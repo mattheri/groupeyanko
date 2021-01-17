@@ -14,19 +14,15 @@ export default function ProductPage({ product }) {
 
     if (router.isFallback) {
         return (
-            <Container fluid>
-                <Container>
-                    <Skeleton />
-                </Container>
+            <Container>
+                <Skeleton />
             </Container>
         );
     }
 
     return (
-        <Container fluid>
-            <Container>
-                
-            </Container>
+        <Container>
+            
         </Container>
     );
 }
