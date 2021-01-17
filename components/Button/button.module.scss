@@ -7,9 +7,19 @@
     width: fit-content;
     max-height: 2.5rem;
     text-decoration: none;
+    border: none;
 
     &:hover {
         text-decoration: none;
+    }
+
+    &:disabled {
+        color: gray;
+
+        &:hover {
+            background-color: v.$colorAccent;
+            color: gray;
+        }
     }
 }
 

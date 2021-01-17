@@ -23,7 +23,7 @@ export interface CartContextState {
     }
 }
 
-export type CartContextTuple = [CartContextState, React.Dispatch<React.SetStateAction<CartContextState>>];
+export type CartContextTuple = [CartContextState, (product: any, number: number) => void, (id: string, number?: number) => void];
 
 /**
  * Context that contains the state of the user. It will automatically try to detect
@@ -53,8 +53,62 @@ export function CartContextProvider<T>(props: React.PropsWithChildren<T>) {
 
     const [cartState, setCartState] = React.useState<CartContextState>(cartDefault);
 
+    const handleAddProductToCart = (product: any, number: number) => {
+        if (cartState.cart.hasOwnProperty(`${product.id}`)) {
+            product.number = cartState.cart[`${product.id}`].number + number;
+        } else {
+            product.number = number;
+        }
+        setCartState(cart => Object.assign(
+            {},
+            cart,
+            {
+                cart: {
+                    ...cart.cart,
+                    [`${product.id}`]: product
+                }
+            }
+        ))
+    }
+
+    const handleRemoveProductFromCart = (id: string, number?: number) => {
+        if (!cartState.cart.hasOwnProperty(`${id}`)) return;
+
+        if (!number) {
+            setCartState(cart => {
+                delete cart.cart[`${id}`];
+                return Object.assign(
+                    {},
+                    cart,
+                    {
+                        cart: {
+                            ...cart.cart
+                        }
+                    }
+                )
+            });
+
+            console.log(cartState.cart);
+        }
+
+        if (number) {
+            setCartState(cart => Object.assign(
+                {},
+                cart,
+                {
+                    cart: {
+                        [`${id}`]: {
+                            ...cart.cart[`${id}`],
+                            number: cart.cart[`${id}`].number - 1
+                        }
+                    }
+                }
+            ));
+        }
+    }
+
     return (
-        <CartContext.Provider value={[cartState, setCartState]}>
+        <CartContext.Provider value={[cartState, handleAddProductToCart, handleRemoveProductFromCart]}>
             {props.children}
         </CartContext.Provider>
     );

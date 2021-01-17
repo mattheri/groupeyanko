@@ -9,19 +9,23 @@ export type ButtonProps = {
     primary?: boolean,
     secondary?: boolean,
     tertiary?: boolean,
-    onClick?: (e: React.MouseEvent<HTMLAnchorElement>) => void
+    onClick?: (e?: React.MouseEvent<HTMLAnchorElement> | React.MouseEvent<HTMLButtonElement, MouseEvent>) => void,
+    className?: string,
+    disabled?: boolean
 } | {
     href?: string,
     text: string,
     primary?: boolean,
     secondary?: boolean,
     tertiary?: boolean,
-    onClick: (e: React.MouseEvent<HTMLAnchorElement>) => void
+    onClick: (e?: React.MouseEvent<HTMLAnchorElement> | React.MouseEvent<HTMLButtonElement, MouseEvent>) => void,
+    className?: string,
+    disabled?: boolean
 }
 
 /**
  * Button component. It is made of of a Link component. See Next.js Link component: https://nextjs.org/docs/api-reference/next/link
- * If the button needs to call a function on click, provide a preventDefault as it isn't provided for you.
+ * If there is an onClick function 
  * 
  * @param href string represents the path. Optional only if an onClick props is 
  * provided otherwise it is required see Next.js Routing: https://nextjs.org/docs/api-routes/introduction
@@ -37,16 +41,36 @@ export function Button({
     primary,
     secondary,
     tertiary,
-    onClick
+    onClick,
+    className,
+    disabled
 }: ButtonProps) {
 
+    if (onClick) {
+        return (
+            <button disabled={disabled} onClick={(e) => {
+                e.preventDefault();
+                onClick(e);
+            }} className={cn({
+                [styles.button]: true,
+                [styles.primary]: !primary || !secondary || !tertiary ? true : primary,
+                [styles.secondary]: secondary,
+                [styles.tertiary]: tertiary,
+                [className]: className
+            })}>
+                {text}
+            </button>
+        );
+    }
+
     return (
-        <Link href={onClick ? '' : href} shallow={onClick ? true : false}>
+        <Link href={href}>
             <a onClick={onClick} className={cn({
                 [styles.button]: true,
                 [styles.primary]: !primary || !secondary || !tertiary ? true : primary,
                 [styles.secondary]: secondary,
-                [styles.tertiary]: tertiary
+                [styles.tertiary]: tertiary,
+                [className]: className
             })}>
                 {text}
             </a>

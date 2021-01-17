@@ -1,0 +1,19 @@
+.addTo {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    align-items: center;
+
+    p {
+        color: white;
+    }
+
+    .addItemBtn {
+        width: 100%;
+    }
+
+    .controls {
+        margin: 0.5rem 1rem;
+    }
+}

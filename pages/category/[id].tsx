@@ -47,7 +47,8 @@ export default function ProductCategory({ products }: ProductCategoryProps) {
                     <Card
                         url={`/product/${product.id}`}
                         description={product.name}
-                        src={product.images.length > 0 ? product.images[0].src : '/uploads/images/placeholder.png'} />
+                            src={product.images.length > 0 ? product.images[0].src : '/uploads/images/placeholder.png'}
+                            addToCart product={product} />
                     </Col>)}
                 </Row>
             </Container>

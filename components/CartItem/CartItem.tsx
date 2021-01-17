@@ -6,7 +6,7 @@ import styles from './cartitem.module.scss';
 
 type CartItemProps = {
     id: string,
-    image: Image,
+    image: string,
     name: string,
     number: number
 }
@@ -22,17 +22,13 @@ type CartItemProps = {
  */
 export function CartItem({ id, image, name, number }: CartItemProps) {
 
-    const [cartContext, setCartContext]: CartContextTuple = React.useContext(CartContext);
-
-    const handleRemoveItemFromCart = (id: string) => {
-
-    }
+    const [cartContext, addToCart, removeFromCart]: CartContextTuple = React.useContext(CartContext);
 
     return (
         <article>
-            <img src={image.src} alt={image.alt} width={50} height={50} />
+            <img src={image} alt={name} width={50} height={50} />
             <p>{`${number}x ${name}`}</p>
-            <Button onClick={() => handleRemoveItemFromCart(id)} text='Delete' />
+            <Button onClick={() => removeFromCart(id)} text='Delete' />
         </article>
     );
 }

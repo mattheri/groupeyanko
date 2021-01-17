@@ -12,7 +12,8 @@ import { CartItem } from '../CartItem/CartItem';
  */
 export function Cart() {
 
-    const [cart, setCart]: CartContextTuple = React.useContext(CartContext);
+    const [cart]: CartContextTuple = React.useContext(CartContext);
+    const [numberOfItems, setNumberOfItems] = React.useState(0);
 
     const getNumberOfItems = () => {
         let numberOfItem = Object.keys(cart.cart).length;
@@ -24,6 +25,10 @@ export function Cart() {
         return numberOfItem;
     }
 
+    React.useEffect(() => {
+        setNumberOfItems(getNumberOfItems());
+    }, [cart.cart])
+
     return (
         <Popup trigger={
             <div className={styles.cart}>
@@ -32,20 +37,20 @@ export function Cart() {
                         <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
                     </svg>
                 </Link>
-                {getNumberOfItems() > 0 &&            
+                {numberOfItems > 0 &&            
                     <article>
-                        {getNumberOfItems()}
+                        {numberOfItems}
                     </article>
                 }
             </div>
         } position="bottom center" on={['hover', 'focus']}>
-            {getNumberOfItems() > 0 ? 
+            {numberOfItems > 0 ? 
                 Object.entries(cart.cart).map(([productId, cart]) =>
                     <CartItem
                         id={productId}
                         name={cart.name}
                         number={cart.number}
-                        image={cart.images[0]} />) :
+                        image={cart.images[0] ? cart.images[0].src : '/uploads/images/placeholder.png'} />) :
                 <div>Il n'y a aucun item dans votre panier pour le moment.</div>
             }
         </Popup>
