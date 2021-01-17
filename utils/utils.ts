@@ -19,6 +19,11 @@ export const GET = async (url: string) => axios.get(`${process.env.API_ENDPOINT}
  * @param paginationLenth the number of items per array that you want defaults to 1
  */
 export const paginate = <T>(item: T[], paginationLenth: number = 1) => {
+    // Check if the array IS an array
+    if (!Array.isArray(item)) {
+        // If it is not an array, return nothing;
+        return [];
+    }
     // Initialize a "master" array;
     const master: T[][] = [];
     // Sanity check, if the array that has been passed has less items than the wanted amount of items per array

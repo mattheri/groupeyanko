@@ -32,9 +32,21 @@ export default function ProductPage({ product }) {
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-    const products: Product[] = await (await GET('products')).data;
+    let page = 1;
+    const allProducts: Product[] = [];
 
-    const paths = products.map(product => ({ params: { id: `${product.id}` } }));
+    while (page) {
+        const products: Product[] = await (await GET(`products?per_page=10&page=${page}`)).data;
+        allProducts.concat(products);
+
+        if (products.length < 10) {
+            page = 0;
+        } else {
+            page++;
+        }
+    }
+
+    const paths = allProducts.map(product => ({ params: { id: `${product.id}` } }));
 
     return {
         paths,

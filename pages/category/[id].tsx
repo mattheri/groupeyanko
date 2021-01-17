@@ -59,9 +59,20 @@ export default function ProductCategory({ products }: ProductCategoryProps) {
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-    const response: Category[] = await (await GET(`products/categories?per_page=100&hide_empty=true`)).data;
+    let page = 1;
+    const allResponses: Category[] = [];
+    while (page) {
+        const response: Category[] = await (await GET(`products/categories?per_page=10&hide_empty=true&page=${page}`)).data;
+        allResponses.concat(response);
 
-    const paths = response.map(category => ({ params: { id: `${category.id}` } }));
+        if (response.length < 10) {
+            page = 0;
+        } else {
+            page++;
+        }
+    }
+
+    const paths = allResponses.map(category => ({ params: { id: `${category.id}` } }));
 
     return {
         paths,
@@ -70,6 +81,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 }
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
+    console.log(params.id);
     const response: Product[] = await (await GET(`products?category=${params.id}`)).data;
 
     return {
