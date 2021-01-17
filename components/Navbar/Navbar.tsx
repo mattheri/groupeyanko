@@ -58,10 +58,10 @@ export function Navbar() {
                 [styles.mobile]: true,
                 [styles.show]: show
             })}>
-                <a href="https://proaxion.ca/en/home/">{text[appState.locale].home}</a>
-                <Link href='/contact'><a>{text[appState.locale].contact}</a></Link>
-                <Link href='/'><a>{text[appState.locale].catalog}</a></Link>
-                <Button href='/' text={text[appState.locale].login} />
+                <a onClick={() => setShow(false)} href="https://proaxion.ca/en/home/">{text[appState.locale].home}</a>
+                <Link href='/'><a onClick={() => setShow(false)}>{text[appState.locale].catalog}</a></Link>
+                <Link href='/contact'><a onClick={() => setShow(false)}>{text[appState.locale].contact}</a></Link>
+                <Button href='/' onClick={() => setShow(false)} text={text[appState.locale].login} />
             </div>
         </nav>
     );
