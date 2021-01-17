@@ -1,8 +1,10 @@
 import { GetStaticPaths, GetStaticProps } from 'next';
+import { useRouter } from 'next/router';
 import React from 'react';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
+import Skeleton from 'react-loading-skeleton';
 import { Card } from '../../components/Card/Card';
 import { usePagination } from '../../components/Hooks/usePagination';
 import { Category, Product } from '../../next-env';
@@ -14,7 +16,29 @@ type ProductCategoryProps = {
 
 export default function ProductCategory({ products }: ProductCategoryProps) {
     const { paginatedItems, pagination, paginationProps, Pagination } = usePagination(products, 9);
-    console.log(paginatedItems);
+
+    const router = useRouter();
+
+    if (router.isFallback) {
+        const skeletonItems = [];
+        for (let i = 0; i <= 9; i++) {
+            skeletonItems.push(i);
+        }
+
+        return (
+            <Container fluid>
+                <Container>
+                    <Row>
+                        {skeletonItems.map(skeleton => (
+                            <Col>
+                                <Skeleton />
+                            </Col>
+                        ))}
+                    </Row>
+                </Container>
+            </Container>
+        );
+    }
 
     return (
         <Container fluid as="main">
@@ -41,7 +65,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
     return {
         paths,
-        fallback: false
+        fallback: true
     }
 }
 
