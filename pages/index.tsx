@@ -14,28 +14,28 @@ type Props = {
 }
 
 export default function Home({ response }: Props) {
-  const [appState] = React.useContext(AppContext);
+  // const [appState] = React.useContext(AppContext);
   
-  const text = {
-    fr: {
-      title: 'Proaxion - Catalogue'
-    },
-    en: {
-      title: 'Proaxion - Catalog'
-    }
-  }
+  // const text = {
+  //   fr: {
+  //     title: 'Proaxion - Catalogue'
+  //   },
+  //   en: {
+  //     title: 'Proaxion - Catalog'
+  //   }
+  // }
 
   return (
     <>
       <Head>
-        <title>{text[appState.locale].title}</title>
+        <title>Proaxion - Catalogue</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Container fluid as="main">
         <Container>
           <Row>
           {response.filter(category => !category._links.up).map(category =>
-            <Col key={category.id} xs={12} md={6} lg={4}>
+            <Col key={category.id} xs={12} md={6} lg={4} className='d-flex justify-content-center p-0'>
               <Card
               url={`/category/${category.id}`}
               description={category.description ? category.description : category.name}
