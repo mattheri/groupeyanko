@@ -31,13 +31,13 @@
 }
 
 .addToCart, .delete {
-    flex-basis: 48%;
+    flex-basis: 48% !important;
 }
 
 .delete {
-    color: black;
+    color: black !important;
 
     &:hover {
-        color: black;
+        color: black !important;
     }
 }

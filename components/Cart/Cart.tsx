@@ -34,7 +34,6 @@ export function Cart() {
     }, [cart.cart])
 
     const { paginatedItems, pagination, paginationProps, Pagination } = usePagination(itemsToPaginate, 3);
-    console.log(paginatedItems);
 
     return (
         <Popup className={styles.popup} trigger={

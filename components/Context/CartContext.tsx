@@ -30,6 +30,8 @@ export type CartContextTuple = [CartContextState, (product: any, number: number)
  * the 'user' cookie. If this cookie is present, it will be updated with the information
  * from this cookie. Otherwise, it will render the application with a user in the state.
  * 
+ * Provides 2 functions to manage the items in the cart.
+ * 
  * See documentation on React Context here: https://reactjs.org/docs/context.html
  */
 export function CartContextProvider<T>(props: React.PropsWithChildren<T>) {
@@ -87,8 +89,6 @@ export function CartContextProvider<T>(props: React.PropsWithChildren<T>) {
                     }
                 )
             });
-
-            console.log(cartState.cart);
         }
 
         if (number) {
