@@ -29,7 +29,7 @@ export default function ProductCategory({ products }: ProductCategoryProps) {
             <Container>
                 <Row>
                     {skeletonItems.map(skeleton => (
-                        <Col>
+                        <Col style={{ height: '23rem' }}>
                             <Skeleton />
                         </Col>
                     ))}

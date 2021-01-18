@@ -1,14 +1,16 @@
 import React from 'react';
-import { Image } from '../../next-env';
+import { Image, Product } from '../../next-env';
 import { Button } from '../Button/Button';
 import { CartContext, CartContextTuple } from '../Context/CartContext';
+import Link from 'next/link';
 import styles from './cartitem.module.scss';
 
 type CartItemProps = {
     id: string,
     image: string,
     name: string,
-    number: number
+    number: number,
+    product: Product
 }
 
 /**
@@ -20,15 +22,44 @@ type CartItemProps = {
  * @param name string. The name of the product
  * @param number number. The number of times this product is shown
  */
-export function CartItem({ id, image, name, number }: CartItemProps) {
+export function CartItem({ id, image, name, number, product }: CartItemProps) {
 
     const [cartContext, addToCart, removeFromCart]: CartContextTuple = React.useContext(CartContext);
+    const [numberOfItem, setNumberOfItem] = React.useState(number);
+    const handleAdd = () => setNumberOfItem(number => number += 1);
+    const handleRemove = () => setNumberOfItem(number => number -= 1);
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const regex = /^[0-9\b]+$/;
+        if (e.target.value === '' || e.target.value === 'NaN') {
+            setNumberOfItem(0);
+        }
+        if (regex.test(e.target.value)) {
+            setNumberOfItem(parseInt(e.target.value));
+        }
+    }
 
     return (
-        <article>
-            <img src={image} alt={name} width={50} height={50} />
-            <p>{`${number}x ${name}`}</p>
-            <Button onClick={() => removeFromCart(id)} text='Delete' />
+        <article className={styles.cartItem}>
+            <Link href={`/product/${id}`}>
+                <a>
+                    <img src={image} alt={name} width={50} height={50} />
+                    <p>{`${number}x ${name}`}</p>
+                </a>
+            </Link>
+            <div className={styles.controls}>
+                <div>
+                    <Button className={styles.controlBtn} onClick={() => handleRemove()} text='-' />
+                    <input onChange={handleChange} className={styles.input} type='text' value={numberOfItem} />
+                    <Button className={styles.controlBtn} onClick={() => handleAdd()} text='+' />
+                </div>
+                <div className={styles.addAndDelete}>
+                    <Button className={styles.addToCart} onClick={() => {
+                        if (!numberOfItem) return removeFromCart(id);
+                        addToCart(product, numberOfItem - number);
+                    }} text='Mettre à jour' />
+                    <Button tertiary className={styles.delete} onClick={() => removeFromCart(id)} text='Supprimer' />
+                </div>
+            </div>
         </article>
     );
 }

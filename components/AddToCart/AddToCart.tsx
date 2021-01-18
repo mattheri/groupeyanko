@@ -8,25 +8,31 @@ type AddToCartProps = {
     product: Product
 }
 
+/**
+ * Set of buttons to add an item to the cart. Has a add button, remove button and a add to cart button.
+ * Pass only the product to be added should the user press on 'Add to cart'. State is managed internally.
+ * 
+ * @param product Product type from next.env.d.ts. Required. Used to add to the cart Context
+ */
 export function AddToCart({ product }: AddToCartProps) {
     const [cart, setCart]: CartContextTuple = React.useContext(CartContext);
     const [number, setNumber] = React.useState(1);
 
-    const handleAdd = (e) => {
+    const handleAdd = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         e.preventDefault();
         setNumber(number => number+=1)
     };
-    const handleRemove = (e) => {
+    const handleRemove = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         e.preventDefault();
         setNumber(number => number-=1)
     };
 
     return (
         <div className={styles.addTo}>
-            <Button className={styles.controls} onClick={handleAdd} text='+' />
-            <p>{number}</p>
             <Button disabled={number === 1} className={styles.controls} onClick={handleRemove} text='-' />
-            <Button className={styles.addItemBtn} onClick={() => setCart(product, number)} text='Add To Cart' />
+            <p>{number}</p>
+            <Button className={styles.controls} onClick={handleAdd} text='+' />
+            <Button className={styles.addItemBtn} onClick={() => setCart(product, number)} text='Ajouter au panier' />
         </div>
     );
 }

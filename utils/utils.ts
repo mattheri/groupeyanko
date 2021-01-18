@@ -21,7 +21,7 @@ export const GET = async (url: string) => axios.get(`${process.env.API_ENDPOINT}
 export const paginate = <T>(item: T[], paginationLenth: number = 1) => {
     // Check if the array IS an array
     if (!Array.isArray(item)) {
-        // If it is not an array, return nothing;
+        // If it is not an array, return an empty array;
         return [];
     }
     // Initialize a "master" array;
@@ -34,33 +34,40 @@ export const paginate = <T>(item: T[], paginationLenth: number = 1) => {
     }
     // Initialize an external index
     let currentIndex = -1;
-    // Get the number of items per array
-    let itemsPerArray = parseFloat((item.length / paginationLenth).toFixed(1));
+    // Find the number of items to iterate through before slicing the last array
+    const numberOfItemsBeforeLastArray = (paginationLenth * (~~(item.length / paginationLenth)));
+    // Find the number of even arrays there should be
+    const numberOfEvenArrays = ~~(item.length / paginationLenth); // https://stackoverflow.com/questions/14494413/javascript-find-out-how-many-times-a-number-goes-into-another-number-evenly
+    // Declare a variable to store which array index you're at
+    let currentArrayIndex = 0;
     // Declare a variable to store the items per array left
-    let lastArrayLength = 0;
-    // If the items per array is not a whole number
-    if (itemsPerArray % 1 !== 0) {
-        // Get the decimal number and transform it in a whole number
-        lastArrayLength = parseInt(`${itemsPerArray}`.split(".")[1]);
-    }
-
+    let lastArrayLength = item.length - numberOfItemsBeforeLastArray;
     // Map over the items
-    item.forEach((o, i) => {
-        // add 1 to currentIndex for each number
+    for (let i = 0; i < item.length; i++) {
+        // Increment the currentIndex to at least 0
         currentIndex++;
-        // when the current index is at the same number as the items per array
-        if (currentIndex >= paginationLenth) {
+        // If the current index is at the same value as paginationLenth
+        if (currentIndex === paginationLenth) {
             // slice the item array and push it to the master array
             master.push(item.slice((i - paginationLenth), i));
             // Reset the current index
-            currentIndex = 0;
+            currentIndex = 1;
+            // Increment the array index
+            currentArrayIndex++;
         }
-        // When the index is the same as end of array - lastArrayLength
-        if ((item.length - lastArrayLength) === i) {
-            // Push the rest to the master array
-            master.push(item.slice(i, item.length));
+        // If the array index is at the same value as the number of even arrays
+        if (currentArrayIndex === numberOfEvenArrays) {
+            // If slicing the array will add any values
+            if (item.slice(item.length - lastArrayLength, item.length).length) {
+                // Push the rest to the master array
+                master.push(item.slice(item.length - lastArrayLength, item.length));
+            }
+            // Reset the current array index to 0
+            currentArrayIndex = 0;
+            // Break out of the loop
+            break;
         }
-    });
+    }
 
     // Sort the master array from longer array to shorter array
     return master.sort((a, b) => b.length - a.length);

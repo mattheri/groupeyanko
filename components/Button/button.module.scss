@@ -21,6 +21,10 @@
             color: gray;
         }
     }
+
+    &:focus {
+        outline: none;
+    }
 }
 
 .primary {

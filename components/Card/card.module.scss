@@ -9,7 +9,7 @@
     padding: 0.3rem;
     margin: 1rem 0;
 
-    &:hover {
+    > *:hover {
         text-decoration: none;
     }
 
@@ -30,6 +30,7 @@
         text-align: center;
         color: white;
         font-weight: 600;
-        margin-top: auto;
+        margin-top: 1rem;
+        text-transform: uppercase;
     }
 }
