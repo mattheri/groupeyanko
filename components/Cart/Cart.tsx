@@ -51,7 +51,7 @@ export function Cart() {
             </div>
         }
             position="bottom right"
-            on={['click']}
+            on={['hover', 'focus']}
             mouseLeaveDelay={500}>
             {numberOfItems > 0 ? 
                 <div>
@@ -70,7 +70,7 @@ export function Cart() {
                             number={cart.number}
                             image={cart.images[0] ? cart.images[0].src : '/uploads/images/placeholder.png'} />))
                     )}
-                    <Pagination {...paginationProps} />
+                    <Pagination className={styles.pagination} {...paginationProps} />
                     <Button className={styles.submit} onClick={() => console.log('soumettre')} text='Voir votre soumission' />
                 </div>
                 :
