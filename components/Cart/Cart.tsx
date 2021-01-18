@@ -54,7 +54,7 @@ export function Cart() {
             on={['click']}
             mouseLeaveDelay={500}>
             {numberOfItems > 0 ? 
-                <>
+                <div>
                     {paginatedItems[pagination] ? paginatedItems[pagination].map(product => Object.entries(product).map(([productId, cart]) => (
                         <CartItem
                             product={cart}
@@ -72,7 +72,7 @@ export function Cart() {
                     )}
                     <Pagination {...paginationProps} />
                     <Button className={styles.submit} onClick={() => console.log('soumettre')} text='Voir votre soumission' />
-                </>
+                </div>
                 :
                 <div>Il n'y a aucun item dans votre panier pour le moment.</div>
             }
