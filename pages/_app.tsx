@@ -7,8 +7,17 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import '../styles/popup.scss';
 import Container from 'react-bootstrap/Container';
 import { Footer } from '../components/Footer/Footer';
+import { useRouter, Router } from 'next/router';
+import NProgress from 'nprogress';
+import 'nprogress/nprogress.css';
+
+Router.events.on('routeChangeStart', () => NProgress.start());
+Router.events.on('routeChangeComplete', () => NProgress.done());
+Router.events.on('routeChangeError', () => NProgress.done());
 
 export default function MyApp({ Component, pageProps }) {
+  const router = useRouter();
+
   return (
     <AppContextProvider>
       <CartContextProvider>

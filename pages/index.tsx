@@ -3,7 +3,6 @@ import Head from 'next/head';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import { AppContext } from '../components/Context/AppContext';
 import { GetStaticProps } from 'next';
 import { Category } from '../next-env';
 import { Card } from '../components/Card/Card';
@@ -14,16 +13,6 @@ type Props = {
 }
 
 export default function Home({ response }: Props) {
-  // const [appState] = React.useContext(AppContext);
-  
-  // const text = {
-  //   fr: {
-  //     title: 'Proaxion - Catalogue'
-  //   },
-  //   en: {
-  //     title: 'Proaxion - Catalog'
-  //   }
-  // }
 
   return (
     <>
