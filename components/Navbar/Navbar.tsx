@@ -7,6 +7,7 @@ import { AppContext, AppContextTuple } from '../Context/AppContext';
 import { Cart } from '../Cart/Cart';
 import { Squash as Hamburger, Squash } from 'hamburger-react';
 import cn from 'classnames';
+import Row from 'react-bootstrap/Row';
 
 export function Navbar() {
     const [appState, setAppState]: AppContextTuple = React.useContext(AppContext);
@@ -32,7 +33,10 @@ export function Navbar() {
     const handleChangeLocale = () => setAppState(state => Object.assign({}, state, { locale: appState.locale === 'en' ? 'fr' : 'en' }));
 
     return (
-        <nav className={styles.navbar}>
+        <Row as='nav' className={cn({
+            [styles.navbar]: styles.navbar,
+            ['px-0 mx-0']: true
+        })}>
             <a className={styles.brand} href='https://proaxion.ca/en/home/'>
                 <Image
                     src='/uploads/images/logo-PROAXION.png'
@@ -63,6 +67,6 @@ export function Navbar() {
                 <Link href='/contact'><a onClick={() => setShow(false)}>{text[appState.locale].contact}</a></Link>
                 <Button href='/' onClick={() => setShow(false)} text={text[appState.locale].login} />
             </div>
-        </nav>
+        </Row>
     );
 }

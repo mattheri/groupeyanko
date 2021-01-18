@@ -1,10 +1,15 @@
 import React from 'react';
 import styles from './footer.module.scss';
+import Row from 'react-bootstrap/Row';
+import cn from 'classnames';
 
 export function Footer() {
     return (
-        <footer className={styles.footer}>
+        <Row as='footer' className={cn({
+            [styles.footer]: styles.footer,
+            ['px-0 mx-0']: true
+        })}>
 
-        </footer>
+        </Row>
     );
 }

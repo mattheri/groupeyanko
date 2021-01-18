@@ -9,6 +9,7 @@ import { Card } from '../../components/Card/Card';
 import { usePagination } from '../../components/Hooks/usePagination';
 import { Category, Product } from '../../next-env';
 import { GET } from '../../utils/utils';
+import Head from 'next/head';
 
 type ProductCategoryProps = {
     products: Product[]
@@ -29,7 +30,7 @@ export default function ProductCategory({ products }: ProductCategoryProps) {
             <Container>
                 <Row>
                     {skeletonItems.map(skeleton => (
-                        <Col style={{ height: '23rem' }}>
+                        <Col xs={12} md={6} lg={4} className='d-flex justify-content-center p-0' style={{ height: '23rem' }}>
                             <Skeleton />
                         </Col>
                     ))}
