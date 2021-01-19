@@ -21,13 +21,13 @@ export function PagePagination({ length, active, toggle, className }: Pagination
     };
 
     return (
-        <Container fluid>
+        <Container>
             <Row className={cn({
                         ['flex-nowrap justify-content-center']: true,
                         [className]: className
                 })}>
                 {length > 1 &&
-                <>
+                <Col className='d-flex justify-content-center px-0'>
                     <button className={styles.paginationControls} disabled={active === 0} onClick={() => toggle(0)}>
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-skip-start" viewBox="0 0 16 16">
                         <path d="M4 4a.5.5 0 0 1 1 0v3.248l6.267-3.636c.52-.302 1.233.043 1.233.696v7.384c0 .653-.713.998-1.233.696L5 8.752V12a.5.5 0 0 1-1 0V4zm7.5.633L5.696 8l5.804 3.367V4.633z"/>
@@ -58,7 +58,7 @@ export function PagePagination({ length, active, toggle, className }: Pagination
                         <path d="M12.5 4a.5.5 0 0 0-1 0v3.248L5.233 3.612C4.713 3.31 4 3.655 4 4.308v7.384c0 .653.713.998 1.233.696L11.5 8.752V12a.5.5 0 0 0 1 0V4zM5 4.633L10.804 8 5 11.367V4.633z"/>
                     </svg>
                     </button>
-                </>
+                </Col>
             }
             </Row>
         </Container>
