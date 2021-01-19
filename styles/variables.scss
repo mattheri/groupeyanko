@@ -10,6 +10,10 @@ $colorGrayNeutral: #7a7a7a;
     font-family: t.$markPro;
 }
 
+@mixin fontBody {
+    font-family: t.$baloo2;
+}
+
 @mixin flexcenter {
     display: flex;
     justify-content: center;

@@ -7,22 +7,43 @@ import { GET } from '../../utils/utils';
 import { Product } from '../../next-env';
 import { useRouter } from 'next/router';
 import Skeleton from 'react-loading-skeleton';
+import { AddToCart } from '../../components/AddToCart/AddToCart';
+import { ProductSection } from '../../components/Product/ProductSection';
 
-export default function ProductPage({ product }) {
+type ProductPageProps = {
+    product: Product
+}
+
+export default function ProductPage({ product }: ProductPageProps) {
 
     const router = useRouter();
 
     if (router.isFallback) {
         return (
             <Container>
-                <Skeleton />
+                <Row>
+                    <Col className='py-5' xs={12} md={8}>
+                        <Skeleton />
+                    </Col>
+                    <Col xs={12} md={4}>
+                        <Skeleton />
+                        <Skeleton />
+                        <Skeleton />
+                    </Col>
+                </Row>
+                <Row>
+                    <Col>
+                        <Skeleton />
+                        <Skeleton />
+                    </Col>
+                </Row>
             </Container>
         );
     }
 
     return (
         <Container>
-            
+            <ProductSection product={product} />
         </Container>
     );
 }

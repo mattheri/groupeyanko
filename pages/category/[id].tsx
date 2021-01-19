@@ -29,8 +29,8 @@ export default function ProductCategory({ products }: ProductCategoryProps) {
         return (
             <Container>
                 <Row>
-                    {skeletonItems.map(skeleton => (
-                        <Col xs={12} md={6} lg={4} className='d-flex justify-content-center p-0' style={{ height: '23rem' }}>
+                    {skeletonItems.map((skeleton, i) => (
+                        <Col key={i} xs={12} md={6} lg={4} className='d-flex justify-content-center p-0' style={{ height: '23rem' }}>
                             <Skeleton />
                         </Col>
                     ))}

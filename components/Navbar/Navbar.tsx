@@ -35,9 +35,9 @@ export function Navbar() {
     const handleChangeLocale = () => setAppState(state => Object.assign({}, state, { locale: appState.locale === 'en' ? 'fr' : 'en' }));
 
     return (
-        <Container as='nav' fluid>
-            <Row className={styles.navbar}>
-                <Col xs={12} className='d-flex align-items-center '>
+        <Container className={styles.navbar} as='nav' fluid>
+            <Row>
+                <Col xs={12} className='d-flex align-items-center px-0 z-10'>
                     <a className={styles.brand} href='https://proaxion.ca/en/home/'>
                         <Image
                             src='/uploads/images/logo-PROAXION.png'

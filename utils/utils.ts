@@ -72,3 +72,5 @@ export const paginate = <T>(item: T[], paginationLenth: number = 1) => {
     // Sort the master array from longer array to shorter array
     return master.sort((a, b) => b.length - a.length);
 }
+
+export const sanitizeHTML = (value: string) => value.replace(/(<([^>]+)>)/gi, "");

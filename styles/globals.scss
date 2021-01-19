@@ -1,3 +1,5 @@
+@use './variables.scss' as v;
+
 html,
 body {
   padding: 0;
@@ -22,4 +24,9 @@ a {
 
 * {
   box-sizing: content-box;
+  @include v.fontBody();
+}
+
+h1, h2, h3, h4, h5, h6 {
+  @include v.fontHeading();
 }
