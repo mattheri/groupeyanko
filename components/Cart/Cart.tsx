@@ -7,6 +7,9 @@ import 'reactjs-popup/dist/index.css';
 import { CartItem } from '../CartItem/CartItem';
 import { usePagination } from '../Hooks/usePagination';
 import { Button } from '../Button/Button';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
 /**
  * Cart component. Receives the cart object from the Cart Context.
@@ -54,25 +57,33 @@ export function Cart() {
             on={['click']}
             mouseLeaveDelay={500}>
             {numberOfItems > 0 ? 
-                <div>
+                <Container fluid className='px-0'>
                     {paginatedItems[pagination] ? paginatedItems[pagination].map(product => Object.entries(product).map(([productId, cart]) => (
-                        <CartItem
-                            product={cart}
-                            id={productId}
-                            name={cart.name}
-                            number={cart.number}
-                            image={cart.images[0] ? cart.images[0].src : '/uploads/images/placeholder.png'} />))
+                        <Row>
+                            <CartItem
+                                product={cart}
+                                id={productId}
+                                name={cart.name}
+                                number={cart.number}
+                                image={cart.images[0] ? cart.images[0].src : '/uploads/images/placeholder.png'} />
+                        </Row>))
                     ) : paginatedItems[0].map(product => Object.entries(product).map(([productId, cart]) => (
-                        <CartItem
-                            product={cart}
-                            id={productId}
-                            name={cart.name}
-                            number={cart.number}
-                            image={cart.images[0] ? cart.images[0].src : '/uploads/images/placeholder.png'} />))
+                        <Row>
+                            <CartItem
+                                product={cart}
+                                id={productId}
+                                name={cart.name}
+                                number={cart.number}
+                                image={cart.images[0] ? cart.images[0].src : '/uploads/images/placeholder.png'} />
+                        </Row>))
                     )}
                     <Pagination className={styles.pagination} {...paginationProps} />
-                    <Button className={styles.submit} onClick={() => console.log('soumettre')} text='Voir votre soumission' />
-                </div>
+                    <Row>
+                        <Col>
+                            <Button className={styles.submit} onClick={() => console.log('soumettre')} text='Voir votre soumission' />
+                        </Col>
+                    </Row>
+                </Container>
                 :
                 <div>Il n'y a aucun item dans votre panier pour le moment.</div>
             }

@@ -17,19 +17,14 @@
     div {
         margin: 0.5rem 0;
     }
-
-    .addTo {
-        width: 50%;
-        margin: 0;
-    }
     
-    .delete {
-        color: black !important;
-        width: 50%;
-    
-        &:hover {
-            color: black !important;
-        }
-    }
 }
 
+.delete {
+    color: black !important;
+    align-self: flex-end;
+
+    &:hover {
+        color: black !important;
+    }
+}

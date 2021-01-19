@@ -51,11 +51,11 @@
 
 .tertiary {
     background-color: transparent;
-    outline: none;
+    border: 2px transparent solid;
     color: white;
 
     &:hover {
-        outline: v.$colorAccent 2px solid;
+        border: v.$colorAccent 2px solid;
         background-color: transparent;
         color: white;
     }

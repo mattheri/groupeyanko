@@ -5,6 +5,9 @@ import { CartContext, CartContextTuple } from '../Context/CartContext';
 import Link from 'next/link';
 import styles from './cartitem.module.scss';
 import { AddToCart } from '../AddToCart/AddToCart';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
 type CartItemProps = {
     id: string,
@@ -40,17 +43,26 @@ export function CartItem({ id, image, name, number, product }: CartItemProps) {
     }
 
     return (
-        <article className={styles.cartItem}>
-            <Link href={`/product/${id}`}>
-                <a>
-                    <img src={image} alt={name} width={50} height={50} />
-                    <p>{`${number}x ${name}`}</p>
-                </a>
-            </Link>
-            <div className={styles.controls}>
-                <AddToCart className={styles.addTo} useInput product={product} />
-                <Button tertiary className={styles.delete} onClick={() => removeFromCart(id)} text='Supprimer' />
-            </div>
-        </article>
+        <Container fluid as='article' className={styles.cartItem}>
+            <Row>
+                <Col>
+                    <Link href={`/product/${id}`}>
+                        <a>
+                            <img src={image} alt={name} width={50} height={50} />
+                            <p>{`${number}x ${name}`}</p>
+                        </a>
+                    </Link>
+                </Col>
+            </Row>
+            <Row>
+                <Col>
+                    <AddToCart className={styles.addTo} useInput product={product} />
+                </Col>
+                <Col className='align-items-end d-flex'>
+                    <Button tertiary className={styles.delete} onClick={() => removeFromCart(id)} text='Supprimer' />
+                </Col>
+            </Row>
+            
+        </Container>
     );
 }
