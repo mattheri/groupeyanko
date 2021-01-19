@@ -2,6 +2,7 @@ import React from 'react';
 import Link from "next/link";
 import styles from "./button.module.scss";
 import cn from "classnames";
+import { motion } from 'framer-motion';
 
 export type ButtonProps = {
     href: string,
@@ -14,7 +15,7 @@ export type ButtonProps = {
     disabled?: boolean
 } | {
     href?: string,
-    text: string,
+    text?: string,
     primary?: boolean,
     secondary?: boolean,
     tertiary?: boolean,
@@ -38,17 +39,22 @@ export type ButtonProps = {
 export function Button({
     href,
     text,
-    primary,
+    primary = true,
     secondary,
     tertiary,
     onClick,
     className,
-    disabled
-}: ButtonProps) {
+    disabled,
+    children
+}: React.PropsWithChildren<ButtonProps>) {
+
+    function onTap() {
+        return { scale: [0.6, 1.2, 1]}
+    }
 
     if (onClick) {
         return (
-            <button disabled={disabled} onClick={(e) => {
+            <motion.button whileTap={{ scale: 0.6 }} transition={{ duration: 0.1 }} disabled={disabled} onClick={(e) => {
                 e.preventDefault();
                 onClick(e);
             }} className={cn({
@@ -58,14 +64,14 @@ export function Button({
                 [styles.tertiary]: tertiary,
                 [className]: className
             })}>
-                {text}
-            </button>
+                {text || children}
+            </motion.button>
         );
     }
 
     return (
         <Link href={href}>
-            <a onClick={onClick} className={cn({
+            <motion.a layout whileTap={{ scale: 0.6 }} transition={{ duration: 0.1 }} onClick={onClick} className={cn({
                 [styles.button]: true,
                 [styles.primary]: !primary || !secondary || !tertiary ? true : primary,
                 [styles.secondary]: secondary,
@@ -73,7 +79,7 @@ export function Button({
                 [className]: className
             })}>
                 {text}
-            </a>
+            </motion.a>
         </Link>
     );
 }

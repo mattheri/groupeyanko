@@ -22,8 +22,8 @@ export default function ProductPage({ product }: ProductPageProps) {
         return (
             <Container>
                 <Row>
-                    <Col className='py-5' xs={12} md={8}>
-                        <Skeleton />
+                    <Col xs={12} md={8}>
+                        <Skeleton height={150} />
                     </Col>
                     <Col xs={12} md={4}>
                         <Skeleton />

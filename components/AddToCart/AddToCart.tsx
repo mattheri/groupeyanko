@@ -4,11 +4,13 @@ import { Button } from '../Button/Button';
 import { CartContext, CartContextTuple } from '../Context/CartContext';
 import styles from './addtocart.module.scss';
 import cn from 'classnames';
+import Form from 'react-bootstrap/Form';
 
 type AddToCartProps = {
     product: Product,
     className?: string,
-    useInput?: boolean
+    useInput?: boolean,
+    replaceAmount?: boolean
 }
 
 /**
@@ -19,7 +21,7 @@ type AddToCartProps = {
  * @param className String add an optional string to style the component
  * @param useInput Boolean add an input to manage the number of items. The input only accepts numbers and if set to 0, removes the item.
  */
-export function AddToCart({ product, className, useInput }: AddToCartProps) {
+export function AddToCart({ product, className, useInput, replaceAmount }: AddToCartProps) {
     const [cart, setCart, removeFromCart]: CartContextTuple = React.useContext(CartContext);
     const [number, setNumber] = React.useState(1);
 
@@ -42,6 +44,10 @@ export function AddToCart({ product, className, useInput }: AddToCartProps) {
         if (number <= 0) {
             return removeFromCart((product.id).toString());
         }
+
+        if (replaceAmount) {
+            return setCart(product, number);
+        }
         setCart(product, number - product.number);
     }
 
@@ -53,11 +59,12 @@ export function AddToCart({ product, className, useInput }: AddToCartProps) {
             <Button disabled={number === 1} className={styles.controls} onClick={handleRemove} text='-' />
             {
                 useInput ?
-                    <input onChange={handleChange} className={styles.input} type='text' value={number} /> :
+                    <Form.Control onChange={handleChange} className={styles.input} type='text' value={number} /> :
                     <p>{number}</p>
             }
             <Button className={styles.controls} onClick={handleAdd} text='+' />
-            <Button className={styles.addItemBtn} onClick={() => useInput ? manageUseInput() : setCart(product, number)} text={useInput ? 'Mettre à jour' : 'Ajouter au panier'} />
+            <Button className={styles.addItemBtn} onClick={() => useInput ? manageUseInput() : setCart(product, number)}
+                text={useInput ? replaceAmount ? 'Ajouter au panier' : 'Mettre à jour' : 'Ajouter au panier'} />
         </div>
     );
 }

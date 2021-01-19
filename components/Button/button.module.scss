@@ -8,6 +8,9 @@
     max-height: 2.5rem;
     text-decoration: none;
     border: none;
+    @include v.flexcenter();
+    border-radius: 5px;
+    cursor: pointer;
 
     &:hover {
         text-decoration: none;
@@ -23,6 +26,7 @@
     }
 
     &:focus {
+        border: none;
         outline: none;
     }
 }
@@ -32,18 +36,18 @@
     color: white;
 
     &:hover {
-        background-color: v.$colorPrimary;
+        background-color: black;
         color: white;
     }
 }
 
 .secondary {
-    outline: v.$colorAccent 2px solid;
+    border: v.$colorAccent 2px solid;
     background-color: transparent;
     color: white;
 
     &:hover {
-        outline: v.$colorAccent 2px solid;
+        border: v.$colorAccent 2px solid;
         color: white;
         background-color: v.$colorAccent;
     }

@@ -22,7 +22,7 @@ export default function MyApp({ Component, pageProps }) {
     <AppContextProvider>
       <CartContextProvider>
         <Navbar />
-        <Container fluid className='py-5' as='main'>
+        <Container fluid className='py-5' style={{ backgroundColor: 'black' }} as='main'>
           <Component {...pageProps} />
         </Container>
         <Footer />

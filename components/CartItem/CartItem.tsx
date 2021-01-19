@@ -8,6 +8,8 @@ import { AddToCart } from '../AddToCart/AddToCart';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import { motion } from 'framer-motion';
+import cn from 'classnames';
 
 type CartItemProps = {
     id: string,
@@ -43,7 +45,10 @@ export function CartItem({ id, image, name, number, product }: CartItemProps) {
     }
 
     return (
-        <Container fluid as='article' className={styles.cartItem}>
+        <motion.article layout className={cn({
+            [styles.cartItem]: true,
+            ['container-fluid']: true
+        })}>
             <Row>
                 <Col>
                     <Link href={`/product/${id}`}>
@@ -63,6 +68,6 @@ export function CartItem({ id, image, name, number, product }: CartItemProps) {
                 </Col>
             </Row>
             
-        </Container>
+        </motion.article>
     );
 }

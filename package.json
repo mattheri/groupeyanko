@@ -16,6 +16,7 @@
     "hamburger-react": "^2.4.0",
     "lodash": "^4.17.20",
     "next": "10.0.5",
+    "nextjs-breadcrumbs": "^0.9.9",
     "nprogress": "^0.2.0",
     "react": "17.0.1",
     "react-bootstrap": "^1.4.3",

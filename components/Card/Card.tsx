@@ -4,6 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Product } from '../../next-env';
 import { AddToCart } from '../AddToCart/AddToCart';
+import { motion } from 'framer-motion';
 
 export type CardProps = {
     src: string,
@@ -29,7 +30,10 @@ export type CardProps = {
  */
 export function Card({ url, src, description, addToCart, product }: CardProps) {
     return (
-        <article className={styles.card}>
+        <motion.article
+            initial={{ opacity: 0, x: -15 }}
+            animate={{ opacity: 1, x: 0 }}
+            className={styles.card}>
             <Link href={url}>
                 <a className={styles.innerCard}>
                     <article className={styles.image} style={{ backgroundImage: `url(${src})` }}></article>
@@ -44,6 +48,6 @@ export function Card({ url, src, description, addToCart, product }: CardProps) {
                 <AddToCart product={product} />
             </>
             }
-        </article>
+        </motion.article>
     );
 }

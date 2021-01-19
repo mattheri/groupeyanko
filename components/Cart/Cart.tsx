@@ -10,6 +10,7 @@ import { Button } from '../Button/Button';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import { motion } from 'framer-motion';
 
 /**
  * Cart component. Receives the cart object from the Cart Context.
@@ -47,9 +48,12 @@ export function Cart() {
                     </svg>
                 </div>
                 {numberOfItems > 0 &&            
-                    <article>
+                    <motion.article
+                        layout
+                        animate={{ scale: [1, 0.8, 1.1, 1] }}
+                        transition={{ duration: 0.3 }}>
                         {numberOfItems}
-                    </article>
+                    </motion.article>
                 }
             </div>
         }
