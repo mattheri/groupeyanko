@@ -23,7 +23,7 @@ a {
 }
 
 * {
-  box-sizing: content-box;
+  box-sizing: border-box;
   @include v.fontBody();
 }
 
