@@ -73,4 +73,10 @@ export const paginate = <T>(item: T[], paginationLenth: number = 1) => {
     return master.sort((a, b) => b.length - a.length);
 }
 
+/**
+ * Some of the data passed in the API have HTML Tags in it. This will remove the tags and return a normal
+ * string instead.
+ * 
+ * @param value string, the value to remove HTML Tags from
+ */
 export const sanitizeHTML = (value: string) => value.replace(/(<([^>]+)>)/gi, "");

@@ -1,6 +1,7 @@
 import React from 'react';
 import { paginate } from '../../utils/utils';
 import { PagePagination } from '../PagePagination/PagePagination';
+import chunk from 'lodash/chunk';
 
 /**
  * Hook that paginates over an array of element. It keeps an internal state of the page you're at.
@@ -20,7 +21,7 @@ import { PagePagination } from '../PagePagination/PagePagination';
  */
 export function usePagination<T>(itemsToPaginate: T[], itemsPerPage: number) {
     const [pagination, setPagination] = React.useState(0);
-    const paginatedItems = paginate(itemsToPaginate, itemsPerPage);
+    const paginatedItems = chunk(itemsToPaginate, itemsPerPage);
 
     return {
         paginatedItems,

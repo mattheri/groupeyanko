@@ -4,6 +4,7 @@ import { Button } from '../Button/Button';
 import { CartContext, CartContextTuple } from '../Context/CartContext';
 import Link from 'next/link';
 import styles from './cartitem.module.scss';
+import { AddToCart } from '../AddToCart/AddToCart';
 
 type CartItemProps = {
     id: string,
@@ -47,18 +48,8 @@ export function CartItem({ id, image, name, number, product }: CartItemProps) {
                 </a>
             </Link>
             <div className={styles.controls}>
-                <div>
-                    <Button className={styles.controlBtn} onClick={() => handleRemove()} text='-' />
-                    <input onChange={handleChange} className={styles.input} type='text' value={numberOfItem} />
-                    <Button className={styles.controlBtn} onClick={() => handleAdd()} text='+' />
-                </div>
-                <div className={styles.addAndDelete}>
-                    <Button className={styles.addToCart} onClick={() => {
-                        if (!numberOfItem) return removeFromCart(id);
-                        addToCart(product, numberOfItem - number);
-                    }} text='Mettre à jour' />
-                    <Button tertiary className={styles.delete} onClick={() => removeFromCart(id)} text='Supprimer' />
-                </div>
+                <AddToCart className={styles.addTo} useInput product={product} />
+                <Button tertiary className={styles.delete} onClick={() => removeFromCart(id)} text='Supprimer' />
             </div>
         </article>
     );

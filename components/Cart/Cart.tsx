@@ -51,7 +51,7 @@ export function Cart() {
             </div>
         }
             position="bottom right"
-            on={['hover', 'focus']}
+            on={['click']}
             mouseLeaveDelay={500}>
             {numberOfItems > 0 ? 
                 <div>
