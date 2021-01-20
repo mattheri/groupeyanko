@@ -7,12 +7,25 @@ import { GetStaticProps } from 'next';
 import { Category } from '../next-env';
 import { Card } from '../components/Card/Card';
 import { GET } from '../utils/utils';
+import { AppContext, AppContextTuple } from '../components/Context/AppContext';
+import { Filter } from '../components/Filter/Filter';
 
 type Props = {
   response: Category[]
 }
 
 export default function Home({ response }: Props) {
+  const [appContext, setAppContext]: AppContextTuple = React.useContext(AppContext);
+
+  React.useEffect(() => {
+    setAppContext(ctx => Object.assign(
+      {},
+      ctx,
+      {
+        categories: response
+      }
+    ));
+  }, [response])
 
   return (
     <>
@@ -38,6 +51,7 @@ export default function Home({ response }: Props) {
 export const getStaticProps: GetStaticProps = async () => {
 
   const response = await GET('products/categories?per_page=100&hide_empty=true');
+
   return {
     props: {
         response: response.data

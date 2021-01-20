@@ -10,6 +10,10 @@ import { Footer } from '../components/Footer/Footer';
 import { useRouter, Router } from 'next/router';
 import NProgress from 'nprogress';
 import 'nprogress/nprogress.css';
+import { Filter } from '../components/Filter/Filter';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import { motion, AnimateSharedLayout } from 'framer-motion';
 
 Router.events.on('routeChangeStart', () => NProgress.start());
 Router.events.on('routeChangeComplete', () => NProgress.done());
@@ -22,8 +26,15 @@ export default function MyApp({ Component, pageProps }) {
     <AppContextProvider>
       <CartContextProvider>
         <Navbar />
-        <Container fluid className='py-5' style={{ backgroundColor: 'black' }} as='main'>
-          <Component {...pageProps} />
+        <Container fluid className='py-5' style={{ backgroundColor: 'black', overflow: 'none' }} as='main'>
+          <Row>
+            <AnimateSharedLayout>
+              <Filter />
+              <Col as={motion.div} layout>
+                <Component {...pageProps} />
+              </Col>
+            </AnimateSharedLayout>
+          </Row>
         </Container>
         <Footer />
       </CartContextProvider>

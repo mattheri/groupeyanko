@@ -53,7 +53,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
     const allProducts: Product[] = [];
 
     while (page) {
-        const products: Product[] = await (await GET(`products?per_page=10&page=${page}`)).data;
+        const products: Product[] = await (await GET(`products?per_page=100&page=${page}`)).data;
         allProducts.concat(products);
 
         if (products.length < 10) {

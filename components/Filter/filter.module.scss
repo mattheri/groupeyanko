@@ -1,0 +1,18 @@
+.filter {
+    position: relative;
+    z-index: 998;
+    width: fit-content;
+
+    ul {
+        list-style: none;
+        
+        a {
+            color: white;
+        }
+    }
+}
+
+.filterBtn {
+    position: absolute;
+    z-index: 999;
+}

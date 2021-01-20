@@ -1,4 +1,5 @@
 import React from "react";
+import { Category } from "../../next-env";
 import { useGetAuthCookie } from "../Hooks/useGetAuthCookie";
 
 export const AppContext = React.createContext(null);
@@ -13,7 +14,8 @@ export type User = {
 export type AppContextState = {
     connected: boolean,
     user: User,
-    locale: 'fr' | 'en'
+    locale: 'fr' | 'en',
+    categories: Category[]
 }
 
 export type AppContextTuple = [AppContextState, React.Dispatch<React.SetStateAction<AppContextState>>];
@@ -32,7 +34,8 @@ export function AppContextProvider<T>(props: React.PropsWithChildren<T>) {
     const [appState, setAppState] = React.useState<AppContextState>({
         connected: user ? user.connected : false,
         user: user ? user.user : {},
-        locale: 'fr'
+        locale: 'fr',
+        categories: []
     });
 
     return (
