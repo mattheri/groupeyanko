@@ -54,7 +54,15 @@ export function Button({
 
     if (onClick) {
         return (
-            <motion.button whileTap={{ scale: 0.6 }} transition={{ duration: 0.1 }} disabled={disabled} onClick={(e) => {
+            <motion.button
+                layout
+                whileTap={{ scale: 0.6 }}
+                transition={{
+                    duration: 0.1,
+                    layoutX: { duration: 0.3, damping: 1000 },
+                    layoutY: { duration: 0.3, damping: 1000 }
+                }}
+                disabled={disabled} onClick={(e) => {
                 e.preventDefault();
                 onClick(e);
             }} className={cn({

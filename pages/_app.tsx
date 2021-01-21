@@ -21,15 +21,15 @@ Router.events.on('routeChangeError', () => NProgress.done());
 
 export default function MyApp({ Component, pageProps }) {
   const router = useRouter();
+  console.log(router.query);
 
   return (
     <AppContextProvider>
       <CartContextProvider>
         <Navbar />
-        <Container fluid className='py-5' style={{ backgroundColor: 'black', overflow: 'none' }} as='main'>
-          <Row>
+        <Container fluid className='py-5' style={{ backgroundColor: 'black', minHeight: '100vh' }} as={motion.main}>
+          <Row as={motion.div}>
             <AnimateSharedLayout>
-              <Filter />
               <Col as={motion.div} layout>
                 <Component {...pageProps} />
               </Col>

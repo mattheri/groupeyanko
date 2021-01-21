@@ -13,6 +13,8 @@
 }
 
 .filterBtn {
-    position: absolute;
+    position: relative;
     z-index: 999;
+    bottom: 0;
+    left: 5rem;
 }

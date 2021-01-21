@@ -31,8 +31,12 @@ export type CardProps = {
 export function Card({ url, src, description, addToCart, product }: CardProps) {
     return (
         <motion.article
+            layout
             initial={{ opacity: 0, x: -15 }}
             animate={{ opacity: 1, x: 0 }}
+            transition={{
+                layoutX: { duration: 0.3, damping: 1000 }
+            }}
             className={styles.card}>
             <Link href={url}>
                 <a className={styles.innerCard}>

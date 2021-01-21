@@ -12,11 +12,10 @@ import { GET } from '../../utils/utils';
 import { motion } from 'framer-motion';
 
 type ProductCategoryProps = {
-    products: Product[]
+    response: Product[] | Category[]
 }
 
-export default function ProductCategory({ products }: ProductCategoryProps) {
-    const { paginatedItems, pagination, paginationProps, Pagination } = usePagination(products, 9);
+export default function ProductCategory({ response }: ProductCategoryProps) {
 
     const router = useRouter();
 
@@ -39,24 +38,50 @@ export default function ProductCategory({ products }: ProductCategoryProps) {
         );
     }
 
-    return (
-        <>
-            <Container>
-                <Row>
-                    {paginatedItems[pagination].map(product =>
-                                <Col key={product.id} xs={12} md={6} lg={4} className='d-flex justify-content-center p-0'>
-                                    <Card
-                                        url={`/product/${product.id}`}
-                                        description={product.name}
-                                            src={product.images.length > 0 ? product.images[0].src : '/uploads/images/placeholder.png'}
-                                            addToCart product={product} />
-                                        </Col>
-                        )}
-                </Row>
-            </Container>
-            <Pagination {...paginationProps} />
-        </>
-    )
+    const isCategory = (obj: Category[] | Product[]): obj is Category[] => {
+        return (obj as Category[]).some(category => category.parent !== undefined);
+    }
+
+    if (isCategory(response)) {
+        const { paginatedItems, pagination, paginationProps, Pagination } = usePagination(response, 9);
+        return (
+            <>
+                <Container>
+                    <Row>
+                        {paginatedItems[pagination].map(category =>
+                            <Col key={category.id} xs={12} md={6} lg={4} className='d-flex justify-content-center p-0'>
+                                <Card
+                                    url={`/category/${category.id}`}
+                                    description={category.description ? category.description : category.name}
+                                    src={category.image.src} />
+                            </Col>)}
+                    </Row>
+                </Container>
+                <Pagination {...paginationProps} />
+            </>
+        )
+    } else {
+        const { paginatedItems, pagination, paginationProps, Pagination } = usePagination(response, 9);
+        return (
+            <>
+                <Container>
+                    <Row>
+                        {paginatedItems[pagination].map(product =>
+                                    <Col key={product.id} xs={12} md={6} lg={4} className='d-flex justify-content-center p-0'>
+                                        <Card
+                                            url={`/product/${product.id}`}
+                                            description={product.name}
+                                                src={product.images.length > 0 ? product.images[0].src : '/uploads/images/placeholder.png'}
+                                                addToCart product={product} />
+                                            </Col>
+                            )}
+                    </Row>
+                </Container>
+                <Pagination {...paginationProps} />
+            </>
+        )
+    }
+
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
@@ -73,7 +98,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
         }
     }
 
-    const paths = allResponses.map(category => ({ params: { id: `${category.id}`, slug: category.slug } }));
+    const paths = allResponses.map(category => ({ params: { id: `${category.id}` } }));
 
     return {
         paths,
@@ -82,11 +107,15 @@ export const getStaticPaths: GetStaticPaths = async () => {
 }
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-    const response: Product[] = await (await GET(`products?category=${params.id}&per_page=100`)).data;
+    let response: Product[] = await (await GET(`products/categories?parent=${params.id}&per_page=100`)).data;
+
+    if (!response || !response.length) {
+        response = await (await GET(`products?category=${params.id}&per_page=100`)).data;
+    }
 
     return {
         props: {
-            products: response
+            response
         },
         revalidate: 1
     }
