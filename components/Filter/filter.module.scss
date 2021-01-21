@@ -1,7 +1,8 @@
 .filter {
     position: relative;
-    z-index: 998;
+    z-index: 997;
     width: fit-content;
+    margin-top: 15px;
 
     ul {
         list-style: none;
@@ -19,11 +20,4 @@
 .search {
     max-height: 2.5rem;
     margin-bottom: 1rem;
-}
-
-.filterBtn {
-    position: absolute;
-    z-index: 999;
-    top: 10%;
-    margin-left: 5%;
 }
