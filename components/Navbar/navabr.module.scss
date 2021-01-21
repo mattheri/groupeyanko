@@ -4,7 +4,7 @@
     position: relative;
     top: 0;
     height: fit-content;
-    z-index: 999;
+    z-index: 1000;
 
     @media only screen and (min-width: 769px) {
         position: relative;
@@ -46,6 +46,10 @@
         background-color: black;
     }
 
+    .cartMobile {
+        margin-right: 0.5rem;
+    }
+
     .linksMobile {
         display: flex;
         flex-direction: column;
@@ -68,6 +72,10 @@
         &.show {
             transform: translateY(0);
             opacity: 1;
+        }
+
+        .mobileLoginBtn {
+            width: 100%;
         }
     }
 

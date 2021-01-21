@@ -35,7 +35,7 @@ export function Navbar() {
     const handleChangeLocale = () => setAppState(state => Object.assign({}, state, { locale: appState.locale === 'en' ? 'fr' : 'en' }));
 
     return (
-        <Container className={styles.navbar} as='nav' fluid>
+        <Container className={styles.navbar} as='nav' fluid style={{ overflow: 'visible' }}>
             <Row>
                 <Col xs={12} className='d-flex align-items-center px-0 z-10'>
                     <a className={styles.brand} href='https://proaxion.ca/en/home/'>
@@ -66,7 +66,7 @@ export function Navbar() {
                         <a onClick={() => setShow(false)} href="https://proaxion.ca/en/home/">{text[appState.locale].home}</a>
                         <Link href='/'><a onClick={() => setShow(false)}>{text[appState.locale].catalog}</a></Link>
                         <Link href='/contact'><a onClick={() => setShow(false)}>{text[appState.locale].contact}</a></Link>
-                        <Button href='/' onClick={() => setShow(false)} text={text[appState.locale].login} />
+                        <Button className={styles.mobileLoginBtn} href='/' onClick={() => setShow(false)} text={text[appState.locale].login} />
                     </div>
                 </Col>
             </Row>
