@@ -53,12 +53,15 @@ export const getStaticPaths: GetStaticPaths = async () => {
     const allProducts: Product[] = [];
 
     while (page) {
-        const products: Product[] = await (await GET(`products?per_page=100&page=${page}`)).data;
-        allProducts.concat(products);
+        const response = await GET(`products?per_page=100&page=${page}`);
+        allProducts.concat(response.data);
 
-        if (products.length < 10) {
+        if (parseInt(response.headers['x-wp-totalpages']) === page) {
             page = 0;
-        } else {
+            break;
+        }
+
+        if (parseInt(response.headers['x-wp-totalpages']) > 1) {
             page++;
         }
     }

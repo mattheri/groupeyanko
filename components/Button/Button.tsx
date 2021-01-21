@@ -48,10 +48,6 @@ export function Button({
     children
 }: React.PropsWithChildren<ButtonProps>) {
 
-    function onTap() {
-        return { scale: [0.6, 1.2, 1]}
-    }
-
     if (onClick) {
         return (
             <motion.button

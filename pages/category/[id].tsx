@@ -41,13 +41,14 @@ export default function ProductCategory({ response }: ProductCategoryProps) {
         return (obj as Category[]).some(category => category.parent !== undefined);
     }
 
+    const { paginatedItems, pagination, paginationProps, Pagination } = usePagination((response as any[]), 9);
     if (isCategory(response)) {
-        const { paginatedItems, pagination, paginationProps, Pagination } = usePagination(response, 9);
+
         return (
             <>
                 <Container>
                     <Row>
-                        {paginatedItems[pagination].map(category =>
+                        {(paginatedItems as Category[][])[pagination].map(category =>
                             <Col key={category.id} xs={12} md={6} lg={4} className='d-flex justify-content-center p-0'>
                                 <Card
                                     url={`/category/${category.id}`}
@@ -60,12 +61,11 @@ export default function ProductCategory({ response }: ProductCategoryProps) {
             </>
         )
     } else {
-        const { paginatedItems, pagination, paginationProps, Pagination } = usePagination(response, 9);
         return (
             <>
                 <Container>
                     <Row>
-                        {paginatedItems[pagination].map(product =>
+                        {(paginatedItems as Product[][])[pagination].map(product =>
                                     <Col key={product.id} xs={12} md={6} lg={4} className='d-flex justify-content-center p-0'>
                                         <Card
                                             url={`/product/${product.id}`}
@@ -87,12 +87,15 @@ export const getStaticPaths: GetStaticPaths = async () => {
     let page = 1;
     const allResponses: Category[] = [];
     while (page) {
-        const response: Category[] = await (await GET(`products/categories?per_page=100&hide_empty=true&page=${page}`)).data;
-        allResponses.concat(response);
+        const response = await GET(`products/categories?per_page=100&hide_empty=true&page=${page}`);
+        allResponses.concat(response.data);
 
-        if (response.length < 10) {
+        if (parseInt(response.headers['x-wp-totalpages']) === page) {
             page = 0;
-        } else {
+            break;
+        }
+
+        if (parseInt(response.headers['x-wp-totalpages']) > 1) {
             page++;
         }
     }

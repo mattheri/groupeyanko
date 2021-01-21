@@ -7,6 +7,7 @@ import Col from 'react-bootstrap/Col';
 import { Category } from '../../next-env';
 import axios from 'axios';
 import Skeleton from 'react-loading-skeleton';
+import { Search } from '../Search/Search';
 
 type FilterProps = {
     categories?: Category[]
@@ -15,7 +16,7 @@ type FilterProps = {
 export function Filter() {
     
     const [open, setOpen] = React.useState(false);
-    const [categories, setCategories] = React.useState<Category[]>();
+    const [categories, setCategories] = React.useState<Category[]>([]);
     const handleOpen = () => setOpen(!open);
     const handleSortCategories = () => {
         const parents = categories.map(category => {
@@ -42,8 +43,9 @@ export function Filter() {
 
     React.useEffect(() => {
         (async () => {
-            if (!categories) {
+            if (!categories.length) {
                 const response = (await axios.get('/api/categories')).data;
+                console.log(response)
                 setCategories(response);
             }
         })();
@@ -77,7 +79,7 @@ export function Filter() {
                         lg={2}
                     className={styles.filter}>
                     <ul>
-                        <li><input type="text" className={styles.search} /></li>
+                        <li><Search /></li>
                             {handleSortCategories().map(parentCategory => {
                                 return (
                                     <li>

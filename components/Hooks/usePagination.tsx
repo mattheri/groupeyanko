@@ -23,6 +23,8 @@ export function usePagination<T>(itemsToPaginate: T[], itemsPerPage: number) {
     const [pagination, setPagination] = React.useState(0);
     const paginatedItems = chunk(itemsToPaginate, itemsPerPage);
 
+    React.useDebugValue(paginatedItems);
+
     return {
         paginatedItems,
         pagination,
