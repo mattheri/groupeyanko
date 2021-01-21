@@ -49,7 +49,7 @@ export function Card({ url, src, description, addToCart, product }: CardProps) {
             {
             addToCart &&
             <>
-                <AddToCart product={product} />
+                <AddToCart layout={true} product={product} />
             </>
             }
         </motion.article>

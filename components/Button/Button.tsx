@@ -12,7 +12,8 @@ export type ButtonProps = {
     tertiary?: boolean,
     onClick?: (e?: React.MouseEvent<HTMLAnchorElement> | React.MouseEvent<HTMLButtonElement, MouseEvent>) => void,
     className?: string,
-    disabled?: boolean
+    disabled?: boolean,
+    layout?: boolean
 } | {
     href?: string,
     text?: string,
@@ -21,7 +22,8 @@ export type ButtonProps = {
     tertiary?: boolean,
     onClick: (e?: React.MouseEvent<HTMLAnchorElement> | React.MouseEvent<HTMLButtonElement, MouseEvent>) => void,
     className?: string,
-    disabled?: boolean
+    disabled?: boolean,
+    layout?: boolean
 }
 
 /**
@@ -45,13 +47,13 @@ export function Button({
     onClick,
     className,
     disabled,
-    children
+    children,
+    layout
 }: React.PropsWithChildren<ButtonProps>) {
-
     if (onClick) {
         return (
             <motion.button
-                layout
+                layout={layout}
                 whileTap={{ scale: 0.6 }}
                 transition={{
                     duration: 0.1,
@@ -75,12 +77,17 @@ export function Button({
 
     return (
         <Link href={href}>
-            <motion.a layout whileTap={{ scale: 0.6 }} transition={{ duration: 0.1 }} onClick={onClick} className={cn({
-                [styles.button]: true,
-                [styles.primary]: !primary || !secondary || !tertiary ? true : primary,
-                [styles.secondary]: secondary,
-                [styles.tertiary]: tertiary,
-                [className]: className
+            <motion.a
+                layout={layout}
+                whileTap={{ scale: 0.6 }}
+                transition={{ duration: 0.1 }}
+                onClick={onClick}
+                className={cn({
+                    [styles.button]: true,
+                    [styles.primary]: !primary || !secondary || !tertiary ? true : primary,
+                    [styles.secondary]: secondary,
+                    [styles.tertiary]: tertiary,
+                    [className]: className
             })}>
                 {text}
             </motion.a>

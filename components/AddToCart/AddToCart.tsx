@@ -10,7 +10,8 @@ type AddToCartProps = {
     product: Product,
     className?: string,
     useInput?: boolean,
-    replaceAmount?: boolean
+    replaceAmount?: boolean,
+    layout?: boolean
 }
 
 /**
@@ -21,7 +22,13 @@ type AddToCartProps = {
  * @param className String add an optional string to style the component
  * @param useInput Boolean add an input to manage the number of items. The input only accepts numbers and if set to 0, removes the item.
  */
-export function AddToCart({ product, className, useInput, replaceAmount }: AddToCartProps) {
+export function AddToCart({
+    product,
+    className,
+    useInput,
+    replaceAmount,
+    layout
+}: AddToCartProps) {
     const [cart, setCart, removeFromCart]: CartContextTuple = React.useContext(CartContext);
     const [number, setNumber] = React.useState(1);
 
@@ -56,14 +63,14 @@ export function AddToCart({ product, className, useInput, replaceAmount }: AddTo
             [styles.addTo]: styles.addTo,
             [className]: className
         })}>
-            <Button disabled={number === 1} className={styles.controls} onClick={handleRemove} text='-' />
+            <Button layout={layout} disabled={number === 1} className={styles.controls} onClick={handleRemove} text='-' />
             {
                 useInput ?
                     <Form.Control onChange={handleChange} className={styles.input} type='text' value={number} /> :
                     <p>{number}</p>
             }
-            <Button className={styles.controls} onClick={handleAdd} text='+' />
-            <Button className={styles.addItemBtn} onClick={() => useInput ? manageUseInput() : setCart(product, number)}
+            <Button layout={layout} className={styles.controls} onClick={handleAdd} text='+' />
+            <Button layout={layout} className={styles.addItemBtn} onClick={() => useInput ? manageUseInput() : setCart(product, number)}
                 text={useInput ? replaceAmount ? 'Ajouter au panier' : 'Mettre à jour' : 'Ajouter au panier'} />
         </div>
     );

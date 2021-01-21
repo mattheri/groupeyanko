@@ -27,11 +27,11 @@ export default function MyApp({ Component, pageProps }) {
     <AppContextProvider>
       <CartContextProvider>
         <Navbar />
-        <Container fluid className='py-5' style={{ backgroundColor: 'black', minHeight: '100vh' }} as={motion.main}>
+        <Container fluid className='py-5' style={{ backgroundColor: 'black', minHeight: '100vh', overflow: 'visible' }} as={motion.main}>
           <Row as={motion.div}>
             <AnimateSharedLayout>
               <Filter />
-              <Col as={motion.div} layout>
+              <Col style={{ overflow: 'visible' }} as={motion.div}>
                 <Component {...pageProps} />
               </Col>
             </AnimateSharedLayout>

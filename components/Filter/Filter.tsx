@@ -45,7 +45,6 @@ export function Filter() {
         (async () => {
             if (!categories.length) {
                 const response = (await axios.get('/api/categories')).data;
-                console.log(response)
                 setCategories(response);
             }
         })();
@@ -70,8 +69,8 @@ export function Filter() {
                         key={1}
                         as={motion.aside}
                         layout
-                        initial={{ x: -100, opacity: 0 }}
-                        animate={{ x: 40, opacity: 1 }}
+                        initial={{ x: '-100%', opacity: 0 }}
+                        animate={{ x: 0, opacity: 1 }}
                     exit={{ x: -100, opacity: 0 }}
                     layoutId={''}
                         xs={10}
