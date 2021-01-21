@@ -9,7 +9,6 @@ import { Card } from '../../components/Card/Card';
 import { usePagination } from '../../components/Hooks/usePagination';
 import { Category, Product } from '../../next-env';
 import { GET } from '../../utils/utils';
-import { motion } from 'framer-motion';
 
 type ProductCategoryProps = {
     response: Product[] | Category[]

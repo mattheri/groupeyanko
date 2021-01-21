@@ -5,14 +5,20 @@ import { AppContext, AppContextTuple } from '../Context/AppContext';
 import Link from 'next/link';
 import styles from './filter.module.scss';
 import Col from 'react-bootstrap/Col';
+import { Category } from '../../next-env';
+import axios from 'axios';
+
+type FilterProps = {
+    categories?: Category[]
+}
 
 export function Filter() {
-
-    const [appState, setAppState]: AppContextTuple = React.useContext(AppContext);
+    
     const [open, setOpen] = React.useState(false);
+    const [categories, setCategories] = React.useState<Category[]>();
     const handleOpen = () => setOpen(!open);
     const handleSortCategories = () => {
-        const parents = appState.categories.map(category => {
+        const parents = categories.map(category => {
             if (!category.parent) {
                 return {
                     ref: category.id,
@@ -22,7 +28,7 @@ export function Filter() {
             }
         }).filter(Boolean);
 
-        appState.categories.forEach(category => {
+        categories.forEach(category => {
             if (category._links.up) {
                 parents.forEach(parent => {
                     if (parent.ref === category.parent) {
@@ -34,7 +40,14 @@ export function Filter() {
         return parents;
     }
 
-    React.useEffect(() => console.log(appState.categories), [appState.categories]);
+    React.useEffect(() => {
+        (async () => {
+            const response = (await axios.get('/api/categories')).data;
+            setCategories(response);
+
+            console.log(categories);
+        })();
+    }, [])
 
     return (
         <>
@@ -44,7 +57,7 @@ export function Filter() {
                 </svg>
             </Button>
             <AnimatePresence>
-                {open &&
+                {open && categories.length > 0 &&
                     <Col
                         key={1}
                         as={motion.aside}

@@ -7,26 +7,12 @@ import { GetStaticProps } from 'next';
 import { Category } from '../next-env';
 import { Card } from '../components/Card/Card';
 import { GET } from '../utils/utils';
-import { AppContext, AppContextTuple } from '../components/Context/AppContext';
-import { Filter } from '../components/Filter/Filter';
 
 type Props = {
   response: Category[]
 }
 
 export default function Home({ response }: Props) {
-  const [appContext, setAppContext]: AppContextTuple = React.useContext(AppContext);
-
-  React.useEffect(() => {
-    setAppContext(ctx => Object.assign(
-      {},
-      ctx,
-      {
-        categories: response
-      }
-    ));
-  }, [response])
-
   return (
     <>
       <Head>
