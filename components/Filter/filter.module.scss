@@ -12,9 +12,18 @@
     }
 }
 
+.filterBtnContainer {
+    display: flex;
+}
+
+.search {
+    max-height: 2.5rem;
+    margin-bottom: 1rem;
+}
+
 .filterBtn {
-    position: relative;
+    position: absolute;
     z-index: 999;
-    bottom: 0;
-    left: 5rem;
+    top: 10%;
+    margin-left: 5%;
 }
