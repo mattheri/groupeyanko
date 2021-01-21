@@ -1,16 +1,25 @@
 import axios from "axios";
+import { Agent } from 'http';
+import { Agent as SecureAgent } from 'https';
 
 /**
  * Simple get with axios, however, the basic auth is provided. I'm lazy so I did not want to re-type the auth over and over again.
  * 
  * @param url the domain + version of the API endpoint is already indicated ending with '/'. Simply add the rest
  */
-export const GET = async (url: string) => axios.get(`${process.env.API_ENDPOINT}${url}`, {
-    auth: {
-        username: process.env.API_KEY,
-        password: process.env.API_SECRET
-    }
-});
+export const GET = async (url: string) => {
+    const httpsAgent = new SecureAgent({ keepAlive: true });
+    const httpAgent = new Agent({ keepAlive: true });
+    
+    return axios.get(`${process.env.API_ENDPOINT}${url}`, {
+        auth: {
+            username: process.env.API_KEY,
+            password: process.env.API_SECRET
+        },
+        httpAgent: httpAgent,
+        httpsAgent: httpsAgent
+    })
+};
 
 /**
  * Returns an array of arrays. Each sub arrays have, at the maximum, the number in the paginationLenth
