@@ -6,6 +6,7 @@ import styles from './filter.module.scss';
 import Col from 'react-bootstrap/Col';
 import { Category } from '../../next-env';
 import axios from 'axios';
+import Skeleton from 'react-loading-skeleton';
 
 type FilterProps = {
     categories?: Category[]
@@ -61,7 +62,8 @@ export function Filter() {
                 }
             </Button>
             <AnimatePresence>
-                {open && categories.length > 0 &&
+                {open && !categories && <Skeleton />}
+                {open && categories &&
                     <Col
                         key={1}
                         as={motion.aside}
