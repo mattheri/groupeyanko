@@ -106,7 +106,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 }
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-    let response: Product[] = await (await GET(`products/categories?parent=${params.id}&per_page=100`)).data;
+    let response: Product[] = await (await GET(`products/categories?parent=${params.id}&per_page=100&hide_empty=true`)).data;
 
     if (!response || !response.length) {
         response = await (await GET(`products?category=${params.id}&per_page=100`)).data;
