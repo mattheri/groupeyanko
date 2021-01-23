@@ -10,6 +10,7 @@ export type ButtonProps = {
     primary?: boolean,
     secondary?: boolean,
     tertiary?: boolean,
+    size?: 'sm' | 'lg',
     onClick?: (e?: React.MouseEvent<HTMLAnchorElement> | React.MouseEvent<HTMLButtonElement, MouseEvent>) => void,
     className?: string,
     disabled?: boolean,
@@ -20,6 +21,7 @@ export type ButtonProps = {
     primary?: boolean,
     secondary?: boolean,
     tertiary?: boolean,
+    size?: 'sm' | 'lg',
     onClick: (e?: React.MouseEvent<HTMLAnchorElement> | React.MouseEvent<HTMLButtonElement, MouseEvent>) => void,
     className?: string,
     disabled?: boolean,
@@ -44,13 +46,14 @@ export function Button({
     primary = true,
     secondary,
     tertiary,
+    size = 'lg',
     onClick,
     className,
     disabled,
     children,
     layout
 }: React.PropsWithChildren<ButtonProps>) {
-    if (onClick) {
+    if (onClick && !href) {
         return (
             <motion.button
                 layout={layout}
@@ -68,6 +71,7 @@ export function Button({
                 [styles.primary]: !primary || !secondary || !tertiary ? true : primary,
                 [styles.secondary]: secondary,
                 [styles.tertiary]: tertiary,
+                [styles.small]: size === 'sm',
                 [className]: className
             })}>
                 {text || children}
@@ -87,6 +91,7 @@ export function Button({
                     [styles.primary]: !primary || !secondary || !tertiary ? true : primary,
                     [styles.secondary]: secondary,
                     [styles.tertiary]: tertiary,
+                    [styles.small]: size === 'sm',
                     [className]: className
             })}>
                 {text}

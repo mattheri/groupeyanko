@@ -10,10 +10,11 @@ type PaginationProps = {
     length: number,
     active: number,
     toggle: React.Dispatch<React.SetStateAction<number>>,
-    className?: string
+    className?: string,
+    max?: number
 }
 
-export function PagePagination({ length, active, toggle, className }: PaginationProps) {
+export function PagePagination({ length, active, toggle, className, max }: PaginationProps) {
 
     const indexes = [];
 
@@ -48,6 +49,12 @@ export function PagePagination({ length, active, toggle, className }: Pagination
                     </Button>
 
                     {indexes.map(index => {
+                        // if (max && indexes.length > max) {
+                        //     return <div key={index} className={cn({
+                        //         [styles.paginationBtn]: true,
+                        //         [styles.active]: active === index - 1
+                        //     })} onClick={() => toggle(index - 1)}>{index}</div>
+                        // }
                         return <div key={index} className={cn({
                             [styles.paginationBtn]: true,
                             [styles.active]: active === index - 1

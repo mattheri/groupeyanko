@@ -1,6 +1,7 @@
 import 'sanitize.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../styles/popup.scss';
+import '../styles/modal.scss';
 import '../styles/globals.scss';
 import 'nprogress/nprogress.css';
 import { AppContextProvider } from '../components/Context/AppContext';
@@ -24,7 +25,7 @@ export default function MyApp({ Component, pageProps }) {
     <AppContextProvider>
       <CartContextProvider>
         <Navbar />
-        <Container fluid className='py-5' style={{ backgroundColor: 'black', minHeight: '100vh' }} as={motion.main}>
+        <Container fluid className='py-5' style={{ minHeight: '100vh' }} as={motion.main}>
           <Row as={motion.div}>
             <AnimateSharedLayout>
               <Filter />

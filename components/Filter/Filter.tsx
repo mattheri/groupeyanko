@@ -69,10 +69,10 @@ export function Filter() {
                         lg={2}
                     className={styles.filter}>
                     <ul>
-                            {handleSortCategories().map(parentCategory => {
+                            {handleSortCategories().map((parentCategory, i) => {
                                 return (
-                                    <li>
-                                        <Link href={{
+                                    <li onClick={handleOpen}>
+                                        <Link key={i} href={{
                                             pathname: '/category/[id]',
                                             query: { id: `${parentCategory.category.id}` }
                                         }}>
@@ -82,7 +82,7 @@ export function Filter() {
                                             <ul>
                                                 {parentCategory.sub.map(category =>
                                                     <li>
-                                                        <Link href={{
+                                                        <Link key={i} href={{
                                                             pathname: '/category/[id]',
                                                             query: { id: `${category.id}` }
                                                         }}>{category.name}</Link>

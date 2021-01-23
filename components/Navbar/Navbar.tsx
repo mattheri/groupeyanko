@@ -10,6 +10,8 @@ import cn from 'classnames';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
+import { ModalPopup } from '../ModalPopup/ModalPopup';
+import { LoginForm } from '../LoginForm/LoginForm';
 
 export function Navbar() {
     const [appState, setAppState]: AppContextTuple = React.useContext(AppContext);
@@ -50,7 +52,9 @@ export function Navbar() {
                         <Button href="/" tertiary text={text[appState.locale].catalog} />
                         <Button href="/contact" tertiary text={text[appState.locale].contact} />
                         <Cart />
-                        <Button href='/' text={text[appState.locale].login} />
+                        <ModalPopup trigger={<Button onClick={() => console.log('')} text={text[appState.locale].login} />} >
+                            <LoginForm />
+                        </ModalPopup>
                     </div>
                     <div className={cn(styles.cartMobile, styles.mobile)}>
                         <Cart />

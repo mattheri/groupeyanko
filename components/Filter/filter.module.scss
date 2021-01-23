@@ -1,3 +1,5 @@
+@use '../../styles/variables.scss' as v;
+
 .filter {
     position: relative;
     z-index: 997;
@@ -8,7 +10,7 @@
         list-style: none;
         
         a {
-            color: white;
+            color: v.$colorDark;
         }
     }
 }

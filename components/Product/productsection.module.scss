@@ -1,5 +1,7 @@
+@use '../../styles/variables.scss' as v;
+
 .product {
-    color: white;
+    color: v.$colorDark;
 
     .productImage {
         width: 100%;
