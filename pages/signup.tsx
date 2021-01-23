@@ -11,6 +11,7 @@ export default function Signup() {
         email: '',
         password: '',
         reType: '',
+        company: '',
         address: '',
         province: 'Québec',
         city: '',
@@ -42,6 +43,12 @@ export default function Signup() {
                 message: 'Le champ doit être identique.'
             }
         ],
+        company: [
+            {
+                pattern: /\*/,
+                message: ''
+            }
+        ],
         address: [
             {
                 pattern: /\*/,
@@ -71,7 +78,9 @@ export default function Signup() {
     const { errors, handleChange } = useForm(validation, formData, setFormData);
     const hasErrors = () => {
         if (
-            Object.entries(formData).every(([key, value]) => value.length > 0) &&
+            Object.entries(formData).
+                filter(([key, value]) => key !== 'company')
+                .every(([key, value]) => value.length > 0) &&
             Object.entries(errors)
                 .filter(([key, value]) => key !== 'province')
                 .every(([key, value]) => value.length === 0)
@@ -81,30 +90,25 @@ export default function Signup() {
 
         return true;
     }
-
-    React.useEffect(() => {
-        console.log(formData, 'formData');
-        console.log(errors, 'errors');
-    }, [formData, errors]);
     
     return (
-        <Container className='p-5'>
+        <Container className='p-2 pt-5'>
             <Form
                 onChange={handleChange}
                 noValidate>
                 <Form.Row>
-                    <Col>
+                    <Col xs={12} md={6}>
                         <Form.Group>
                             <Form.Label>
-                                Prénom
+                                Prénom *
                             </Form.Label>
                             <Form.Control required />
                         </Form.Group>
                     </Col>
-                    <Col>
+                    <Col xs={12} md={6}>
                         <Form.Group>
                             <Form.Label>
-                                Nom
+                                Nom *
                             </Form.Label>
                             <Form.Control required />
                         </Form.Group>
@@ -112,7 +116,7 @@ export default function Signup() {
                 </Form.Row>
                 <Form.Group>
                     <Form.Label>
-                        Courriel
+                        Courriel *
                     </Form.Label>
                     <Form.Control
                         required
@@ -125,53 +129,23 @@ export default function Signup() {
                         {errors.email}
                     </Form.Control.Feedback>
                 </Form.Group>
-                <Form.Row>
-                    <Col>
-                        <Form.Group>
-                            <Form.Label>
-                                Mot de passe
-                            </Form.Label>
-                            <Form.Control
-                                isValid={formData.password && errors.password.length === 0}
-                                isInvalid={formData.password && errors.password.length > 0}
-                                required
-                                name='password'
-                                id='password'
-                                type='password' />
-                            <small>
-                                Le mot de passe doit contenir 8 caractères dont une lettre et un chiffre.
-                            </small>
-                        </Form.Group>
-                    </Col>
-                    <Col>
-                        <Form.Group>
-                            <Form.Label>
-                                Entrez de nouveau le mot de passe
-                            </Form.Label>
-                            <Form.Control
-                                isValid={formData.reType && errors.reType.length === 0}
-                                isInvalid={formData.reType && errors.reType.length > 0}
-                                required
-                                name='reType'
-                                id='reType'
-                                type='password' />
-                            <Form.Control.Feedback as='small' type='invalid'>
-                                {errors.reType}
-                            </Form.Control.Feedback>
-                        </Form.Group>
-                    </Col>
-                </Form.Row>
                 <Form.Group>
                     <Form.Label>
-                        Adresse
+                        Compagnie
+                    </Form.Label>
+                    <Form.Control name='company' id='company' />
+                </Form.Group>
+                <Form.Group>
+                    <Form.Label>
+                        Adresse *
                     </Form.Label>
                     <Form.Control required name='address' id='address' />
                 </Form.Group>
                 <Form.Row>
-                    <Col>
+                    <Col xs={12} md={6} lg={4}>
                         <Form.Group>
                             <Form.Label>
-                                Province
+                                Province *
                             </Form.Label>
                             <Form.Control name='province' id='province' as='select'>
                                 <option value='Québec'>Québec</option>
@@ -188,18 +162,18 @@ export default function Signup() {
                             </Form.Control>
                         </Form.Group>
                     </Col>
-                    <Col>
+                    <Col xs={12} md={6} lg={4}>
                         <Form.Group>
                             <Form.Label>
-                                Ville
+                                Ville *
                             </Form.Label>
                             <Form.Control required name='city' id='city' />
                         </Form.Group>
                     </Col>
-                    <Col>
+                    <Col xs={12} md={6} lg={4}>
                         <Form.Group>
                             <Form.Label>
-                                Code Postal
+                                Code Postal *
                             </Form.Label>
                             <Form.Control
                                 isValid={formData.postalCode && errors.postalCode.length === 0}
@@ -213,10 +187,46 @@ export default function Signup() {
                         </Form.Group>
                     </Col>
                 </Form.Row>
+                <Form.Row>
+                    <Col xs={12} md={6}>
+                        <Form.Group>
+                            <Form.Label>
+                                Mot de passe *
+                            </Form.Label>
+                            <Form.Control
+                                isValid={formData.password && errors.password.length === 0}
+                                isInvalid={formData.password && errors.password.length > 0}
+                                required
+                                name='password'
+                                id='password'
+                                type='password' />
+                            <small>
+                                Le mot de passe doit contenir 8 caractères dont une lettre et un chiffre.
+                            </small>
+                        </Form.Group>
+                    </Col>
+                    <Col xs={12} md={6}>
+                        <Form.Group>
+                            <Form.Label>
+                                Entrez de nouveau le mot de passe *
+                            </Form.Label>
+                            <Form.Control
+                                isValid={formData.reType && errors.reType.length === 0}
+                                isInvalid={formData.reType && errors.reType.length > 0}
+                                required
+                                name='reType'
+                                id='reType'
+                                type='password' />
+                            <Form.Control.Feedback as='small' type='invalid'>
+                                {errors.reType}
+                            </Form.Control.Feedback>
+                        </Form.Group>
+                    </Col>
+                </Form.Row>
             </Form>
             <Row>
                 <Col className='d-flex justify-content-center'>
-                    <Button className='w-50' disabled={hasErrors()} onClick={() => console.log('yay')} text='Créer mon compte' />
+                    <Button className='mt-4 w-100 w-lg-50' disabled={hasErrors()} onClick={() => console.log('yay')} text='Créer mon compte' />
                 </Col>
             </Row>
         </Container>

@@ -70,7 +70,9 @@ export function Navbar() {
                         <a onClick={() => setShow(false)} href="https://proaxion.ca/en/home/">{text[appState.locale].home}</a>
                         <Link href='/'><a onClick={() => setShow(false)}>{text[appState.locale].catalog}</a></Link>
                         <Link href='/contact'><a onClick={() => setShow(false)}>{text[appState.locale].contact}</a></Link>
-                        <Button className={styles.mobileLoginBtn} href='/' onClick={() => setShow(false)} text={text[appState.locale].login} />
+                        <ModalPopup trigger={<Button className={styles.mobileLoginBtn} href='/' onClick={() => setShow(false)} text={text[appState.locale].login} />} >
+                            <LoginForm />
+                        </ModalPopup>
                     </div>
                 </Col>
             </Row>

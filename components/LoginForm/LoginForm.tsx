@@ -42,7 +42,7 @@ export function LoginForm({ close }: LoginFormProps) {
     }
 
     return (
-        <Container className='pt-5 pr-5 pl-5'>
+        <Container className='pt-2 pr-2 pl-2'>
             <Form
                 onChange={handleChange}
                 noValidate>
