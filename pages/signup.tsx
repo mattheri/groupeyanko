@@ -229,7 +229,6 @@ export default function Signup() {
                 <Col className='d-flex justify-content-center'>
                     <Button className='mt-4 w-100 w-lg-50' disabled={hasErrors()} onClick={async () => {
                         const user = await new LocalLogin().signup(formData.email, formData.password);
-                        console.log(user);
                     }} text='Créer mon compte' />
                 </Col>
             </Row>

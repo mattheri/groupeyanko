@@ -8,9 +8,9 @@ import ls, {get, set} from 'local-storage';
  */
 export function useSetCartStorage() {
     
-    const handleSetCookie = (data: { [key: string]: Cart }) => {
+    const handleSetStorage = (data: { [key: string]: Cart }) => {
         set('cart', JSON.stringify(data));
     }
 
-    return { cart: JSON.parse(get('cart')), handleSetCookie: handleSetCookie }
+    return { cart: JSON.parse(get('cart')), handleSetStorage: handleSetStorage }
 }

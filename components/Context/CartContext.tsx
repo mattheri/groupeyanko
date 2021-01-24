@@ -1,6 +1,6 @@
 import React from "react";
 import { Product } from "../../next-env";
-import { useSetCartStorage } from "../Hooks/useSetCartCookie";
+import { useSetCartStorage } from "../Hooks/useSetCartStorage";
 import { AppContext, AppContextTuple } from './AppContext';
 
 export const CartContext = React.createContext(null);
@@ -35,9 +35,8 @@ export type CartContextTuple = [CartContextState, (product: any, number: number)
  */
 export function CartContextProvider<T>(props: React.PropsWithChildren<T>) {
 
-    const { cart, handleSetCookie } = useSetCartStorage();
+    const { cart, handleSetStorage } = useSetCartStorage();
     const [appState, setAppState]: AppContextTuple = React.useContext(AppContext);
-    console.log(cart);
 
     function getCart() {
         const { connected, user: { id } } = appState;
@@ -108,8 +107,7 @@ export function CartContextProvider<T>(props: React.PropsWithChildren<T>) {
     }
 
     React.useEffect(() => {
-        handleSetCookie(cartState.cart);
-        console.log(cartState.cart);
+        handleSetStorage(cartState.cart);
     }, [cartState.cart]);
 
     return (

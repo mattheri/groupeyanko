@@ -1,20 +1,16 @@
+import firebase from 'firebase';
 import Firebase from './Firebase';
 
-type Credentials = {
-    email: string,
-    password: string
-}
-
-export const googleLogin = () => {
-
-}
-
-export class LocalLogin {
-    constructor() { }
+export class GoogleLogin {
+    provider: firebase.auth.GoogleAuthProvider;
+    constructor() {
+        this.provider = new firebase.auth.GoogleAuthProvider()
+    }
     
-    async login(email: string, password: string) {
+    async Login() {
         try {
-            return await Firebase.auth().signInWithEmailAndPassword(email, password);
+            await Firebase.auth().signInWithRedirect(this.provider);
+            return (await Firebase.auth().getRedirectResult()).user;
         } catch (e) {
             console.log({
                 code: e.code,
@@ -23,9 +19,17 @@ export class LocalLogin {
         }
     }
 
-    async logout() {
+    async Signout() {
+        Firebase.auth().signOut();
+    }
+}
+
+export class LocalLogin {
+    constructor() { }
+    
+    async login(email: string, password: string) {
         try {
-            return await Firebase.auth().signOut();
+            return await Firebase.auth().signInWithEmailAndPassword(email, password);
         } catch (e) {
             console.log({
                 code: e.code,

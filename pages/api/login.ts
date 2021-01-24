@@ -8,10 +8,10 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
     if (emailValidated) {
         const { email, password } = req.body;
-        const isPreviousCustomer = await GET(`customers?email=${req.body.email}`);
+        const isPreviousCustomer = await (await GET(`customers?email=${req.body.email}`)).data;
         const login = new LocalLogin();
     
-        if (isPreviousCustomer.data.length) {
+        if (isPreviousCustomer.length) {
             const user = (await login.signup(email, password)).user;
             res.send(JSON.stringify({
                 email: user.email,

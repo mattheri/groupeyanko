@@ -12,6 +12,7 @@ import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import { ModalPopup } from '../ModalPopup/ModalPopup';
 import { LoginForm } from '../LoginForm/LoginForm';
+import { useSignOut } from '../Hooks/useSignOut';
 
 export function Navbar() {
     const [appState, setAppState]: AppContextTuple = React.useContext(AppContext);
@@ -34,7 +35,8 @@ export function Navbar() {
         }
     }
 
-    const handleChangeLocale = () => setAppState(state => Object.assign({}, state, { locale: appState.locale === 'en' ? 'fr' : 'en' }));
+    // const handleChangeLocale = () => setAppState(state => Object.assign({}, state, { locale: appState.locale === 'en' ? 'fr' : 'en' }));
+    const logout = useSignOut();
 
     return (
         <Container className={styles.navbar} as='nav' fluid style={{ overflow: 'visible' }}>
@@ -48,13 +50,15 @@ export function Navbar() {
                             layout='intrinsic' />
                     </a>
                     <div className={cn(styles.links, styles.desktop)}>
-                        <Button href="https://proaxion.ca/en/home/" tertiary text={text[appState.locale].home} />
                         <Button href="/" tertiary text={text[appState.locale].catalog} />
-                        <Button href="/contact" tertiary text={text[appState.locale].contact} />
                         <Cart />
-                        <ModalPopup trigger={<Button onClick={() => console.log('')} text={text[appState.locale].login} />} >
-                            <LoginForm />
-                        </ModalPopup>
+                        {
+                            appState.connected ?
+                            <Button onClick={async () => await logout()} text='Déconnexion' />:
+                            <ModalPopup trigger={<Button onClick={() => console.log('')} text={text[appState.locale].login} />} >
+                                <LoginForm />
+                            </ModalPopup>
+                        }
                     </div>
                     <div className={cn(styles.cartMobile, styles.mobile)}>
                         <Cart />
