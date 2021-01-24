@@ -1,0 +1,25 @@
+import type { NextApiRequest, NextApiResponse } from 'next';
+import { GET } from '../../utils/utils';
+import { LocalLogin } from '../../utils/logins';
+
+export default async (req: NextApiRequest, res: NextApiResponse) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const emailValidated = emailRegex.test(req.body.email) && req.body.email;
+
+    if (emailValidated) {
+        const { email, password } = req.body;
+        const isPreviousCustomer = await GET(`customers?email=${req.body.email}`);
+        const login = new LocalLogin();
+    
+        if (isPreviousCustomer.data.length) {
+            const user = (await login.signup(email, password)).user;
+            res.send(JSON.stringify({
+                user,
+                previousCustomer: isPreviousCustomer
+            }));
+        } else {
+            const user = await login.login(email, password);
+            res.send(JSON.stringify({ email: user.user.email, isVerified: user.user.emailVerified }));
+        }
+    }
+}

@@ -1,7 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { Category } from '../../next-env';
 import { GET } from '../../utils/utils';
-import concat from 'lodash/concat';
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
     let page = 1;
@@ -11,7 +10,6 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         
 
         if (parseInt(response.headers['x-wp-totalpages']) === page) {
-            console.log(allCategories);
             return res.send(JSON.stringify(allCategories));
         }
         

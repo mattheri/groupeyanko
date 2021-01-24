@@ -69,7 +69,7 @@ export function Cart() {
                                 id={productId}
                                 name={cart.name}
                                 number={cart.number}
-                                image={cart.images[0] ? cart.images[0].src : '/uploads/images/placeholder.png'} />
+                                image={cart.image ? cart.image : '/uploads/images/placeholder.png'} />
                         </Row>))
                     ) : paginatedItems[0].map(product => Object.entries(product).map(([productId, cart]) => (
                         <Row>
@@ -78,7 +78,7 @@ export function Cart() {
                                 id={productId}
                                 name={cart.name}
                                 number={cart.number}
-                                image={cart.images[0] ? cart.images[0].src : '/uploads/images/placeholder.png'} />
+                                image={cart.image ? cart.image : '/uploads/images/placeholder.png'} />
                         </Row>))
                     )}
                     <Pagination className={styles.pagination} {...paginationProps} />

@@ -2,6 +2,7 @@ import React from "react";
 import { Product } from "../../next-env";
 import { useGetAuthCookie } from "../Hooks/useGetAuthCookie";
 import { useGetCartCookie } from "../Hooks/useGetCartCookie";
+import { useSetCartCookie } from "../Hooks/useSetCartCookie";
 import { AppContext, AppContextTuple } from './AppContext';
 
 export const CartContext = React.createContext(null);
@@ -10,7 +11,7 @@ interface NumberOfItems {
     number: number
 }
 
-interface Cart extends Product, NumberOfItems { };
+export interface Cart extends Product, NumberOfItems { };
 
 export interface CartContextState {
     id: string,
@@ -27,8 +28,9 @@ export type CartContextTuple = [CartContextState, (product: any, number: number)
 
 /**
  * Context that contains the state of the user. It will automatically try to detect
- * the 'user' cookie. If this cookie is present, it will be updated with the information
+ * the 'cart' cookie. If this cookie is present, it will be updated with the information
  * from this cookie. Otherwise, it will render the application with a user in the state.
+ * Upon change, it will either create or update the cookie.
  * 
  * Provides 2 functions to manage the items in the cart.
  * 
@@ -36,18 +38,18 @@ export type CartContextTuple = [CartContextState, (product: any, number: number)
  */
 export function CartContextProvider<T>(props: React.PropsWithChildren<T>) {
 
-    const cart = useGetCartCookie();
+    const { cart, handleSetCookie } = useSetCartCookie();
     const [appState, setAppState]: AppContextTuple = React.useContext(AppContext);
 
     function getCart() {
         const { connected, user: { id } } = appState;
-        if (connected && id === cart.id) {
-            return (cart as CartContextState);
-        }
+        // if (connected && id === cart.id) {
+        //     return (cart as CartContextState);
+        // }
 
         return {
             id: appState.user.id,
-            cart: {}
+            cart: (cart as Cart) || {}
         }
     }
 
@@ -106,6 +108,8 @@ export function CartContextProvider<T>(props: React.PropsWithChildren<T>) {
             ));
         }
     }
+
+    React.useEffect(() => handleSetCookie(cartState.cart), [cartState.cart]);
 
     return (
         <CartContext.Provider value={[cartState, handleAddProductToCart, handleRemoveProductFromCart]}>

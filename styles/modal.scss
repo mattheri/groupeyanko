@@ -33,6 +33,7 @@
   // }
   [role='dialog'].popup-content {
     width: 100%;
+    max-width: 800px;
   }
   .popup-overlay {
       z-index: 1000 !important;

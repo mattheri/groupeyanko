@@ -5,6 +5,7 @@ import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import { useForm } from '../components/Hooks/useForm';
 import { Button } from '../components/Button/Button';
+import { LocalLogin } from '../utils/logins';
 
 export default function Signup() {
     const [formData, setFormData] = React.useState({
@@ -226,7 +227,10 @@ export default function Signup() {
             </Form>
             <Row>
                 <Col className='d-flex justify-content-center'>
-                    <Button className='mt-4 w-100 w-lg-50' disabled={hasErrors()} onClick={() => console.log('yay')} text='Créer mon compte' />
+                    <Button className='mt-4 w-100 w-lg-50' disabled={hasErrors()} onClick={async () => {
+                        const user = await new LocalLogin().signup(formData.email, formData.password);
+                        console.log(user);
+                    }} text='Créer mon compte' />
                 </Col>
             </Row>
         </Container>

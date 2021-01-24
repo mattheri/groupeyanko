@@ -7,6 +7,7 @@ import { GetStaticProps } from 'next';
 import { Category } from '../next-env';
 import { Card } from '../components/Card/Card';
 import { GET } from '../utils/utils';
+import Firebase from '../utils/Firebase';
 
 type Props = {
   response: Category[]
@@ -37,7 +38,7 @@ export default function Home({ response }: Props) {
 export const getStaticProps: GetStaticProps = async () => {
 
   const response = await GET('products/categories?per_page=100&hide_empty=true');
-
+  console.log(Firebase);
   return {
     props: {
         response: response.data

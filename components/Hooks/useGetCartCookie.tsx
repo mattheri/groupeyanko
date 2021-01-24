@@ -6,10 +6,10 @@ import { useCookies } from "react-cookie";
  * If the cookie is not present, it will return false.
  */
 export function useGetCartCookie() {
-    const [cookie] = useCookies(["cart"]);
+    const [cookies] = useCookies(["cart"]);
 
-    if (cookie.cart) {
-        return cookie.cart;
+    if (cookies.cart) {
+        return cookies.cart;
     }
 
     return false;

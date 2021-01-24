@@ -5,16 +5,19 @@ import Form from 'react-bootstrap/Form';
 import { Button } from '../Button/Button';
 import { useForm } from '../Hooks/useForm';
 import Col from 'react-bootstrap/Col';
+import axios from 'axios';
 
 type LoginFormProps = {
     close?: () => void
 }
 
 export function LoginForm({ close }: LoginFormProps) {
+
     const [formData, setFormData] = React.useState({
         email: '',
         password: ''
     });
+
     const validation = {
         email: [
             {
@@ -30,6 +33,7 @@ export function LoginForm({ close }: LoginFormProps) {
         ]
     }
     const { errors, handleChange } = useForm(validation, formData, setFormData);
+
     const hasErrors = () => {
         if (
             Object.entries(formData).every(([key, value]) => value.length > 0) &&
@@ -79,7 +83,14 @@ export function LoginForm({ close }: LoginFormProps) {
             </Form>
             <Row>
                 <Col className='d-flex justify-content-center'>
-                    <Button className='w-50' disabled={hasErrors()} onClick={() => console.log('yay')} text='Connexion' />
+                    <Button className='w-50' disabled={hasErrors()} onClick={async () => {
+                        try {
+                            const user = await (await axios.post('/api/login', formData)).data;
+                            console.log(user);
+                        } catch (e) {
+                            console.log(e);
+                        }
+                    }} text='Connexion' />
                 </Col>
             </Row>
             <Row>

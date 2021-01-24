@@ -15,28 +15,32 @@ import { Filter } from '../components/Filter/Filter';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { motion, AnimateSharedLayout } from 'framer-motion';
+import { CookiesProvider } from 'react-cookie';
 
 Router.events.on('routeChangeStart', () => NProgress.start());
 Router.events.on('routeChangeComplete', () => NProgress.done());
 Router.events.on('routeChangeError', () => NProgress.done());
 
 export default function MyApp({ Component, pageProps }) {
+
   return (
-    <AppContextProvider>
-      <CartContextProvider>
-        <Navbar />
-        <Container fluid className='py-5' style={{ minHeight: '100vh' }} as={motion.main}>
-          <Row as={motion.div}>
-            <AnimateSharedLayout>
-              <Filter />
-              <Col style={{ overflow: 'visible' }} as={motion.div}>
-                <Component {...pageProps} />
-              </Col>
-            </AnimateSharedLayout>
-          </Row>
-        </Container>
-        <Footer />
-      </CartContextProvider>
-    </AppContextProvider>
+    <CookiesProvider>
+      <AppContextProvider>
+        <CartContextProvider>
+          <Navbar />
+          <Container fluid className='py-5' style={{ minHeight: '100vh' }} as={motion.main}>
+            <Row as={motion.div}>
+              <AnimateSharedLayout>
+                <Filter />
+                <Col style={{ overflow: 'visible' }} as={motion.div}>
+                  <Component {...pageProps} />
+                </Col>
+              </AnimateSharedLayout>
+            </Row>
+          </Container>
+          <Footer />
+        </CartContextProvider>
+      </AppContextProvider>
+    </CookiesProvider>
   );
 }
