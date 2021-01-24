@@ -14,12 +14,22 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         if (isPreviousCustomer.data.length) {
             const user = (await login.signup(email, password)).user;
             res.send(JSON.stringify({
-                user,
-                previousCustomer: isPreviousCustomer
+                email: user.email,
+                name: user.displayName,
+                picture: user.photoURL,
+                isVerified: user.emailVerified,
+                previousCustomer: isPreviousCustomer,
+                id: await user.getIdToken()
             }));
         } else {
-            const user = await login.login(email, password);
-            res.send(JSON.stringify({ email: user.user.email, isVerified: user.user.emailVerified }));
+            const user = (await login.login(email, password)).user;
+            res.send(JSON.stringify({
+                email: user.email,
+                name: user.displayName,
+                picture: user.photoURL,
+                isVerified: user.emailVerified,
+                id: await user.getIdToken()
+            }));
         }
     }
 }

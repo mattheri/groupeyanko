@@ -1,16 +1,16 @@
 import React from 'react';
-import { useCookies } from "react-cookie";
 import { Cart } from '../Context/CartContext';
+import ls, {get, set} from 'local-storage';
 
 /**
- * Hook that will set the cookie 'cart'. If the cookie existed before, it will be replaced with a new one.
+ * Hook that will add stringified items to the local storage.
+ * Provides the object from the local storage.
  */
-export function useSetCartCookie() {
-    const [cookies, setCookie, removeCookie] = useCookies(['cart']);
+export function useSetCartStorage() {
     
     const handleSetCookie = (data: { [key: string]: Cart }) => {
-        setCookie('cart', data, { path: '/' });
+        set('cart', JSON.stringify(data));
     }
 
-    return { cart: cookies.cart, handleSetCookie: handleSetCookie }
+    return { cart: JSON.parse(get('cart')), handleSetCookie: handleSetCookie }
 }

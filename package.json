@@ -17,6 +17,7 @@
     "hamburger-react": "^2.4.0",
     "http": "0.0.1-security",
     "https": "^1.0.0",
+    "local-storage": "^2.0.0",
     "lodash": "^4.17.20",
     "next": "10.0.5",
     "nextjs-breadcrumbs": "^0.9.9",

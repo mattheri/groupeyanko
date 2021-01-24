@@ -1,21 +1,21 @@
 import React from "react";
 import { Category } from "../../next-env";
-import { useGetAuthCookie } from "../Hooks/useGetAuthCookie";
+import { useSetUserCookie } from "../Hooks/useSetUserCookie";
 
 export const AppContext = React.createContext(null);
 
 export type User = {
     id: string,
-    username: string,
+    email: string,
     name?: string,
-    picture?: string
+    picture?: string,
+    isVerified: boolean
 }
 
 export type AppContextState = {
     connected: boolean,
     user: User,
-    locale: 'fr' | 'en',
-    categories: Category[]
+    locale: 'fr' | 'en'
 }
 
 export type AppContextTuple = [AppContextState, React.Dispatch<React.SetStateAction<AppContextState>>];
@@ -29,14 +29,15 @@ export type AppContextTuple = [AppContextState, React.Dispatch<React.SetStateAct
  */
 export function AppContextProvider<T>(props: React.PropsWithChildren<T>) {
 
-    const user = useGetAuthCookie();
+    const { user, handleSetCookie } = useSetUserCookie();
 
     const [appState, setAppState] = React.useState<AppContextState>({
         connected: user ? user.connected : false,
         user: user ? user.user : {},
-        locale: 'fr',
-        categories: []
+        locale: 'fr'
     });
+
+    React.useEffect(() => handleSetCookie(appState), [appState]);
 
     return (
         <AppContext.Provider value={[appState, setAppState]}>

@@ -1,8 +1,6 @@
 import React from "react";
 import { Product } from "../../next-env";
-import { useGetAuthCookie } from "../Hooks/useGetAuthCookie";
-import { useGetCartCookie } from "../Hooks/useGetCartCookie";
-import { useSetCartCookie } from "../Hooks/useSetCartCookie";
+import { useSetCartStorage } from "../Hooks/useSetCartCookie";
 import { AppContext, AppContextTuple } from './AppContext';
 
 export const CartContext = React.createContext(null);
@@ -28,9 +26,8 @@ export type CartContextTuple = [CartContextState, (product: any, number: number)
 
 /**
  * Context that contains the state of the user. It will automatically try to detect
- * the 'cart' cookie. If this cookie is present, it will be updated with the information
- * from this cookie. Otherwise, it will render the application with a user in the state.
- * Upon change, it will either create or update the cookie.
+ * the 'cart' in local storage. If a cart is found, sets it as the user's cart automatically.
+ * Otherwise, inits the cart with an empty object.
  * 
  * Provides 2 functions to manage the items in the cart.
  * 
@@ -38,8 +35,9 @@ export type CartContextTuple = [CartContextState, (product: any, number: number)
  */
 export function CartContextProvider<T>(props: React.PropsWithChildren<T>) {
 
-    const { cart, handleSetCookie } = useSetCartCookie();
+    const { cart, handleSetCookie } = useSetCartStorage();
     const [appState, setAppState]: AppContextTuple = React.useContext(AppContext);
+    console.log(cart);
 
     function getCart() {
         const { connected, user: { id } } = appState;
@@ -109,7 +107,10 @@ export function CartContextProvider<T>(props: React.PropsWithChildren<T>) {
         }
     }
 
-    React.useEffect(() => handleSetCookie(cartState.cart), [cartState.cart]);
+    React.useEffect(() => {
+        handleSetCookie(cartState.cart);
+        console.log(cartState.cart);
+    }, [cartState.cart]);
 
     return (
         <CartContext.Provider value={[cartState, handleAddProductToCart, handleRemoveProductFromCart]}>

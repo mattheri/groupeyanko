@@ -6,6 +6,7 @@ import { Button } from '../Button/Button';
 import { useForm } from '../Hooks/useForm';
 import Col from 'react-bootstrap/Col';
 import axios from 'axios';
+import { useAuth } from '../Hooks/useAuth';
 
 type LoginFormProps = {
     close?: () => void
@@ -45,6 +46,8 @@ export function LoginForm({ close }: LoginFormProps) {
         return true;
     }
 
+    const handleAuth = useAuth();
+
     return (
         <Container className='pt-2 pr-2 pl-2'>
             <Form
@@ -83,14 +86,7 @@ export function LoginForm({ close }: LoginFormProps) {
             </Form>
             <Row>
                 <Col className='d-flex justify-content-center'>
-                    <Button className='w-50' disabled={hasErrors()} onClick={async () => {
-                        try {
-                            const user = await (await axios.post('/api/login', formData)).data;
-                            console.log(user);
-                        } catch (e) {
-                            console.log(e);
-                        }
-                    }} text='Connexion' />
+                    <Button className='w-50' disabled={hasErrors()} onClick={() => handleAuth(formData)} text='Connexion' />
                 </Col>
             </Row>
             <Row>
