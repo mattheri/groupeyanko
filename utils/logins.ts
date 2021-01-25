@@ -10,7 +10,9 @@ export class GoogleLogin {
     async Login() {
         try {
             await Firebase.auth().signInWithRedirect(this.provider);
-            return (await Firebase.auth().getRedirectResult()).user;
+            const user = (await Firebase.auth().getRedirectResult()).user;
+            console.log(user);
+            return user;
         } catch (e) {
             console.log({
                 code: e.code,

@@ -19,8 +19,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
             email: user.email,
             name: user.displayName,
             picture: user.photoURL,
-            isVerified: user.emailVerified,
-            id: await user.getIdToken()
+            isVerified: user.emailVerified
         }));
     }
 }

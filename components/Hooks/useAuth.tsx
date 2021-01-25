@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React from 'react';
 import { AppContext, AppContextTuple } from '../Context/AppContext';
-import { Router, useRouter } from 'next/router';
+import { useRouter } from 'next/router';
 import { GoogleLogin } from '../../utils/logins';
 
 type UseAuthProps = {
@@ -25,7 +25,7 @@ export function useAuth() {
                     })).data;
         
                     if (user) {
-                        callback();
+                        callback && callback();
                         return setAppState(state => Object.assign(
                             {},
                             state,
@@ -48,9 +48,8 @@ export function useAuth() {
             default:
                 try {
                     const user = await (await axios.post('/api/login', { email, password })).data;
-        
                     if (user) {
-                        callback();
+                        callback && callback();
                         return setAppState(state => Object.assign(
                             {},
                             state,
@@ -68,5 +67,28 @@ export function useAuth() {
         }
     }
 
-    return handleAuth;
+    const handleSignUp = async (formData: any, callback?: () => void) => {
+        try {
+            const user = await (await axios.post('/api/signup', formData)).data;
+            console.log(user);
+            if (user) {
+                callback && callback();
+                setAppState(state => Object.assign(
+                    {},
+                    state,
+                    {
+                        connected: true,
+                        user: user,
+                        locale: 'fr'
+                    }
+                ))
+
+                return router.push('/');
+            }
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
+    return { handleAuth, handleSignUp };
 }   

@@ -46,7 +46,7 @@ export function LoginForm({ close }: LoginFormProps) {
         return true;
     }
 
-    const handleAuth = useAuth();
+    const { handleAuth } = useAuth();
 
     return (
         <Container className='pt-2 pr-2 pl-2'>
@@ -89,7 +89,7 @@ export function LoginForm({ close }: LoginFormProps) {
                     <Button className='w-50' disabled={hasErrors()} onClick={() => handleAuth(formData, 'local', close)} text='Connexion' />
                 </Col>
             </Row>
-            <hr />
+            {/* <hr />
             <Row>
                 <Col className='d-flex justify-content-center'>
                     <Button className={styles.googlebtn} secondary onClick={() => handleAuth({}, 'google', close)}>
@@ -99,7 +99,7 @@ export function LoginForm({ close }: LoginFormProps) {
                         </svg>
                     </Button>
                 </Col>
-            </Row>
+            </Row> */}
             <Row>
                 <Col className='d-flex justify-content-center align-items-center pt-5'>
                     <small>Vous n'avez pas de compte?</small>
