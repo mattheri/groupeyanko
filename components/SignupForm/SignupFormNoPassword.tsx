@@ -13,7 +13,8 @@ export type FormData = {
     address: string,
     province: string,
     city: string,
-    postalCode: string
+    postalCode: string,
+    message?: string
 }
 
 type SignUpProps = {
@@ -135,7 +136,7 @@ export function SignupFormNoPassword({ formData, setFormData, returnErrors }: Si
                         <Form.Label>
                             Province *
                         </Form.Label>
-                        <Form.Control name='province' id='province' as='select'>
+                        <Form.Control value={formData.province} name='province' id='province' as='select'>
                             <option value='Québec'>Québec</option>
                             <option value='Alberta'>Alberta</option>
                             <option value='Colombie-Britannique'>Colombie Britannique</option>
@@ -176,6 +177,12 @@ export function SignupFormNoPassword({ formData, setFormData, returnErrors }: Si
                     </Form.Group>
                 </Col>
             </Form.Row>
+            <Form.Group>
+                <Form.Label>
+                    Message (optionel)
+                </Form.Label>
+                <Form.Control as='textarea' rows={8} />
+            </Form.Group>
         </Form>
     );
 }

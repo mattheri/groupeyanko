@@ -8,6 +8,7 @@ import { Category } from '../../next-env';
 import axios from 'axios';
 import Skeleton from 'react-loading-skeleton';
 import { Search } from '../Search/Search';
+import { delayPrefetch } from '../../utils/utils';
 
 type FilterProps = {
     categories?: Category[]
@@ -72,7 +73,7 @@ export function Filter() {
                             {handleSortCategories().map((parentCategory, i) => {
                                 return (
                                     <li onClick={handleOpen}>
-                                        <Link key={i} href={{
+                                        <Link prefetch={delayPrefetch(1000, i)} key={i} href={{
                                             pathname: '/category/[id]',
                                             query: { id: `${parentCategory.category.id}` }
                                         }}>
@@ -82,7 +83,7 @@ export function Filter() {
                                             <ul>
                                                 {parentCategory.sub.map(category =>
                                                     <li>
-                                                        <Link key={i} href={{
+                                                        <Link prefetch={delayPrefetch(1000, i)} key={i} href={{
                                                             pathname: '/category/[id]',
                                                             query: { id: `${category.id}` }
                                                         }}>{category.name}</Link>

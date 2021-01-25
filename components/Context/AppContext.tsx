@@ -1,15 +1,19 @@
 import React from "react";
 import { Category } from "../../next-env";
 import { useSetUserCookie } from "../Hooks/useSetUserCookie";
+import { FormData } from '../SignupForm/SignupFormNoPassword';
 
 export const AppContext = React.createContext(null);
+
+type UserData = Omit<FormData, 'password' | 'reType' | 'message'>
 
 export type User = {
     id: string,
     email: string,
     name?: string,
     picture?: string,
-    isVerified: boolean
+    isVerified: boolean,
+    additionalUserInformation?: UserData
 }
 
 export type AppContextState = {

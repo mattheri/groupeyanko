@@ -5,19 +5,22 @@ import Link from 'next/link';
 import { Product } from '../../next-env';
 import { AddToCart } from '../AddToCart/AddToCart';
 import { motion } from 'framer-motion';
+import { delayPrefetch } from '../../utils/utils';
 
 export type CardProps = {
     src: string,
     description: string,
     url: string,
     addToCart?: boolean,
-    product?: Product 
+    product?: Product,
+    index?: number
 } | {
     src: string,
     description: string,
     url: string,
     addToCart: boolean,
-    product: Product 
+    product: Product,
+    index?: number
 }
 
 /**
@@ -28,7 +31,7 @@ export type CardProps = {
  * @param description string. Description of the product/category
  * @param addToCart boolean. Enables a "add to cart UI on the card itself"
  */
-export function Card({ url, src, description, addToCart, product }: CardProps) {
+export function Card({ url, src, description, addToCart, product, index }: CardProps) {
     return (
         <motion.article
             layout
@@ -39,7 +42,7 @@ export function Card({ url, src, description, addToCart, product }: CardProps) {
             }}
             whileHover={{ y: 0 }}
             className={styles.card}>
-            <Link href={url}>
+            <Link prefetch={delayPrefetch(1000, index)} href={url}>
                 <a className={styles.innerCard}>
                     <article className={styles.image} style={{ backgroundImage: `url(${src})` }}></article>
                     <div className={styles.description}>

@@ -13,16 +13,18 @@ export type FormData = {
     address: string,
     province: string,
     city: string,
-    postalCode: string
+    postalCode: string,
+    message?: string
 }
 
 type SignUpProps = {
     formData: FormData,
     setFormData: React.Dispatch<React.SetStateAction<FormData>>,
-    returnErrors: React.Dispatch<React.SetStateAction<FormData>>
+    returnErrors: React.Dispatch<React.SetStateAction<FormData>>,
+    anonymus?: boolean
 }
 
-export function SignupForm({ formData, setFormData, returnErrors }: SignUpProps) {
+export function SignupForm({ formData, setFormData, returnErrors, anonymus }: SignUpProps) {
 
     const isEqualWith = (id: string) => {
 
@@ -195,42 +197,54 @@ export function SignupForm({ formData, setFormData, returnErrors }: SignUpProps)
                     </Form.Group>
                 </Col>
             </Form.Row>
-            <Form.Row>
-                <Col xs={12} md={6}>
+            {!anonymus ?
+                <>    
+                    <Form.Row>
+                        <Col xs={12} md={6}>
+                            <Form.Group>
+                                <Form.Label>
+                                    Mot de passe *
+                                </Form.Label>
+                                <Form.Control
+                                    isValid={formData.password && errors.password.length === 0}
+                                    isInvalid={formData.password && errors.password.length > 0}
+                                    required
+                                    name='password'
+                                    id='password'
+                                    type='password' />
+                                <small>
+                                    Le mot de passe doit contenir 8 caractères dont une lettre et un chiffre.
+                                </small>
+                            </Form.Group>
+                        </Col>
+                        <Col xs={12} md={6}>
+                            <Form.Group>
+                                <Form.Label>
+                                    Entrez de nouveau le mot de passe *
+                                </Form.Label>
+                                <Form.Control
+                                    isValid={formData.reType && errors.reType.length === 0}
+                                    isInvalid={formData.reType && errors.reType.length > 0}
+                                    required
+                                    name='reType'
+                                    id='reType'
+                                    type='password' />
+                                <Form.Control.Feedback as='small' type='invalid'>
+                                    {errors.reType}
+                                </Form.Control.Feedback>
+                            </Form.Group>
+                        </Col>
+                    </Form.Row>
+                </> :
+                <>
                     <Form.Group>
                         <Form.Label>
-                            Mot de passe *
+                            Message (optionel)
                         </Form.Label>
-                        <Form.Control
-                            isValid={formData.password && errors.password.length === 0}
-                            isInvalid={formData.password && errors.password.length > 0}
-                            required
-                            name='password'
-                            id='password'
-                            type='password' />
-                        <small>
-                            Le mot de passe doit contenir 8 caractères dont une lettre et un chiffre.
-                        </small>
+                        <Form.Control value={formData.message} as='textarea' rows={9} id='message' name='message' />
                     </Form.Group>
-                </Col>
-                <Col xs={12} md={6}>
-                    <Form.Group>
-                        <Form.Label>
-                            Entrez de nouveau le mot de passe *
-                        </Form.Label>
-                        <Form.Control
-                            isValid={formData.reType && errors.reType.length === 0}
-                            isInvalid={formData.reType && errors.reType.length > 0}
-                            required
-                            name='reType'
-                            id='reType'
-                            type='password' />
-                        <Form.Control.Feedback as='small' type='invalid'>
-                            {errors.reType}
-                        </Form.Control.Feedback>
-                    </Form.Group>
-                </Col>
-            </Form.Row>
+                </>
+            }
         </Form>
     );
 }

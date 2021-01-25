@@ -21,12 +21,13 @@ export default function Home({ response }: Props) {
       </Head>
       <Container>
         <Row>
-        {response.filter(category => !category._links.up).map(category =>
+        {response.filter(category => !category._links.up).map((category, i) =>
           <Col key={category.id} xs={12} md={6} lg={4} className='d-flex justify-content-center p-0'>
             <Card
-            url={`/category/${category.id}`}
-            description={category.description ? category.description : category.name}
-            src={category.image.src} />
+              index={i}
+              url={`/category/${category.id}`}
+              description={category.description ? category.description : category.name}
+              src={category.image.src} />
           </Col>)}
         </Row>
       </Container>

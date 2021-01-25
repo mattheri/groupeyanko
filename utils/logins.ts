@@ -11,7 +11,6 @@ export class GoogleLogin {
         try {
             await Firebase.auth().signInWithRedirect(this.provider);
             const user = (await Firebase.auth().getRedirectResult()).user;
-            console.log(user);
             return user;
         } catch (e) {
             console.log({

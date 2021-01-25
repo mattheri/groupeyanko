@@ -58,7 +58,7 @@ export function Cart() {
             </div>
         }
             position="bottom right"
-            on={['click']}
+            on={['hover', 'focus']}
             mouseLeaveDelay={500}>
             {numberOfItems > 0 ? 
                 <Container fluid className='px-0'>
@@ -84,7 +84,7 @@ export function Cart() {
                     <Pagination className={styles.pagination} {...paginationProps} />
                     <Row>
                         <Col>
-                            <Button className={styles.submit} onClick={() => console.log('soumettre')} text='Voir votre soumission' />
+                            <Button className={styles.submit} href='/quote' text='Voir votre soumission' />
                         </Col>
                     </Row>
                 </Container>

@@ -65,11 +65,12 @@ export default function ProductCategory({ response }: ProductCategoryProps) {
             <>
                 <Container>
                     <Row>
-                        {(paginatedItems as Product[][])[pagination].map(product =>
+                        {(paginatedItems as Product[][])[pagination].map((product, i) =>
                                     <Col key={product.id} xs={12} md={6} lg={4} className='d-flex justify-content-center p-0'>
-                                        <Card
-                                            url={`/product/${product.id}`}
-                                            description={product.name}
+                                            <Card
+                                                index={i}
+                                                url={`/product/${product.id}`}
+                                                description={product.name}
                                                 src={product.images.length > 0 ? product.images[0].src : '/uploads/images/placeholder.png'}
                                                 addToCart product={product} />
                                             </Col>

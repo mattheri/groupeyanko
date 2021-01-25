@@ -89,3 +89,11 @@ export const paginate = <T>(item: T[], paginationLenth: number = 1) => {
  * @param value string, the value to remove HTML Tags from
  */
 export const sanitizeHTML = (value: string) => value.replace(/(<([^>]+)>)/gi, "");
+
+export const delayPrefetch = (timer: number, index: number = 0) => {
+    setTimeout(() => {
+        return true
+    }, timer * index);
+
+    return false;
+}
