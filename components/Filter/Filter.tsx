@@ -73,7 +73,7 @@ export function Filter() {
                             {handleSortCategories().map((parentCategory, i) => {
                                 return (
                                     <li onClick={handleOpen}>
-                                        <Link prefetch={delayPrefetch(1000, i)} key={i} href={{
+                                        <Link prefetch={delayPrefetch(5000, i)} key={i} href={{
                                             pathname: '/category/[id]',
                                             query: { id: `${parentCategory.category.id}` }
                                         }}>
@@ -83,7 +83,7 @@ export function Filter() {
                                             <ul>
                                                 {parentCategory.sub.map(category =>
                                                     <li>
-                                                        <Link prefetch={delayPrefetch(1000, i)} key={i} href={{
+                                                        <Link prefetch={delayPrefetch(5000, i)} key={i} href={{
                                                             pathname: '/category/[id]',
                                                             query: { id: `${category.id}` }
                                                         }}>{category.name}</Link>

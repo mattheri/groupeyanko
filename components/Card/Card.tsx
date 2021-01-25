@@ -42,7 +42,7 @@ export function Card({ url, src, description, addToCart, product, index }: CardP
             }}
             whileHover={{ y: 0 }}
             className={styles.card}>
-            <Link prefetch={delayPrefetch(1000, index)} href={url}>
+            <Link prefetch={delayPrefetch(5000, index)} href={url}>
                 <a className={styles.innerCard}>
                     <article className={styles.image} style={{ backgroundImage: `url(${src})` }}></article>
                     <div className={styles.description}>
