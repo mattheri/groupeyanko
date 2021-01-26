@@ -1,6 +1,5 @@
 import React from 'react';
 import styles from './card.module.scss';
-import Image from 'next/image';
 import Link from 'next/link';
 import { Product } from '../../next-env';
 import { AddToCart } from '../AddToCart/AddToCart';

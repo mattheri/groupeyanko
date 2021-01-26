@@ -16,7 +16,8 @@ export function useForm<T>(
     formData: T,
     setFormData: React.Dispatch<React.SetStateAction<T>>
 ): UseFormReturn<T> {
-    const [formErrors, setFormErrors] = React.useState<T>(formData);
+    const data = (Object.fromEntries(Object.entries(formData).map(([key, value]) => [key, value = ''])) as unknown as T)
+    const [formErrors, setFormErrors] = React.useState<T>(data);
 
     const handleError = (
         validation: {

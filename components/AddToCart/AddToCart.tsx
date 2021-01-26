@@ -71,10 +71,7 @@ export function AddToCart({
             }
             <Button layout={layout} className={styles.controls} onClick={handleAdd} text='+' />
             <Button layout={layout} className={styles.addItemBtn} onClick={() => useInput ? manageUseInput() : setCart({
-                id: product.id,
-                description: product.description,
-                name: product.name,
-                slug: product.slug,
+                ...product,
                 image: product.images.length ? product.images[0].src : '/uploads/images/placeholder.png',
             }, number)}
                 text={useInput ? replaceAmount ? 'Ajouter au panier' : 'Mettre à jour' : 'Ajouter au panier'} />
