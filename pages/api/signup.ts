@@ -25,7 +25,6 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
         try {
             const user = (await login.signup(email, password)).user;
-            await login.sendEmailVerification();
 
             const userData = await userDB.add({
                 address: address,

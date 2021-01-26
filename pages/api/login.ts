@@ -12,37 +12,38 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         const isPreviousCustomer = await (await GET(`customers?email=${req.body.email}`)).data;
         const login = new LocalLogin();
         const userDB = db().collection('users');
+        let user = (await login.login(email, password)).user;
     
-        if (isPreviousCustomer.length) {
-            const user = (await login.signup(email, password)).user;
+        if (isPreviousCustomer.length && !user) {
+            user = (await login.signup(email, password)).user;
 
             try {
                 const {
                     id,
                     first_name,
                     last_name,
-                    shipping: {
+                    billing: {
                         company,
                         address_1,
                         address_2,
                         city,
-                        postCode,
+                        postcode,
                         state
                     },
                     avatar_url
                 } = isPreviousCustomer[0];
 
                 const userData = await userDB.add({
-                    address: address_1 + ' ' + address_2,
-                    city: city,
-                    company: company,
+                    address: address_1 ? address_1 : '' + ' ' + address_2 ? address_2 : '',
+                    city: city ? city : '',
+                    company: company ? company : '',
                     email: user.email,
-                    firstname: first_name,
-                    lastname: last_name,
-                    picture: avatar_url,
-                    postalCode: postCode,
-                    province: state,
-                    wooId: id
+                    firstname: first_name ? first_name : '',
+                    lastname: last_name ? last_name : '',
+                    picture: avatar_url ? avatar_url : '',
+                    postalCode: postcode ? postcode : '',
+                    province: state ? state : '',
+                    wooId: id ? id : ''
                 });
 
                 res.send(JSON.stringify({
@@ -59,7 +60,6 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
                 });
             }
         } else {
-            const user = (await login.login(email, password)).user;
             const additionalUserInformation = (await userDB.where('email', '==', `${user.email}`).get()).docs.map(doc => doc.data())[0];
             res.send(JSON.stringify({
                 email: user.email,

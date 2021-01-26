@@ -42,7 +42,7 @@ export class LocalLogin {
     async signup(email: string, password: string) {
         try {
             const user = await Firebase.auth().createUserWithEmailAndPassword(email, password);
-            await Firebase.auth().currentUser.sendEmailVerification();
+            // await Firebase.auth().currentUser.sendEmailVerification();
             return user;
         } catch (e) {
             console.log({
