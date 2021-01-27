@@ -10,7 +10,7 @@ export function Breadcrumbs() {
     const [navigationState, setNavigationState]: NavigationContextTuple = React.useContext(NavigationContext);
 
     return (
-        <Breadcrumb className='mt-5 mx-5'>
+        <Breadcrumb className='mt-5'>
             {Object.entries(navigationState).map(([key, value]) => <Breadcrumb.Item active={router.asPath === value}><Link href={value}>{key}</Link></Breadcrumb.Item>)}
         </Breadcrumb>
     );

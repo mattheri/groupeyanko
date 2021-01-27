@@ -36,7 +36,7 @@ export default function MyApp({ Component, pageProps }) {
                 <AnimateSharedLayout>
                   <Filter />
                   <Col style={{ overflow: 'visible' }} as={motion.div}>
-                    <Col xs={{ offset: 0, span: 12 }}>
+                    <Col xs={{ offset: 0, span: 12 }} md={{ offset: 1, span: 10 }} lg={{ offset: 3, span: 6 }}>
                       <Breadcrumbs />
                     </Col>
                     <Component {...pageProps} />
