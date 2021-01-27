@@ -1,6 +1,9 @@
 import axios from "axios";
 import { Agent } from 'http';
 import { Agent as SecureAgent } from 'https';
+import { Cart } from "../components/Context/CartContext";
+import { init, send } from 'emailjs-com'
+import { FormData } from '../components/SignupForm/SignupForm';
 
 /**
  * Simple get with axios, however, the basic auth is provided. I'm lazy so I did not want to re-type the auth over and over again.
@@ -96,4 +99,44 @@ export const delayPrefetch = (timer: number, index: number = 0) => {
     }, timer * index);
 
     return false;
+}
+
+export const sendEmail = (customer: FormData, cart: any) => {
+    console.log(process.env.EMAIL_JS_USER_ID);
+    init('user_LWfMaXh3RqPoda7HMFMr6');
+    const buildProductTable = ({ name, number, id}) => {
+        return `<tr><td><a href='https://proaxion.vercel.app/product/${id}'>${name.trim()}</a></td><td style='text-align: center'>${number}</td></tr>`;
+    }
+    const productsString = Object.entries(cart).map(([key, value]) => buildProductTable((value as any)));
+    const products = `
+        <table>
+            <tbody>
+                <tr>
+                    <th>
+                        Produit
+                    </th>
+                    <th>
+                        Quantité
+                    </th>
+                </tr>
+                ${productsString.join('')}
+            </tbdoy>
+        </table>
+    `;
+
+    const name = `${customer.firstname} ${customer.lastname}`;
+    const address = `   ${customer.address} ${customer.city}
+                        ${customer.province}, ${customer.postalCode}`;
+    const company = `${customer.company ? customer.company : 'Aucune'}`;
+    const message = `${customer.message ? customer.message : 'Aucun'}`;
+    const email = `${customer.email}`;
+
+    return send("proaxion_shop", "template_05et95x", {
+        from_name: name,
+        from_email: email,
+        from_company: company,
+        from_address: address,
+        from_message: message,
+        produits: products
+    });
 }

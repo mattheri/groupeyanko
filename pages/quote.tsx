@@ -5,14 +5,15 @@ import { AppContext, AppContextTuple } from '../components/Context/AppContext';
 import { FormData } from '../components/SignupForm/SignupForm';
 import { SignupForm } from '../components/SignupForm/SignupForm';
 import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
 import { QuoteProduct } from '../components/QuoteProduct/QuoteProduct';
 import { Button } from '../components/Button/Button';
-import axios from 'axios';
+import { sendEmail } from '../utils/utils';
+import Link from 'next/link';
 
 export default function Quote() {
-    const [cart, setCart]: CartContextTuple = React.useContext(CartContext);
+    const [cart, , , setCart]: CartContextTuple = React.useContext(CartContext);
     const [user, setUser]: AppContextTuple = React.useContext(AppContext);
+    const [quoteMsg, setQuoteMsg] = React.useState('Envoyer la soumission');
 
     const [formData, setFormData] = React.useState<FormData>({
         firstname: user.connected && user.user.additionalUserInformation.firstname || '',
@@ -43,7 +44,18 @@ export default function Quote() {
         return true;
     }
 
-    console.log(cart.cart);
+    const handleSendEmail = async () => {
+        try {
+            const status = await sendEmail(formData, cart.cart);
+    
+            if (status.status === 200) {
+                setQuoteMsg('Soumission envoyée');
+                setCart(cart => Object.assign({}, cart, { cart: {} }));
+            }
+        } catch (e) {
+            console.log(e);
+        }
+    }
 
     return (
         <Container className='p-2 pt-5'>
@@ -54,13 +66,16 @@ export default function Quote() {
                 );
             })}
             </Row>
-            <SignupForm anonymus returnErrors={setErrors} formData={formData} setFormData={setFormData} />
-            <Button className='w-100' disabled={hasErrors(['province', 'company', 'message'])} onClick={async () =>
-                axios.post('/api/quote', {
-                ...formData,
-                ...cart.cart
-                })
-            } text='Envoyer la soumission' />
+            {Object.keys(cart.cart).length > 0 ?
+                <>    
+                    <SignupForm anonymus returnErrors={setErrors} formData={formData} setFormData={setFormData} />
+                    <Button className='w-100' disabled={hasErrors(['province', 'company', 'message'])} onClick={handleSendEmail} text={quoteMsg} />
+                </> :
+                <>
+                    <h1 className='text-center'>Vous n'avez pas encore d'articles dans votre panier. Ajoutez des articles afin de pouvoir envoyer votre soumission.</h1>
+                    <Link href='/'><a className='text-center text-primary'><h1>Retour au catalogue</h1></a></Link>
+                </>
+            }
         </Container>
     );
 }

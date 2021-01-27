@@ -22,7 +22,7 @@ export interface CartContextState {
     }
 }
 
-export type CartContextTuple = [CartContextState, (product: any, number: number) => void, (id: string, number?: number) => void];
+export type CartContextTuple = [CartContextState, (product: any, number: number) => void, (id: string, number?: number) => void, React.Dispatch<React.SetStateAction<CartContextState>>];
 
 /**
  * Context that contains the state of the user. It will automatically try to detect
@@ -111,7 +111,7 @@ export function CartContextProvider<T>(props: React.PropsWithChildren<T>) {
     }, [cartState.cart]);
 
     return (
-        <CartContext.Provider value={[cartState, handleAddProductToCart, handleRemoveProductFromCart]}>
+        <CartContext.Provider value={[cartState, handleAddProductToCart, handleRemoveProductFromCart, setCartState]}>
             {props.children}
         </CartContext.Provider>
     );
