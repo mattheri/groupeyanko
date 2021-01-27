@@ -1,7 +1,6 @@
 import React from "react";
-import { Category } from "../../next-env";
 import { useSetUserCookie } from "../Hooks/useSetUserCookie";
-import { FormData } from '../SignupForm/SignupForm';
+import { FormData } from '../../next-env';
 
 export const AppContext = React.createContext(null);
 

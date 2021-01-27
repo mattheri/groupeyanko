@@ -71,9 +71,7 @@ export function Navbar() {
                         [styles.mobile]: true,
                         [styles.show]: show
                     })}>
-                        <a onClick={() => setShow(false)} href="https://proaxion.ca/en/home/">{text[appState.locale].home}</a>
                         <Link href='/'><a onClick={() => setShow(false)}>{text[appState.locale].catalog}</a></Link>
-                        <Link href='/contact'><a onClick={() => setShow(false)}>{text[appState.locale].contact}</a></Link>
                         {
                             appState.connected ?
                             <Button className={styles.mobileLoginBtn} onClick={async () => await logout()} text='Déconnexion' />:
