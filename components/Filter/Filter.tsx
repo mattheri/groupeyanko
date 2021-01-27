@@ -9,6 +9,7 @@ import axios from 'axios';
 import Skeleton from 'react-loading-skeleton';
 import { Search } from '../Search/Search';
 import { delayPrefetch } from '../../utils/utils';
+import { Breadcrumbs } from '../Breadcrumbs/Breadcrumbs';
 
 type FilterProps = {
     categories?: Category[]

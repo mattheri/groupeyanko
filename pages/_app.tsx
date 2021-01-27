@@ -16,6 +16,8 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { motion, AnimateSharedLayout } from 'framer-motion';
 import { CookiesProvider } from 'react-cookie';
+import { Breadcrumbs } from '../components/Breadcrumbs/Breadcrumbs';
+import { NavigationContextProvider } from '../components/Context/NavigationContext';
 
 Router.events.on('routeChangeStart', () => NProgress.start());
 Router.events.on('routeChangeComplete', () => NProgress.done());
@@ -24,23 +26,28 @@ Router.events.on('routeChangeError', () => NProgress.done());
 export default function MyApp({ Component, pageProps }) {
 
   return (
-    <CookiesProvider>
-      <AppContextProvider>
-        <CartContextProvider>
-          <Navbar />
-          <Container fluid className='py-5' style={{ minHeight: '100vh' }} as={motion.main}>
-            <Row as={motion.div}>
-              <AnimateSharedLayout>
-                <Filter />
-                <Col style={{ overflow: 'visible' }} as={motion.div}>
-                  <Component {...pageProps} />
-                </Col>
-              </AnimateSharedLayout>
-            </Row>
-          </Container>
-          <Footer />
-        </CartContextProvider>
-      </AppContextProvider>
-    </CookiesProvider>
+    <NavigationContextProvider>
+      <CookiesProvider>
+        <AppContextProvider>
+          <CartContextProvider>
+            <Navbar />
+            <Container fluid className='py-5' style={{ minHeight: '100vh' }} as={motion.main}>
+              <Row as={motion.div}>
+                <AnimateSharedLayout>
+                  <Filter />
+                  <Col style={{ overflow: 'visible' }} as={motion.div}>
+                    <Col xs={{ offset: 0, span: 12 }}>
+                      <Breadcrumbs />
+                    </Col>
+                    <Component {...pageProps} />
+                  </Col>
+                </AnimateSharedLayout>
+              </Row>
+            </Container>
+            <Footer />
+          </CartContextProvider>
+        </AppContextProvider>
+      </CookiesProvider>
+    </NavigationContextProvider>
   );
 }
