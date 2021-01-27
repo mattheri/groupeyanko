@@ -7,7 +7,8 @@ import { useForm } from '../components/Hooks/useForm';
 import { Button } from '../components/Button/Button';
 import { useAuth } from '../components/Hooks/useAuth';
 import styles from '../components/LoginForm/loginform.module.scss';
-import { SignupForm, FormData } from '../components/SignupForm/SignupForm';
+import { SignupForm } from '../components/SignupForm/SignupForm';
+import { FormData } from '../next-env';
 
 export default function Signup() {
     const [formData, setFormData] = React.useState<FormData>({
