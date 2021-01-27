@@ -23,14 +23,14 @@ export function ProductSection({ product }: ProductProps) {
                 </Col>
                 <Col className='py-5' xs={12} md={6}>
                     <h3>{product.name}</h3>
-                    <p>{sanitizeHTML(product.short_description)}</p>
+                    <p dangerouslySetInnerHTML={{ __html: product.short_description }} />
                     <AddToCart useInput replaceAmount className={styles.addTo} product={product} />
                 </Col>
             </Row>
             <Row>
                 <Col>
                     <h3>Description</h3>
-                    <p>{sanitizeHTML(product.description)}</p>
+                    <p dangerouslySetInnerHTML={{ __html: product.description }} />
                 </Col>
             </Row>
         </section>

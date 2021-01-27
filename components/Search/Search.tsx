@@ -6,7 +6,7 @@ import { Product } from '../../next-env';
 import { Button } from '../Button/Button';
 import styles from './search.module.scss';
 import Link from 'next/link';
-import { AnimatePresence, motion } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { useClickOutside } from '../Hooks/useClickOutside';
 
 type SearchProps = {

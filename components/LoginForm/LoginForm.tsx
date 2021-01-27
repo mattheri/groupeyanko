@@ -7,6 +7,8 @@ import { useForm } from '../Hooks/useForm';
 import Col from 'react-bootstrap/Col';
 import { useAuth } from '../Hooks/useAuth';
 import styles from './loginform.module.scss';
+import Alert from 'react-bootstrap/Alert';
+import Link from 'next/link';
 
 type LoginFormProps = {
     close?: () => void
@@ -18,6 +20,8 @@ export function LoginForm({ close }: LoginFormProps) {
         email: '',
         password: ''
     });
+
+    const [loginError, setLoginError] = React.useState('');
 
     const validation = {
         email: [
@@ -50,6 +54,7 @@ export function LoginForm({ close }: LoginFormProps) {
 
     return (
         <Container className='pt-2 pr-2 pl-2'>
+            {loginError.length > 0 && <Alert variant='danger'>{loginError}</Alert>}
             <Form
                 onChange={handleChange}
                 noValidate>
@@ -86,7 +91,7 @@ export function LoginForm({ close }: LoginFormProps) {
             </Form>
             <Row>
                 <Col className='d-flex justify-content-center'>
-                    <Button className='w-50' disabled={hasErrors()} onClick={() => handleAuth(formData, 'local', close)} text='Connexion' />
+                    <Button className='w-50' disabled={hasErrors()} onClick={() => handleAuth(formData, 'local', close, setLoginError)} text='Connexion' />
                 </Col>
             </Row>
             {/* <hr />
@@ -100,6 +105,11 @@ export function LoginForm({ close }: LoginFormProps) {
                     </Button>
                 </Col>
             </Row> */}
+            <Row>
+                <Col className='d-flex justify-content-center align-items-center pt-3'>
+                    <Button className='text-dark' href='/forgotpassword' tertiary onClick={() => close()} text='Vous avez oublié votre mot de passe?' />
+                </Col>
+            </Row>
             <Row>
                 <Col className='d-flex justify-content-center align-items-center pt-5'>
                     <small>Vous n'avez pas de compte?</small>

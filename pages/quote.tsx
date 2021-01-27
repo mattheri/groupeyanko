@@ -2,14 +2,23 @@ import React from 'react';
 import { CartContext, CartContextTuple } from '../components/Context/CartContext';
 import Container from 'react-bootstrap/Container';
 import { AppContext, AppContextTuple } from '../components/Context/AppContext';
-import { FormData } from '../components/SignupForm/SignupForm';
+import { FormData } from '../next-env';
 import { SignupForm } from '../components/SignupForm/SignupForm';
 import Row from 'react-bootstrap/Row';
 import { QuoteProduct } from '../components/QuoteProduct/QuoteProduct';
 import { Button } from '../components/Button/Button';
 import { sendEmail } from '../utils/utils';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 
+/**
+ * Quote page component. Will show the items in the cart as well as prefill
+ * the information in the form if the user is logged in and those information
+ * have been previously filled.
+ * 
+ * When the user sends the quote, an email is sent as confirmation to the user and the
+ * cart is emptied.
+ */
 export default function Quote() {
     const [cart, , , setCart]: CartContextTuple = React.useContext(CartContext);
     const [user, setUser]: AppContextTuple = React.useContext(AppContext);
@@ -28,6 +37,7 @@ export default function Quote() {
     });
 
     const [errors, setErrors] = React.useState<FormData>();
+    const router = useRouter();
 
     const hasErrors = (fieldsToIgnore?: string[]) => {
         const condition = fieldsToIgnore ?
@@ -51,6 +61,7 @@ export default function Quote() {
             if (status.status === 200) {
                 setQuoteMsg('Soumission envoyée');
                 setCart(cart => Object.assign({}, cart, { cart: {} }));
+                router.push('/quotesent');
             }
         } catch (e) {
             console.log(e);

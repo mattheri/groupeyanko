@@ -72,3 +72,17 @@ export interface Product {
     }[],
     [key: string]: any
 }
+
+export type FormData = {
+    firstname: string,
+    lastname: string,
+    email: string,
+    password?: string,
+    reType?: string,
+    company: string,
+    address: string,
+    province: string,
+    city: string,
+    postalCode: string,
+    message?: string
+}

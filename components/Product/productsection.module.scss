@@ -3,6 +3,19 @@
 .product {
     color: v.$colorDark;
 
+    h3 {
+        text-transform: capitalize;
+    }
+
+    p {
+        * {
+            font-weight: 100;
+            text-align: left;
+            font-size: 18px;
+            line-height: 150%;
+        }
+    }
+
     .productImage {
         width: 100%;
     }

@@ -1,29 +1,28 @@
-import firebase from 'firebase';
 import Firebase from './Firebase';
 
-export class GoogleLogin {
-    provider: firebase.auth.GoogleAuthProvider;
-    constructor() {
-        this.provider = new firebase.auth.GoogleAuthProvider()
-    }
+// export class GoogleLogin {
+//     provider: firebase.auth.GoogleAuthProvider;
+//     constructor() {
+//         this.provider = new firebase.auth.GoogleAuthProvider()
+//     }
     
-    async Login() {
-        try {
-            await Firebase.auth().signInWithRedirect(this.provider);
-            const user = (await Firebase.auth().getRedirectResult()).user;
-            return user;
-        } catch (e) {
-            console.log({
-                code: e.code,
-                message: e.message
-            });
-        }
-    }
+//     async Login() {
+//         try {
+//             await Firebase.auth().signInWithRedirect(this.provider);
+//             const user = (await Firebase.auth().getRedirectResult()).user;
+//             return user;
+//         } catch (e) {
+//             console.log({
+//                 code: e.code,
+//                 message: e.message
+//             });
+//         }
+//     }
 
-    async Signout() {
-        Firebase.auth().signOut();
-    }
-}
+//     async Signout() {
+//         Firebase.auth().signOut();
+//     }
+// }
 
 export class LocalLogin {
     constructor() { }
@@ -42,7 +41,6 @@ export class LocalLogin {
     async signup(email: string, password: string) {
         try {
             const user = await Firebase.auth().createUserWithEmailAndPassword(email, password);
-            // await Firebase.auth().currentUser.sendEmailVerification();
             return user;
         } catch (e) {
             console.log({

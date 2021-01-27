@@ -5,7 +5,6 @@ import { CartContext, CartContextTuple } from '../Context/CartContext';
 import Link from 'next/link';
 import styles from './cartitem.module.scss';
 import { AddToCart } from '../AddToCart/AddToCart';
-import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { motion } from 'framer-motion';
@@ -31,18 +30,6 @@ type CartItemProps = {
 export function CartItem({ id, image, name, number, product }: CartItemProps) {
 
     const [cartContext, addToCart, removeFromCart]: CartContextTuple = React.useContext(CartContext);
-    const [numberOfItem, setNumberOfItem] = React.useState(number);
-    const handleAdd = () => setNumberOfItem(number => number += 1);
-    const handleRemove = () => setNumberOfItem(number => number -= 1);
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const regex = /^[0-9\b]+$/;
-        if (e.target.value === '' || e.target.value === 'NaN') {
-            setNumberOfItem(0);
-        }
-        if (regex.test(e.target.value)) {
-            setNumberOfItem(parseInt(e.target.value));
-        }
-    }
 
     return (
         <motion.article layout className={cn({

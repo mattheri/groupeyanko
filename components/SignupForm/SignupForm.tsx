@@ -2,20 +2,7 @@ import React from 'react';
 import Form from 'react-bootstrap/Form';
 import Col from 'react-bootstrap/Col';
 import { useForm } from '../Hooks/useForm';
-
-export type FormData = {
-    firstname: string,
-    lastname: string,
-    email: string,
-    password?: string,
-    reType?: string,
-    company: string,
-    address: string,
-    province: string,
-    city: string,
-    postalCode: string,
-    message?: string
-}
+import { FormData } from '../../next-env';
 
 type SignUpProps = {
     formData: FormData,

@@ -1,9 +1,8 @@
 import axios from "axios";
 import { Agent } from 'http';
 import { Agent as SecureAgent } from 'https';
-import { Cart } from "../components/Context/CartContext";
 import { init, send } from 'emailjs-com'
-import { FormData } from '../components/SignupForm/SignupForm';
+import { FormData } from '../next-env';
 
 /**
  * Simple get with axios, however, the basic auth is provided. I'm lazy so I did not want to re-type the auth over and over again.
@@ -93,6 +92,15 @@ export const paginate = <T>(item: T[], paginationLenth: number = 1) => {
  */
 export const sanitizeHTML = (value: string) => value.replace(/(<([^>]+)>)/gi, "");
 
+/**
+ * Fix for prefetch issue. In production, Next tries to prefetch all the data for the different Links.
+ * Since on the main page there are a lot of them, the API cannot handle that many fetch at the same time.
+ * This function uses a setTimeout to return true after the indicated time. Otherwise, it will return false.
+ * 
+ * @param timer number the minimum time the prefetch should return true after
+ * @param index number, optional, if there are multiple Links to prefetch you can pass an
+ * index to increase time between Links
+ */
 export const delayPrefetch = (timer: number, index: number = 0) => {
     setTimeout(() => {
         return true
@@ -101,17 +109,26 @@ export const delayPrefetch = (timer: number, index: number = 0) => {
     return false;
 }
 
+/**
+ * Will build the a table containing links to the products. Then it inits emailsjs.
+ * Once the email table is done, it will send the data to emailjs API to send the email to the customer.
+ * 
+ * @param customer Object, the customer's data
+ * @param cart Object, the cart information
+ */
 export const sendEmail = (customer: FormData, cart: any) => {
-    console.log(process.env.EMAIL_JS_USER_ID);
     init('user_LWfMaXh3RqPoda7HMFMr6');
-    const buildProductTable = ({ name, number, id}) => {
-        return `<tr><td><a href='https://proaxion.vercel.app/product/${id}'>${name.trim()}</a></td><td style='text-align: center'>${number}</td></tr>`;
+    const buildProductTable = ({ name, number, id, sku}) => {
+        return `<tr><td>${sku ? sku : id}</td><td><a href='https://proaxion.vercel.app/product/${id}'>${name.trim()}</a></td><td style='text-align: center'>${number}</td></tr>`;
     }
     const productsString = Object.entries(cart).map(([key, value]) => buildProductTable((value as any)));
     const products = `
         <table>
             <tbody>
                 <tr>
+                    <th>
+                        SKU
+                    </th>
                     <th>
                         Produit
                     </th>
