@@ -56,12 +56,12 @@
 .tertiary {
     background-color: transparent;
     border: 2px transparent solid;
-    color: white;
+    color: v.$colorDark;
 
     &:hover {
         border: v.$colorAccent 2px solid;
         background-color: transparent;
-        color: white;
+        color: v.$colorDark;
     }
 }
 

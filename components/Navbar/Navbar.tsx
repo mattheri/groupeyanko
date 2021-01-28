@@ -64,7 +64,7 @@ export function Navbar() {
                         <Cart />
                     </div>
                     <div className={cn(styles.mobileButton, styles.mobile)}>
-                        <Squash toggled={show} toggle={setShow} color='#ffffff' />
+                        <Squash toggled={show} toggle={setShow} color='#111111' />
                     </div>
                     <div className={cn({
                         [styles.linksMobile]: true,
@@ -74,8 +74,11 @@ export function Navbar() {
                         <Link href='/'><a onClick={() => setShow(false)}>{text[appState.locale].catalog}</a></Link>
                         {
                             appState.connected ?
-                            <Button className={styles.mobileLoginBtn} onClick={async () => await logout()} text='Déconnexion' />:
-                            <ModalPopup trigger={<Button className={styles.mobileLoginBtn} onClick={() => console.log('')} text={text[appState.locale].login} />} >
+                                <Button className={styles.mobileLoginBtn} onClick={async () => {
+                                    await logout()
+                                    setShow(false)
+                                }} text='Déconnexion' /> :
+                            <ModalPopup trigger={<Button className={styles.mobileLoginBtn} onClick={() => setShow(false)} text={text[appState.locale].login} />} >
                                 <LoginForm />
                             </ModalPopup>
                         }
