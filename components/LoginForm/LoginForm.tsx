@@ -6,9 +6,7 @@ import { Button } from '../Button/Button';
 import { useForm } from '../Hooks/useForm';
 import Col from 'react-bootstrap/Col';
 import { useAuth } from '../Hooks/useAuth';
-import styles from './loginform.module.scss';
 import Alert from 'react-bootstrap/Alert';
-import Link from 'next/link';
 
 type LoginFormProps = {
     close?: () => void

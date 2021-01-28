@@ -47,10 +47,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
                 additionalUserInformation: (await userData.get()).data(),
             }));
         } catch (e) {
-            return console.log({
-                code: e.code,
-                message: e.message
-            });
+            res.status(404).send(JSON.stringify({ code: e.code, message: e.message }));
         }
     }
 }

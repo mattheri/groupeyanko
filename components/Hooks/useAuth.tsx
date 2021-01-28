@@ -72,10 +72,14 @@ export function useAuth() {
         }
     }
 
-    const handleSignUp = async (formData: any, callback?: () => void) => {
+    const handleSignUp = async (formData: any, onError?: React.Dispatch<React.SetStateAction<string>>) => {
         try {
-            const user = await (await axios.post('/api/signup', formData)).data;
-            console.log(user);
+            const response = await axios.post('/api/signup', formData);
+            const user = response.data;
+
+            if (response.status !== 200) {
+                throw new Error("L'utilisateur existe déjà. Veuillez vous connecter ou utiliser une autre adresse courriel.");
+            }
             if (user) {
                 callback && callback();
                 setAppState(state => Object.assign(
@@ -92,6 +96,7 @@ export function useAuth() {
             }
         } catch (e) {
             console.log(e);
+            onError && onError("L'utilisateur existe déjà. Veuillez vous connecter ou utiliser une autre adresse courriel.");
         }
     }
 
