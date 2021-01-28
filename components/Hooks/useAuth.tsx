@@ -72,7 +72,7 @@ export function useAuth() {
         }
     }
 
-    const handleSignUp = async (formData: any, onError?: React.Dispatch<React.SetStateAction<string>>) => {
+    const handleSignUp = async (formData: any, onError?: React.Dispatch<React.SetStateAction<string>>, callback?: () => void) => {
         try {
             const response = await axios.post('/api/signup', formData);
             const user = response.data;
