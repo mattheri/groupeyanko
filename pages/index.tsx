@@ -7,12 +7,17 @@ import { GetStaticProps } from "next";
 import { Category } from "../next-env";
 import { Card } from "../components/Card/Card";
 import { GET } from "../utils/utils";
+import { useBreadcrumbs } from "../components/Hooks/useBreadcrumbs";
 
 type Props = {
   response: Category[];
 };
 
 export default function Home({ response }: Props) {
+  const { setNavigationState } = useBreadcrumbs();
+
+  React.useEffect(() => setNavigationState(["Accueil", "/"]), []);
+
   return (
     <>
       <Head>

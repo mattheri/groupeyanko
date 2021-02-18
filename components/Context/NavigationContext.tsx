@@ -4,55 +4,96 @@ import { useWindow } from "../Hooks/useWindow";
 
 export const NavigationContext = React.createContext(null);
 
-type NavigationContextState = { [key: string]: string };
+type NavigationContextState = [string, string][];
 
-export type NavigationContextTuple = [NavigationContextState, React.Dispatch<React.SetStateAction<NavigationContextState>>];
+export type NavigationContextTuple = [
+  NavigationContextState,
+  (crumb: [string, string] | NavigationContextState) => void
+];
 
-/* 
+/*
  * See documentation on React Context here: https://reactjs.org/docs/context.html
  */
-export function NavigationContextProvider<T>(props: React.PropsWithChildren<T>) {
+export function NavigationContextProvider<T>(
+  props: React.PropsWithChildren<T>
+) {
+  const [appState, setAppState] = React.useState<NavigationContextState>([
+    ["Accueil", "/"],
+  ]);
 
-    const [appState, setAppState] = React.useState({
-        [`Accueil`]: '/'
-    });
+  const window = useWindow();
+  const router = useRouter();
 
-    const window = useWindow();
-    const router = useRouter();
+  const compareArray = (array1: any[], array2: any[]) => {
+    if (array1.filter((values, i) => array2[i] === values).length) {
+      return true;
+    }
 
-    React.useEffect(() => {
-        console.log(router);
-        setAppState(state => {
-            if (router.asPath === '/') {
-                return {
-                    [`Accueil`]: '/'
-                }
-            }
+    return false;
+  };
 
-            if (router.asPath.includes("category")) {
-                return {
-                    [`Accueil`]: '/',
-                    [`Catégorie`]: router.asPath || '/'
-                }
-            }
+  const handleAddCrumb = (crumb: [string, string]) => {
+    setAppState((state) => [...state, crumb]);
+  };
 
-            if (router.asPath.includes("product")) {
-                return Object.assign(
-                    {},
-                    state,
-                    {
-                        ["Produit"]: router.asPath || '/'
-                    }
-                )
-            }
-        })
+  const handlesCrumbs = (crumb: [string, string] | NavigationContextState) => {
+    const isNavigationState = (
+      crumb: [string, string] | NavigationContextState
+    ): crumb is NavigationContextState => {
+      if (Array.isArray(crumb[0])) {
+        return true;
+      }
 
-        console.log(router);
-    }, [router])
+      return false;
+    };
 
-    return (
-        <NavigationContext.Provider value={[appState, setAppState]}>
-            {props.children}
-        </NavigationContext.Provider>
-    );
+    if (isNavigationState(crumb)) {
+      if (!router.asPath.includes("/product/")) {
+        setAppState((state) => (state = [["Accueil", "/"], ...crumb]));
+      }
+    } else {
+      if (router.asPath === "/") {
+        return setAppState((state) => (state = [["Accueil", "/"]]));
+      }
+      if (router.asPath === "/quote") {
+        return setAppState(
+          (state) =>
+            (state = [
+              ["Accueil", "/"],
+              ["Envoyer votre soumission", "/quote"],
+            ])
+        );
+      }
+      if (router.asPath === "/signup") {
+        return setAppState(
+          (state) =>
+            (state = [
+              ["Accueil", "/"],
+              ["Créer un compte", "/signup"],
+            ])
+        );
+      }
+      if (router.asPath === "/forgotpassword") {
+        return setAppState(
+          (state) =>
+            (state = [
+              ["Accueil", "/"],
+              ["Réinitialisation de mot de passe", "/forgotpassword"],
+            ])
+        );
+      }
+      if (crumb[1].includes("category")) {
+        return setAppState((state) => (state = [["Accueil", "/"], [...crumb]]));
+      }
+      return handleAddCrumb(crumb);
+    }
+  };
+
+  React.useEffect(() => console.log(appState, router.asPath), [appState]);
+
+  return (
+    <NavigationContext.Provider value={[appState, handlesCrumbs]}>
+      {props.children}
+    </NavigationContext.Provider>
+  );
 }

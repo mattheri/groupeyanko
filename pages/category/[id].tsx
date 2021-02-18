@@ -6,16 +6,36 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Skeleton from "react-loading-skeleton";
 import { Card } from "../../components/Card/Card";
+import { useBreadcrumbs } from "../../components/Hooks/useBreadcrumbs";
 import { usePagination } from "../../components/Hooks/usePagination";
 import { Category, Product } from "../../next-env";
 import { GET } from "../../utils/utils";
 
 type ProductCategoryProps = {
   response: Product[] | Category[];
+  name: [string | null, string];
 };
 
-export default function ProductCategory({ response }: ProductCategoryProps) {
+export default function ProductCategory({
+  response,
+  name,
+}: ProductCategoryProps) {
   const router = useRouter();
+  const { setNavigationState } = useBreadcrumbs();
+
+  React.useEffect(() => {
+    if (name[0] !== null) {
+      setNavigationState([
+        [
+          ((name[0] as unknown) as Category).name,
+          `/category/${((name[0] as unknown) as Category).id}`,
+        ],
+        [name[1], router.asPath],
+      ]);
+    } else {
+      setNavigationState([name[1], router.asPath]);
+    }
+  }, [name]);
 
   if (router.isFallback) {
     const skeletonItems = [];
@@ -161,7 +181,13 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   //     await GET(`products?category=${parentCategory.id}&per_page=100`)
   //   ).data;
   // }
-  let response: Product[] = await (
+  const category: Category = await (
+    await GET(`products/categories/${params.id}`)
+  ).data;
+  let parentCategory = category.parent
+    ? await (await GET(`products/categories/${category.parent}`)).data
+    : null;
+  let response = await (
     await GET(
       `products/categories?parent=${params.id}&per_page=100&hide_empty=true`
     )
@@ -175,6 +201,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   return {
     props: {
       response,
+      name: [parentCategory, category.name],
     },
     revalidate: 1,
   };

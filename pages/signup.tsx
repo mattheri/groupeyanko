@@ -7,6 +7,7 @@ import { useAuth } from "../components/Hooks/useAuth";
 import { SignupForm } from "../components/SignupForm/SignupForm";
 import { FormData } from "../next-env";
 import Alert from "react-bootstrap/Alert";
+import { useBreadcrumbs } from "../components/Hooks/useBreadcrumbs";
 
 export default function Signup() {
   const [formData, setFormData] = React.useState<FormData>({
@@ -38,7 +39,11 @@ export default function Signup() {
 
     return true;
   };
+  const { setNavigationState } = useBreadcrumbs();
 
+  React.useEffect(() => {
+    setNavigationState(["Créer un compte", "/signup"]);
+  }, []);
   const { handleAuth, handleSignUp } = useAuth();
   const [loginError, setLoginError] = React.useState("");
 

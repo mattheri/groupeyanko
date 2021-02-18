@@ -9,6 +9,7 @@ import { useRouter } from "next/router";
 import Skeleton from "react-loading-skeleton";
 import { AddToCart } from "../../components/AddToCart/AddToCart";
 import { ProductSection } from "../../components/Product/ProductSection";
+import { useBreadcrumbs } from "../../components/Hooks/useBreadcrumbs";
 
 type ProductPageProps = {
   product: Product;
@@ -16,6 +17,11 @@ type ProductPageProps = {
 
 export default function ProductPage({ product }: ProductPageProps) {
   const router = useRouter();
+  const { setNavigationState } = useBreadcrumbs();
+
+  React.useEffect(() => {
+    setNavigationState([product.name, router.asPath]);
+  }, []);
 
   if (router.isFallback) {
     return (

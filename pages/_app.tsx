@@ -17,6 +17,8 @@ import Col from "react-bootstrap/Col";
 import { motion, AnimateSharedLayout } from "framer-motion";
 import { CookiesProvider } from "react-cookie";
 import { Breadcrumbs } from "../components/Breadcrumbs/Breadcrumbs";
+import React from "react";
+import { NavigationContextProvider } from "../components/Context/NavigationContext";
 
 Router.events.on("routeChangeStart", () => NProgress.start());
 Router.events.on("routeChangeComplete", () => NProgress.done());
@@ -27,30 +29,32 @@ export default function MyApp({ Component, pageProps }) {
     <CookiesProvider>
       <AppContextProvider>
         <CartContextProvider>
-          <Navbar />
-          <Container
-            fluid
-            className="py-5"
-            style={{ minHeight: "100vh" }}
-            as={motion.main}
-          >
-            <Row as={motion.div}>
-              <AnimateSharedLayout>
-                <Filter />
-                <Col style={{ overflow: "visible" }} as={motion.div}>
-                  <Col
-                    xs={{ offset: 0, span: 12 }}
-                    md={{ offset: 1, span: 10 }}
-                    lg={{ offset: 3, span: 6 }}
-                  >
-                    <Breadcrumbs />
+          <NavigationContextProvider>
+            <Navbar />
+            <Container
+              fluid
+              className="py-5"
+              style={{ minHeight: "100vh" }}
+              as={motion.main}
+            >
+              <Row as={motion.div}>
+                <AnimateSharedLayout>
+                  <Filter />
+                  <Col style={{ overflow: "visible" }} as={motion.div}>
+                    <Col
+                      xs={{ offset: 0, span: 12 }}
+                      md={{ offset: 1, span: 10 }}
+                      lg={{ offset: 3, span: 6 }}
+                    >
+                      <Breadcrumbs />
+                    </Col>
+                    <Component {...pageProps} />
                   </Col>
-                  <Component {...pageProps} />
-                </Col>
-              </AnimateSharedLayout>
-            </Row>
-          </Container>
-          <Footer />
+                </AnimateSharedLayout>
+              </Row>
+            </Container>
+            <Footer />
+          </NavigationContextProvider>
         </CartContextProvider>
       </AppContextProvider>
     </CookiesProvider>

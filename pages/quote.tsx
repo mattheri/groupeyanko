@@ -13,6 +13,7 @@ import { Button } from "../components/Button/Button";
 import { sendEmail } from "../utils/utils";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { useBreadcrumbs } from "../components/Hooks/useBreadcrumbs";
 
 /**
  * Quote page component. Will show the items in the cart as well as prefill
@@ -26,6 +27,11 @@ export default function Quote() {
   const [cart, , , setCart]: CartContextTuple = React.useContext(CartContext);
   const [user, setUser]: AppContextTuple = React.useContext(AppContext);
   const [quoteMsg, setQuoteMsg] = React.useState("Envoyer la soumission");
+
+  const { setNavigationState } = useBreadcrumbs();
+  React.useEffect(() => {
+    setNavigationState(["Envoyer votre soumission", "/quote"]);
+  }, []);
 
   const [formData, setFormData] = React.useState<FormData>({
     firstname:
