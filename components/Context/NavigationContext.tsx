@@ -21,16 +21,7 @@ export function NavigationContextProvider<T>(
     ["Accueil", "/"],
   ]);
 
-  const window = useWindow();
   const router = useRouter();
-
-  const compareArray = (array1: any[], array2: any[]) => {
-    if (array1.filter((values, i) => array2[i] === values).length) {
-      return true;
-    }
-
-    return false;
-  };
 
   const handleAddCrumb = (crumb: [string, string]) => {
     setAppState((state) => [...state, crumb]);
@@ -88,8 +79,6 @@ export function NavigationContextProvider<T>(
       return handleAddCrumb(crumb);
     }
   };
-
-  React.useEffect(() => console.log(appState, router.asPath), [appState]);
 
   return (
     <NavigationContext.Provider value={[appState, handlesCrumbs]}>

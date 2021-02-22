@@ -167,20 +167,6 @@ export const getStaticPaths: GetStaticPaths = async () => {
 };
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-  // const parentCategory: Category = await (
-  //   await GET(`products/categories/${params.id}`)
-  // ).data[0];
-  // let response: Category[] = await (
-  //   await GET(
-  //     `products/categories?parent=${parentCategory.id}&per_page=100&hide_empty=true`
-  //   )
-  // ).data;
-
-  // if (!response || !response.length) {
-  //   response = await (
-  //     await GET(`products?category=${parentCategory.id}&per_page=100`)
-  //   ).data;
-  // }
   const category: Category = await (
     await GET(`products/categories/${params.id}`)
   ).data;

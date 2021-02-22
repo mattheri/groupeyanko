@@ -1,25 +1,25 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { GET } from "../../utils/utils";
-import { LocalLogin } from "../../utils/logins";
-import { db } from "../../utils/db";
+import Firebase from "../../utils/Firebase";
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const emailValidated = emailRegex.test(req.body.email) && req.body.email;
+  const { db } = Firebase.firestore();
+  const { login, signup } = Firebase.auth();
 
   if (emailValidated) {
     const { email, password } = req.body;
     const isPreviousCustomer = await (
       await GET(`customers?email=${req.body.email}`)
     ).data;
-    const login = new LocalLogin();
-    const userDB = db().collection("users");
+    const userDB = db.collection("users");
 
     try {
-      let user = (await login.login(email, password)).user;
+      let user = (await login(email, password)).user;
 
       if (isPreviousCustomer.length && !user) {
-        user = (await login.signup(email, password)).user;
+        user = (await signup(email, password)).user;
 
         try {
           const {

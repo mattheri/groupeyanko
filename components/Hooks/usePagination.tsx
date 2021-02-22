@@ -1,7 +1,6 @@
-import React from 'react';
-import { paginate } from '../../utils/utils';
-import { PagePagination } from '../PagePagination/PagePagination';
-import chunk from 'lodash/chunk';
+import React from "react";
+import { PagePagination } from "../PagePagination/PagePagination";
+import chunk from "lodash/chunk";
 
 /**
  * Hook that paginates over an array of element. It keeps an internal state of the page you're at.
@@ -20,19 +19,19 @@ import chunk from 'lodash/chunk';
  * );
  */
 export function usePagination<T>(itemsToPaginate: T[], itemsPerPage: number) {
-    const [pagination, setPagination] = React.useState(0);
-    const paginatedItems = chunk(itemsToPaginate, itemsPerPage);
+  const [pagination, setPagination] = React.useState(0);
+  const paginatedItems = chunk(itemsToPaginate, itemsPerPage);
 
-    React.useDebugValue(paginatedItems);
+  React.useDebugValue(paginatedItems);
 
-    return {
-        paginatedItems,
-        pagination,
-        paginationProps: {
-            length: paginatedItems.length,
-            active: pagination,
-            toggle: setPagination
-        },
-        Pagination: PagePagination
-    }
+  return {
+    paginatedItems,
+    pagination,
+    paginationProps: {
+      length: paginatedItems.length,
+      active: pagination,
+      toggle: setPagination,
+    },
+    Pagination: PagePagination,
+  };
 }

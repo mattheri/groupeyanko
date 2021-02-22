@@ -63,11 +63,14 @@ export default function Quote() {
           .filter(([key, value]) =>
             fieldsToIgnore.every((keys) => keys !== key)
           )
-          .every(([key, value]) =>
-            value.length > 0 && errors ? errors[key].length === 0 : true
-          )
+          .every(([key, value]) => {
+            console.log(value);
+            return value.length > 0 && errors
+              ? errors[key].length === 0
+              : false;
+          })
       : Object.entries(formData).every(([key, value]) =>
-          value.length > 0 && errors ? errors[key].length === 0 : true
+          value.length > 0 && errors ? errors[key].length === 0 : false
         );
 
     if (condition) {

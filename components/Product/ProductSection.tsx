@@ -2,7 +2,6 @@ import React from "react";
 import { Product } from "../../next-env";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import { sanitizeHTML } from "../../utils/utils";
 import { AddToCart } from "../AddToCart/AddToCart";
 import styles from "./productsection.module.scss";
 import { useRouter } from "next/router";

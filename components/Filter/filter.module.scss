@@ -1,25 +1,25 @@
 @use '../../styles/variables.scss' as v;
 
 .filter {
-    position: relative;
-    z-index: 997;
-    width: fit-content;
-    margin-top: 15px;
+  position: relative;
+  z-index: 997;
+  width: fit-content;
+  margin-top: 3rem;
 
-    ul {
-        list-style: none;
-        
-        a {
-            color: v.$colorDark;
-        }
+  ul {
+    list-style: none;
+
+    a {
+      color: v.$colorDark;
     }
+  }
 }
 
 .filterBtnContainer {
-    display: flex;
+  display: flex;
 }
 
 .search {
-    max-height: 2.5rem;
-    margin-bottom: 1rem;
+  max-height: 2.5rem;
+  margin-bottom: 1rem;
 }

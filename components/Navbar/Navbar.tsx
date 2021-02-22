@@ -1,6 +1,5 @@
 import Link from "next/link";
 import React from "react";
-import Image from "next/image";
 import styles from "./navabr.module.scss";
 import { Button } from "../Button/Button";
 import { AppContext, AppContextTuple } from "../Context/AppContext";
@@ -35,7 +34,6 @@ export function Navbar() {
     },
   };
 
-  // const handleChangeLocale = () => setAppState(state => Object.assign({}, state, { locale: appState.locale === 'en' ? 'fr' : 'en' }));
   const logout = useSignOut();
 
   return (
