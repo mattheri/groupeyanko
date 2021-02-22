@@ -3,9 +3,9 @@ import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import { Button } from "../components/Button/Button";
 import { useForm } from "../components/Hooks/useForm";
-import { LocalLogin } from "../utils/logins";
 import { useRouter } from "next/router";
 import { useBreadcrumbs } from "../components/Hooks/useBreadcrumbs";
+import Firebase from "../utils/Firebase";
 
 export default function ForgotPassword() {
   const [formData, setFormData] = React.useState({
@@ -53,8 +53,7 @@ export default function ForgotPassword() {
   const router = useRouter();
 
   const handleSendEmailReset = () => {
-    const login = new LocalLogin();
-    login.sendPasswordReset(formData.email);
+    Firebase.auth().sendPasswordReset(formData.email);
     setEmailSent(true);
 
     setTimeout(() => {
