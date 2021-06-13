@@ -1,15 +1,15 @@
-import React from "react";
 import { Cart } from "../Context/CartContext";
-import { get, set } from "local-storage";
+import useLocalStorage from "./useLocalStorage";
 
 /**
  * Hook that will add stringified items to the local storage.
  * Provides the object from the local storage.
  */
 export function useSetCartStorage() {
+  const { setItem, getItem } = useLocalStorage();
   const handleSetStorage = (data: { [key: string]: Cart }) => {
-    set("cart", JSON.stringify(data));
+    setItem("cart", data);
   };
 
-  return { cart: JSON.parse(get("cart")), handleSetStorage: handleSetStorage };
+  return { cart: getItem("cart"), setCartInLocalStorage: handleSetStorage };
 }

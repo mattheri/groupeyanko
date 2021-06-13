@@ -1,18 +1,14 @@
-import React from "react";
 import { Product } from "../../next-env";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import { AddToCart } from "../AddToCart/AddToCart";
+import { AddToCart } from "../AddToCart/organism/AddToCart";
 import styles from "./productsection.module.scss";
-import { useRouter } from "next/router";
 
 type ProductProps = {
   product: Product;
 };
 
 export function ProductSection({ product }: ProductProps) {
-  const router = useRouter();
-
   return (
     <section className={styles.product}>
       <Row>

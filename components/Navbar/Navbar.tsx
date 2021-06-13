@@ -1,40 +1,27 @@
-import Link from "next/link";
-import React from "react";
-import styles from "./navabr.module.scss";
-import { Button } from "../Button/Button";
-import { AppContext, AppContextTuple } from "../Context/AppContext";
-import { Cart } from "../Cart/Cart";
-import { Squash as Hamburger, Squash } from "hamburger-react";
+import React, { useState } from "react";
+import styles from "./navbar.module.scss";
+import { Button } from "../Button/atom/Button";
+import { Cart } from "../Cart/organism/Cart";
 import cn from "classnames";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import { ModalPopup } from "../ModalPopup/ModalPopup";
-import { LoginForm } from "../LoginForm/LoginForm";
-import { useSignOut } from "../Hooks/useSignOut";
+import { LoginFormController } from "../LoginForm/LoginFormController";
+import MobileNavbar from "./MobileNavbar";
+import { useAuth } from "components/Hooks/useAuth";
 
 export function Navbar() {
-  const [appState, setAppState]: AppContextTuple = React.useContext(AppContext);
-  const [show, setShow] = React.useState(false);
+  const [show, setShow] = useState(false);
 
-  const text = {
-    fr: {
-      home: "Accueil",
-      catalog: "Catalogue",
-      contact: "Nous joindre",
-      login: "Connexion",
-      locale: "English",
-    },
-    en: {
-      home: "Home",
-      catalog: "Catalog",
-      contact: "Contact",
-      login: "Log In",
-      locale: "Français",
-    },
+  const { isAuthenticated, signOut } = useAuth();
+
+  const handleShow = () => setShow(!show);
+  const handleLogout = async () => await signOut();
+  const handleLogoutThenClose = async () => {
+    await handleLogout();
+    handleShow();
   };
-
-  const logout = useSignOut();
 
   return (
     <Container
@@ -54,64 +41,20 @@ export function Navbar() {
             />
           </a>
           <div className={cn(styles.links, styles.desktop)}>
-            <Button href="/" tertiary text={text[appState.locale].catalog} />
+            <Button href="/" tertiary text="Catalogue" />
             <Cart />
-            {appState.connected ? (
-              <Button onClick={async () => await logout()} text="Déconnexion" />
+            {isAuthenticated ? (
+              <>
+                <Button onClick={handleLogout} text="Déconnexion" />
+                <Button href='/me' text='Profil' />
+              </>
             ) : (
-              <ModalPopup
-                trigger={
-                  <Button
-                    onClick={() => console.log("")}
-                    text={text[appState.locale].login}
-                  />
-                }
-              >
-                <LoginForm />
+              <ModalPopup trigger={<Button text={"Connexion"} />}>
+                <LoginFormController />
               </ModalPopup>
             )}
           </div>
-          <div className={cn(styles.cartMobile, styles.mobile)}>
-            <Cart />
-          </div>
-          <div className={cn(styles.mobileButton, styles.mobile)}>
-            <Squash toggled={show} toggle={setShow} color="#111111" />
-          </div>
-          <div
-            className={cn({
-              [styles.linksMobile]: true,
-              [styles.mobile]: true,
-              [styles.show]: show,
-            })}
-          >
-            <Link href="/">
-              <a onClick={() => setShow(false)}>
-                {text[appState.locale].catalog}
-              </a>
-            </Link>
-            {appState.connected ? (
-              <Button
-                className={styles.mobileLoginBtn}
-                onClick={async () => {
-                  await logout();
-                  setShow(false);
-                }}
-                text="Déconnexion"
-              />
-            ) : (
-              <ModalPopup
-                trigger={
-                  <Button
-                    className={styles.mobileLoginBtn}
-                    onClick={() => setShow(false)}
-                    text={text[appState.locale].login}
-                  />
-                }
-              >
-                <LoginForm />
-              </ModalPopup>
-            )}
-          </div>
+          <MobileNavbar show={show} onShow={handleShow} onLogout={handleLogoutThenClose} />
         </Col>
       </Row>
     </Container>

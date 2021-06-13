@@ -1,7 +1,8 @@
-import axios from "axios";
-import React from "react";
-import { AppContext, AppContextTuple } from "../Context/AppContext";
+import { useContext, Dispatch, SetStateAction } from "react";
+import { AppContext } from "../Context/AppContext";
 import { useRouter } from "next/router";
+import ApiService from "services/ApiService";
+import { BasicUserInformation, UserInformation } from "services/domain/User";
 
 type UseAuthProps = {
   email?: string;
@@ -9,83 +10,46 @@ type UseAuthProps = {
 };
 
 export function useAuth() {
-  const [appState, setAppState]: AppContextTuple = React.useContext(AppContext);
+  const { id, connected, login, logout, userInformations, updateUserInformation } = useContext(AppContext);
   const router = useRouter();
 
   const handleAuth = async (
     { email, password }: UseAuthProps,
-    type?: "local" | "google",
-    callback?: () => void,
-    onError?: React.Dispatch<React.SetStateAction<string>>
+    onError?: (e:string) => void,
   ) => {
-    switch (type) {
-      case "google":
-        // try {
-        //     const google = new GoogleLogin();
-        //     const user = await google.Login();
-        //     const userComplete = await (await axios.post('/api/googleLogin', {
-        //         email: user.email,
-        //         user
-        //     })).data;
-
-        //     if (user) {
-        //         callback && callback();
-        //         return setAppState(state => Object.assign(
-        //             {},
-        //             state,
-        //             {
-        //                 connected: true,
-        //                 user: userComplete,
-        //                 locale: 'fr'
-        //             }
-        //         ))
-        //     }
-
-        // } catch (e) {
-        //     console.log({
-        //         code: e.code,
-        //         message: e.message
-        //     });
-        // }
-
-        return;
-      default:
-        try {
-          const response = await axios.post("/api/login", { email, password });
-          const user = response.data;
-          if (response.status !== 200) {
-            throw new Error(
-              "Le nom d'utilisateur ou le mot de passe est incorrect."
-            );
-          }
-
-          if (user) {
-            callback && callback();
-            return setAppState((state) =>
-              Object.assign({}, state, {
-                connected: true,
-                user: user,
-                locale: "fr",
-              })
-            );
-          }
-        } catch (e) {
-          console.log(e.message);
-          onError &&
-            onError("Le nom d'utilisateur ou le mot de passe est incorrect.");
+    try {
+      const response = await ApiService.fetch({
+        url: '/api/login',
+        method: 'POST',
+        data: {
+          email,
+          password,
         }
+      });
+
+      const user:UserInformation = response.data;
+
+      if (response.status === 200) {
+        login(user);
+      }
+    } catch (e) {
+      onError &&
+        onError("Le nom d'utilisateur ou le mot de passe est incorrect.");
     }
   };
 
   const handleSignUp = async (
     formData: any,
-    onError?: React.Dispatch<React.SetStateAction<string>>,
+    onError?: Dispatch<SetStateAction<string>>,
     callback?: () => void
   ) => {
     try {
-      const response = await axios.post("/api/signup", formData);
-      const user = response.data;
-
+      const response = await ApiService.fetch({
+        url: '/api/signup',
+        method: 'POST',
+        data: formData,
+      });
+      const user:UserInformation = response.data;
       if (response.status !== 200) {
         throw new Error(
           "L'utilisateur existe déjà. Veuillez vous connecter ou utiliser une autre adresse courriel."
@@ -93,18 +57,11 @@ export function useAuth() {
       }
       if (user) {
         callback && callback();
-        setAppState((state) =>
-          Object.assign({}, state, {
-            connected: true,
-            user: user,
-            locale: "fr",
-          })
-        );
+        login(user);
 
         return router.push("/");
       }
     } catch (e) {
-      console.log(e);
       onError &&
         onError(
           "L'utilisateur existe déjà. Veuillez vous connecter ou utiliser une autre adresse courriel."
@@ -112,5 +69,34 @@ export function useAuth() {
     }
   };
 
-  return { handleAuth, handleSignUp };
+  const signOut = async () => {
+    const response = await ApiService.fetch({
+      url: '/api/signout',
+      method: 'POST'
+    });
+
+    const isSignedOut = response.data;
+
+    if (isSignedOut) {
+      logout();
+    }
+  }
+
+  const isAuthenticated = connected;
+
+  const userId = id;
+
+  const userInfo = userInformations;
+
+  const update = (userInformations:BasicUserInformation) => updateUserInformation(userInformations);
+
+  return { 
+    handleAuth,
+    handleSignUp,
+    signOut,
+    update,
+    isAuthenticated,
+    userId,
+    userInfo,
+  };
 }

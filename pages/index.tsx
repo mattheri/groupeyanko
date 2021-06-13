@@ -5,7 +5,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { GetStaticProps } from "next";
 import { Category } from "../next-env";
-import { Card } from "../components/Card/Card";
+import { Card } from "../components/Card/atom/Card";
 import { GET } from "../utils/utils";
 import { useBreadcrumbs } from "../components/Hooks/useBreadcrumbs";
 

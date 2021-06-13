@@ -6,7 +6,6 @@ body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-  // background-color: black;
 }
 
 a {
@@ -14,7 +13,8 @@ a {
   text-decoration: none;
 }
 
-.container, .container-fluid {
+.container,
+.container-fluid {
   background-color: transparent;
 }
 
@@ -27,7 +27,12 @@ a {
   @include v.fontBody();
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   @include v.fontHeading();
 }
 

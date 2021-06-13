@@ -1,0 +1,27 @@
+@use 'styles/variables.scss' as v;
+
+.addTo {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  align-items: center;
+
+  p {
+    color: white;
+  }
+
+  .addItemBtn {
+    width: 100%;
+  }
+
+  .controls {
+    margin-bottom: 0.5rem;
+  }
+}
+.input {
+  height: 2.5rem;
+  width: 3.5rem;
+  // border: 2px solid v.$colorAccent;
+  margin-bottom: 8px;
+}

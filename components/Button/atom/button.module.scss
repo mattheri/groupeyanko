@@ -1,0 +1,71 @@
+@use 'styles/variables.scss' as v;
+
+.button {
+  padding: 0.5rem 0.8rem;
+  @include v.fontHeading();
+  transition: transform 0.3s, background-color 0.2s, color 0.2s;
+  width: fit-content;
+  max-height: 2.5rem;
+  text-decoration: none;
+  border: none;
+  @include v.flexcenter();
+  border-radius: 5px;
+  cursor: pointer;
+
+  &:hover {
+    text-decoration: none;
+  }
+
+  &:disabled {
+    color: gray;
+
+    &:hover {
+      background-color: v.$colorAccent;
+      color: gray;
+    }
+  }
+
+  &:focus {
+    border: none;
+    outline: none;
+  }
+}
+
+.primary {
+  background-color: v.$colorAccent;
+  color: white;
+
+  &:hover {
+    background-color: black;
+    color: white;
+  }
+}
+
+.secondary {
+  border: v.$colorAccent 2px solid;
+  background-color: transparent;
+  color: white;
+
+  &:hover {
+    border: v.$colorAccent 2px solid;
+    color: white;
+    background-color: v.$colorAccent;
+  }
+}
+
+.tertiary {
+  background-color: transparent;
+  border: 2px transparent solid;
+  color: v.$colorDark;
+
+  &:hover {
+    border: v.$colorAccent 2px solid;
+    background-color: transparent;
+    color: v.$colorDark;
+  }
+}
+
+.small {
+  padding: 0.3rem 0.5rem;
+  font-size: 14px;
+}

@@ -1,10 +1,10 @@
-@use '../../styles/variables.scss' as v;
+@use 'styles/variables.scss' as v;
 
 .filter {
   position: relative;
   z-index: 997;
   width: fit-content;
-  margin-top: 3rem;
+  margin-top: 5rem;
 
   ul {
     list-style: none;
@@ -20,6 +20,6 @@
 }
 
 .search {
-  max-height: 2.5rem;
+  max-height: 4rem;
   margin-bottom: 1rem;
 }

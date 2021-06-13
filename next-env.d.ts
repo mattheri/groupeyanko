@@ -1,5 +1,6 @@
 /// <reference types="next" />
 /// <reference types="next/types/global" />
+import { GetStaticPathsResult, GetStaticPropsResult } from 'next';
 
 export type Image = {
   id: number;
@@ -87,3 +88,18 @@ export type FormData = {
   postalCode: string;
   message?: string;
 };
+
+export type FormikValues<T> = T;
+
+export type PropsType = { [key:string]:any };
+export type Paths = (context:GetStaticPathsContext) => Promise<GetStaticPathsResult>;
+export type Props = (context:GetStaticPropsContext) => Promise<GetStaticPropsResult<PropsType>>;
+
+export interface StaticProps {
+  paths:Paths;
+  props:Props;
+}
+
+export interface WooHeaders {
+  ["x-wp-totalpages"]:string;
+}

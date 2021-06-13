@@ -1,9 +1,14 @@
-import React from "react";
-import { Product } from "../../next-env";
-import { useSetCartStorage } from "../Hooks/useSetCartStorage";
-import { AppContext, AppContextTuple } from './AppContext';
+import React, { useState, useEffect, createContext } from "react";
+import { Product } from "next-env";
+import { useSetCartStorage } from "components/Hooks/useSetCartStorage";
+export interface CartContextState {
+    [key: string]: Cart
+}
 
-export const CartContext = React.createContext(null);
+const cart:CartContextState = {};
+const setCart:React.Dispatch<React.SetStateAction<CartContextState>> = () => {}
+
+export const CartContext = createContext({ cart, setCart });
 
 interface NumberOfItems {
     number: number
@@ -11,18 +16,6 @@ interface NumberOfItems {
 
 export interface Cart extends Product, NumberOfItems { };
 
-export interface CartContextState {
-    id: string,
-    /**
-     * Key is the product id,
-     * number is the number of times it is requested
-     */
-    cart: {
-        [key: string]: Cart
-    }
-}
-
-export type CartContextTuple = [CartContextState, (product: any, number: number) => void, (id: string, number?: number) => void, React.Dispatch<React.SetStateAction<CartContextState>>];
 
 /**
  * Context that contains the state of the user. It will automatically try to detect
@@ -35,83 +28,27 @@ export type CartContextTuple = [CartContextState, (product: any, number: number)
  */
 export function CartContextProvider<T>(props: React.PropsWithChildren<T>) {
 
-    const { cart, handleSetStorage } = useSetCartStorage();
-    const [appState, setAppState]: AppContextTuple = React.useContext(AppContext);
+    const { cart, setCartInLocalStorage } = useSetCartStorage();
 
     function getCart() {
-        const { connected, user: { id } } = appState;
-        // if (connected && id === cart.id) {
-        //     return (cart as CartContextState);
-        // }
-
-        return {
-            id: appState.user.id,
-            cart: (cart as Cart) || {}
-        }
+        return cart;
     }
 
     const cartDefault = getCart();
 
-    const [cartState, setCartState] = React.useState<CartContextState>(cartDefault);
+    const [cartState, setCartState] = useState<CartContextState>(cartDefault);
 
-    const handleAddProductToCart = (product: any, number: number) => {
-        if (cartState.cart.hasOwnProperty(`${product.id}`)) {
-            product.number = cartState.cart[`${product.id}`].number + number;
-        } else {
-            product.number = number;
-        }
-        setCartState(cart => Object.assign(
-            {},
-            cart,
-            {
-                cart: {
-                    ...cart.cart,
-                    [`${product.id}`]: product
-                }
-            }
-        ))
+    const updateCartInLocalStorage = (cart:CartContextState) => {
+        setCartInLocalStorage(cart);
+        return cart;
     }
 
-    const handleRemoveProductFromCart = (id: string, number?: number) => {
-        if (!cartState.cart.hasOwnProperty(`${id}`)) return;
-
-        if (!number) {
-            setCartState(cart => {
-                delete cart.cart[`${id}`];
-                return Object.assign(
-                    {},
-                    cart,
-                    {
-                        cart: {
-                            ...cart.cart
-                        }
-                    }
-                )
-            });
-        }
-
-        if (number) {
-            setCartState(cart => Object.assign(
-                {},
-                cart,
-                {
-                    cart: {
-                        [`${id}`]: {
-                            ...cart.cart[`${id}`],
-                            number: cart.cart[`${id}`].number - 1
-                        }
-                    }
-                }
-            ));
-        }
+    const setCart = (fn:(cart:CartContextState) => CartContextState) => {
+        setCartState((cart) => updateCartInLocalStorage(fn(cart)));
     }
-
-    React.useEffect(() => {
-        handleSetStorage(cartState.cart);
-    }, [cartState.cart]);
 
     return (
-        <CartContext.Provider value={[cartState, handleAddProductToCart, handleRemoveProductFromCart, setCartState]}>
+        <CartContext.Provider value={{ cart: cartState, setCart: setCart }}>
             {props.children}
         </CartContext.Provider>
     );
