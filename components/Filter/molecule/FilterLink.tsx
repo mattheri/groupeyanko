@@ -12,7 +12,7 @@ interface Props {
 const FilterLink: FC<Props> = ({ href, name, subcategories }) => {
   return (
     <li key={href}>
-      <Link href={href}>{name}</Link>
+      <Link prefetch={false} href={href}>{name}</Link>
       {subcategories ? <FilterUL category={subcategories} /> : null}
     </li>
   );

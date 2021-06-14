@@ -25,8 +25,8 @@ export function Cart() {
   );
 
   const getNumberOfItems = () => {
-    let numberOfItem = Object.keys(cart).length;
-    Object.entries(cart).map(([key, value]) => {
+    let numberOfItem = cart ? Object.keys(cart).length : 0;
+    cart && Object.entries(cart).map(([key, value]) => {
         if (value.number > 1) {
             numberOfItem += value.number - 1
         }

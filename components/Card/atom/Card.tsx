@@ -50,7 +50,7 @@ export function Card({
       whileHover={{ y: 0 }}
       className={styles.card}
     >
-      <Link href={url}>
+      <Link prefetch={false} href={url}>
         <a className={styles.innerCard}>
           <article
             className={styles.image}
