@@ -1,8 +1,7 @@
 import { GetStaticPropsContext } from "next";
-import { StaticProps } from "next-env";
 import ProductService from "./ProductService";
 
-class StaticProductsProps implements StaticProps {
+class StaticProductsProps {
   private static instance:StaticProductsProps;
   private readonly productService:typeof ProductService;
   private constructor(productService:typeof ProductService) {
@@ -22,22 +21,14 @@ class StaticProductsProps implements StaticProps {
       params: { id: `${product.id}` },
     }));
 
-    return {
-      paths,
-      fallback: 'blocking',
-    };
+    return paths;
   }
 
   public async props({ params }:GetStaticPropsContext) {
     const id = this.parseParams(params.id);
     const product = await this.productService.fetchProduct(id);
 
-    return {
-      props: {
-        product,
-      },
-      revalidate: 1,
-    };
+    return product;
   }
 
   private parseParams(paramsId:string | string[]):number {

@@ -92,13 +92,6 @@ export type FormData = {
 export type FormikValues<T> = T;
 
 export type PropsType = { [key:string]:any };
-export type Paths = (context:GetStaticPathsContext) => Promise<GetStaticPathsResult>;
-export type Props = (context:GetStaticPropsContext) => Promise<GetStaticPropsResult<PropsType>>;
-
-export interface StaticProps {
-  paths:Paths;
-  props:Props;
-}
 
 export interface WooHeaders {
   ["x-wp-totalpages"]:string;

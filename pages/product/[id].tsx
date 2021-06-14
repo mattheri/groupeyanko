@@ -5,14 +5,31 @@ import { useRouter } from "next/router";
 import { ProductSection } from "components/Product/ProductSection";
 import { useBreadcrumbs } from "components/Hooks/useBreadcrumbs";
 import StaticProductsProps from "services/Products/StaticProductsProps";
+import { GetStaticPaths, GetStaticProps } from "next";
 
 type ProductPageProps = {
   product: Product;
 };
 
-export const getStaticPaths = StaticProductsProps.paths.bind(StaticProductsProps);
+export const getStaticPaths:GetStaticPaths = async () => {
+  const paths = await StaticProductsProps.paths();
 
-export const getStaticProps = StaticProductsProps.props.bind(StaticProductsProps);
+  return {
+    paths,
+    fallback: 'blocking'
+  }
+};
+
+export const getStaticProps:GetStaticProps = async (context) => {
+  const product = await StaticProductsProps.props(context);
+
+  return {
+    props: {
+      product
+    },
+    revalidate: 1,
+  }
+};
 
 export default function ProductPage({ product }: ProductPageProps) {
   const router = useRouter();

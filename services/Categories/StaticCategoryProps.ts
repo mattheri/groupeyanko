@@ -1,9 +1,9 @@
-import { GetStaticPropsContext, GetStaticPathsResult, GetStaticPropsResult } from "next";
-import { Category, Product, StaticProps } from "next-env";
+import { GetStaticPropsContext } from "next";
+import { Category, Product } from "next-env";
 import ProductService from "../Products/ProductService";
 import CategoryService from "./CategoryService";
 
-class StaticCategoryProps implements StaticProps {
+class StaticCategoryProps {
   private static instance:StaticCategoryProps;
   private readonly categoryService!:typeof CategoryService;
   private readonly productService!:typeof ProductService;
@@ -22,17 +22,14 @@ class StaticCategoryProps implements StaticProps {
     return StaticCategoryProps.instance;
   }
 
-  public async paths():Promise<GetStaticPathsResult> {
+  public async paths() {
     const categories = await this.categoryService.fetchAllCategories();
 
     const paths = categories.map((category) => ({
       params: { id: `${category.id}` },
     }));
   
-    return {
-      paths,
-      fallback: "blocking",
-    };
+    return paths;
   }
 
   public async props({ params }:GetStaticPropsContext) {
@@ -43,14 +40,7 @@ class StaticCategoryProps implements StaticProps {
     response = await this.categoryService.fetchCategoriesByParentId(id);
 
     if (!response || !response.length) response = await this.productService.fetchProductsByCategory(id);
-
-    return {
-      props: {
-        response,
-        name: [parentCategory, category.name],
-      },
-      revalidate: 1,
-    }
+    return { response, parentCategory, categoryName: category.name }
   }
 
   private parseParams(paramsId:string | string[]):number {

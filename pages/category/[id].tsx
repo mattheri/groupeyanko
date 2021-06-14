@@ -5,15 +5,33 @@ import { useBreadcrumbs } from "components/Hooks/useBreadcrumbs";
 import ProductsGrid from "components/ProductsGrid/ProductsGrid";
 import { Category, Product } from "next-env";
 import StaticCategoryProps from "services/Categories/StaticCategoryProps";
+import { GetStaticPaths, GetStaticProps } from "next";
 
 type ProductCategoryProps = {
   response: Product[] | Category[];
   name: [Category | null, string];
 };
 
-export const getStaticPaths = StaticCategoryProps.paths.bind(StaticCategoryProps);
+export const getStaticPaths:GetStaticPaths = async () => {
+  const paths = await StaticCategoryProps.paths();
 
-export const getStaticProps = StaticCategoryProps.props.bind(StaticCategoryProps);
+  return {
+    paths,
+    fallback: 'blocking'
+  }
+};
+
+export const getStaticProps:GetStaticProps = async (context) => {
+  const { response, parentCategory, categoryName } = await StaticCategoryProps.props(context);
+
+  return {
+    props: {
+      response,
+      name: [parentCategory, categoryName],
+    },
+    revalidate: 1,
+  }
+};
 
 export default function ProductCategory({
   response,
