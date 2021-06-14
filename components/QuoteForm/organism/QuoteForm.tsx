@@ -7,7 +7,6 @@ import Col from 'react-bootstrap/Col';
 import { Button } from "components/Button/atom/Button";
 import { hasErrors } from "utils/hasErrors";
 import Alert from 'react-bootstrap/Alert';
-import { sendEmail } from "utils/utils";
 import { useRouter } from "next/router";
 import { useAuth } from "components/Hooks/useAuth";
 
