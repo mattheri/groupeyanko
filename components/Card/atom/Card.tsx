@@ -4,7 +4,6 @@ import Link from "next/link";
 import { Product } from "../../../next-env";
 import { AddToCart } from "../../AddToCart/organism/AddToCart";
 import { motion } from "framer-motion";
-import { delayPrefetch } from "../../../utils/utils";
 
 export type CardProps =
   | {
@@ -51,7 +50,7 @@ export function Card({
       whileHover={{ y: 0 }}
       className={styles.card}
     >
-      <Link prefetch={delayPrefetch(5000, index)} href={url}>
+      <Link href={url}>
         <a className={styles.innerCard}>
           <article
             className={styles.image}
