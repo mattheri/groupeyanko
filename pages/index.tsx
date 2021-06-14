@@ -6,8 +6,8 @@ import Col from "react-bootstrap/Col";
 import { GetStaticProps } from "next";
 import { Category } from "../next-env";
 import { Card } from "../components/Card/atom/Card";
-import { GET } from "../utils/utils";
 import { useBreadcrumbs } from "../components/Hooks/useBreadcrumbs";
+import AxiosService from "services/AxiosService";
 
 type Props = {
   response: Category[];
@@ -53,9 +53,9 @@ export default function Home({ response }: Props) {
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-  const response = await GET(
-    "products/categories?per_page=100&hide_empty=true"
-  );
+  const response = await AxiosService.fetch({
+    url: 'products/categories?per_page=100&hide_empty=true',
+  })
 
   return {
     props: {
