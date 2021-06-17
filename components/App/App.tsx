@@ -1,12 +1,12 @@
 import { Breadcrumbs } from 'components/Breadcrumbs/organism/Breadcrumbs';
-import { Filter } from 'components/Filter/organism/Filter';
 import { Footer } from 'components/Footer/Footer';
 import useRouterEvents from 'components/Hooks/useRouterEvents';
+import Background from 'components/Background/Background';
 import LoaderController, { LoaderRef } from 'components/Loader/organism/LoaderRef';
-import { Navbar } from 'components/Navbar/Navbar';
-import { motion, AnimateSharedLayout } from 'framer-motion';
+import Main from 'components/Main/Main';
+import { Navbar } from 'components/Navbar/organism/Navbar';
 import React, { FC, useRef } from 'react';
-import { Container, Row, Col } from 'react-bootstrap';
+import { Col, Container, Row } from 'react-bootstrap';
 
 interface Props {
   Component:any;
@@ -24,25 +24,18 @@ const App:FC<Props> = ({ Component, pageProps }) => {
     <>
       <LoaderController ref={loaderRef} />
       <Navbar />
-        <Container
-          fluid
-          className="py-5"
-          style={{ minHeight: "100vh" }}
-          as={motion.main}
-        >
-          <Row as={motion.div}>
-            <AnimateSharedLayout>
-              <Filter />
-              <Col style={{ overflow: "visible" }} as={motion.div}>
-                <Container>
-                  <Breadcrumbs />
-                </Container>
-                <Component {...pageProps} />
-              </Col>
-            </AnimateSharedLayout>
+        <Main>
+          <Row>
+            <Col>
+              <Container>
+                <Breadcrumbs />
+              </Container>
+              <Component {...pageProps} />
+            </Col>
           </Row>
-        </Container>
+        </Main>
       <Footer />
+      <Background />
     </>
   );
 }

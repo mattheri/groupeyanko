@@ -1,9 +1,8 @@
 import React from "react";
 import styles from "./card.module.scss";
 import Link from "next/link";
-import { Product } from "../../../next-env";
-import { AddToCart } from "../../AddToCart/organism/AddToCart";
-import { motion } from "framer-motion";
+import { Product } from "next-env";
+import { AddToCart } from "components/AddToCart/organism/AddToCart";
 
 export type CardProps =
   | {
@@ -40,14 +39,7 @@ export function Card({
   index,
 }: CardProps) {
   return (
-    <motion.article
-      layout
-      initial={{ opacity: 0, x: -15, y: -5 }}
-      animate={{ opacity: 1, x: 0 }}
-      transition={{
-        layoutX: { duration: 0.3, damping: 1000 },
-      }}
-      whileHover={{ y: 0 }}
+    <article
       className={styles.card}
     >
       <Link prefetch={false} href={url}>
@@ -66,6 +58,6 @@ export function Card({
           <AddToCart layout={true} product={product} />
         </>
       )}
-    </motion.article>
+    </article>
   );
 }

@@ -1,16 +1,16 @@
-import { useEffect, useState } from "react";
-import { AnimatePresence } from "framer-motion";
+import { useEffect, useState, useContext } from "react";
 import { Category } from "../../../next-env";
 import FilterUI from "../molecule/FilterUI";
 import useFilterCategories from "../hook/UseFilterCategories";
 import ApiService from "services/ApiService";
-import { SearchController } from "components/Search/organism/SearchController";
+import { AnimationContext } from "components/Context/AnimationContext";
 
 export function Filter() {
   const [open, setOpen] = useState(false);
   const [categories, setCategories] = useState<Category[]>([]);
   const handleOpen = () => setOpen(!open);
   const sortedCategories = useFilterCategories(categories);
+  const { setPresence } = useContext(AnimationContext);
 
   useEffect(() => {
     (async () => {
@@ -24,12 +24,13 @@ export function Filter() {
     })();
   }, []);
 
+  useEffect(() => {
+    setPresence({ isPresent:open ? true : false });
+  }, [open]);
+
   return (
     <>
-      <SearchController onClick={handleOpen} toggle={open} />
-      <AnimatePresence>
-        {open && categories.length && <FilterUI categories={sortedCategories} />}
-      </AnimatePresence>
+      {categories.length && <FilterUI categories={sortedCategories} isOpen={open} />}
     </>
   );
 }

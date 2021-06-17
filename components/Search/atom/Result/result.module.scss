@@ -1,0 +1,21 @@
+@use 'styles/variables.scss' as v;
+
+.result {
+  height: 5rem;
+  border-radius: 10px;
+  text-decoration: none;
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+
+  &:hover {
+    color: white;
+    background-color: v.$colorPrimary;
+    text-decoration: none;
+  }
+
+  img {
+    margin-right: 1rem;
+  }
+}

@@ -1,0 +1,9 @@
+.toggler {
+  background-color: white;
+  border: none;
+  padding: 0;
+
+  @media only screen and (min-width: 992px) {
+    display: none;
+  }
+}

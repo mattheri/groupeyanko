@@ -1,0 +1,11 @@
+@use 'styles/variables.scss' as v;
+
+.badge {
+  background-color: v.$colorAccent;
+  color: white;
+  border-radius: 50%;
+  width: 25px;
+  height: 25px;
+  display: grid;
+  place-items: center;
+}

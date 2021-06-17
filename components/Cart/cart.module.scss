@@ -4,6 +4,12 @@
   width: fit-content;
   cursor: pointer;
   position: relative;
+  display: grid;
+  grid-template-rows: repeat(2, 1rem);
+  margin: 0;
+  padding: 0;
+  grid-column: 2;
+  grid-row: 1;
 
   div {
     color: black !important;
@@ -13,18 +19,6 @@
     width: 2rem;
     height: 2rem;
     color: v.$colorDark;
-  }
-
-  article {
-    background-color: v.$colorAccent;
-    color: white;
-    border-radius: 50%;
-    width: 25px;
-    height: 25px;
-    @include v.flexcenter();
-    position: absolute;
-    right: -3px;
-    bottom: 3px;
   }
 }
 

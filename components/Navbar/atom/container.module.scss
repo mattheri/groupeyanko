@@ -1,0 +1,12 @@
+.navbarContainer {
+  display: none;
+
+  @media only screen and (min-width: 992px) {
+    display: grid;
+    padding: 1rem 5rem;
+    grid-template-columns: 25% 1fr auto;
+    background-color: white;
+    position: fixed;
+    z-index: 999;
+  }
+}
