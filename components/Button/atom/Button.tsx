@@ -2,7 +2,6 @@ import { PropsWithChildren } from "react";
 import Link from "next/link";
 import styles from "./button.module.scss";
 import cn from "classnames";
-import { motion } from "framer-motion";
 
 export type ButtonProps =
   | {
@@ -63,20 +62,12 @@ export const Button = function ({
   className,
   disabled,
   children,
-  layout,
   type = "submit",
 }: PropsWithChildren<ButtonProps>) {
   if (!href) {
     return (
-      <motion.button
+      <button
         type={type}
-        layout={layout}
-        whileTap={{ scale: 0.6 }}
-        transition={{
-          duration: 0.1,
-          layoutX: { duration: 0.3, damping: 1000 },
-          layoutY: { duration: 0.3, damping: 1000 },
-        }}
         disabled={disabled}
         onClick={(e) => {
           onClick && onClick(e);
@@ -92,16 +83,13 @@ export const Button = function ({
         })}
       >
         {text || children}
-      </motion.button>
+      </button>
     );
   }
 
   return (
     <Link href={href}>
-      <motion.a
-        layout={layout}
-        whileTap={{ scale: 0.6 }}
-        transition={{ duration: 0.1 }}
+      <a
         onClick={onClick}
         className={cn({
           [styles.button]: true,
@@ -114,7 +102,7 @@ export const Button = function ({
         })}
       >
         {text || children}
-      </motion.a>
+      </a>
     </Link>
   );
 };

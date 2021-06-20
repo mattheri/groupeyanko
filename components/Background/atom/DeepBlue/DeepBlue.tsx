@@ -5,6 +5,7 @@ import styles from './deepBlue.module.scss';
 
 const DeepBlue:FC = () => {
   const [height, setHeight] = useState(0);
+  const [top, setTop] = useState(0);
   const y = useViewportY();
   const bounceAmount = useBouncingAnimation(10);
   const ref = useRef<HTMLDivElement>(null);
@@ -15,12 +16,15 @@ const DeepBlue:FC = () => {
     if (!ref.current) return;
 
     setHeight(ref.current.clientHeight);
+    setTop(ref.current.getBoundingClientRect().top);
   }, [ref]);
 
   const translate = () => {
     let value = height / 15;
 
     value = value - ((height / 60) * yPercent());
+
+    if (value < top) return top;
 
     return value;
   };

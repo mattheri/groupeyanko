@@ -2,7 +2,7 @@ import { Cart } from "components/Cart/organism/Cart";
 import { FC } from "react";
 import { Button } from 'components/Button/atom/Button';
 import NavbarAuthenticationSection from "./NavbarAuthenticationSection";
-import InteractiveSectionContainer from "../atom/InteractiveSectionContainer";
+import InteractiveSectionContainer from "../atom/InteractiveSectionContainer/InteractiveSectionContainer";
 
 interface Props {
   isAuthenticated:boolean;

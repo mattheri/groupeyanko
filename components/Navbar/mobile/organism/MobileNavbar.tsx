@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import cn from 'classnames';
 import MobileNavbarContainer from '../atom/MobileNavbarContainer';
-import Logo from 'components/Navbar/atom/Logo';
+import Logo from 'components/Navbar/atom/Logo/Logo';
 import MobileToggle from '../molecule/MobileToggle';
 import MobileNavbarTop from '../atom/MobileNavbarTop';
 import MobileNavbarBottom from '../atom/MobileNavbarBottom';

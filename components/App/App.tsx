@@ -7,6 +7,7 @@ import Main from 'components/Main/Main';
 import { Navbar } from 'components/Navbar/organism/Navbar';
 import React, { FC, useRef } from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
+import PageTransition from 'components/PageTransition/PageTransition';
 
 interface Props {
   Component:any;
@@ -23,17 +24,19 @@ const App:FC<Props> = ({ Component, pageProps }) => {
   return(
     <>
       <LoaderController ref={loaderRef} />
-      <Navbar />
-        <Main>
-          <Row>
-            <Col>
-              <Container>
-                <Breadcrumbs />
-              </Container>
-              <Component {...pageProps} />
-            </Col>
-          </Row>
-        </Main>
+        <Navbar />
+          <Main>
+            <Row>
+              <Col>
+                <Container>
+                  <Breadcrumbs />
+                </Container>
+                  <PageTransition>
+                  <Component {...pageProps} />
+                  </PageTransition>
+              </Col>
+            </Row>
+          </Main>
       <Footer />
       <Background />
     </>
