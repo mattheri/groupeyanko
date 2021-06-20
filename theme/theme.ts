@@ -6,6 +6,17 @@ const theme = {
     lg: 992,
     xl: 1200,
   },
+  colors: {
+    primary: '#1f285d',
+    accent: '#5065AB',
+    dark: '#111111',
+    black: '#000000',
+    grayNeutral: '#7a7a7a',
+  },
+  typography: {
+    heading: 'Mark Pro',
+    body: "'Baloo 2', cursive",
+  },
   get mediaQueries() {
     return {
       xs: `(max-width: ${this.breakpoints.xs}px)`,

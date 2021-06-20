@@ -3,7 +3,7 @@ import { Category } from 'next-env';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import { Card } from 'components/Card/atom/Card';
+import { Card } from 'components/Card/organism/Card';
 import { usePagination } from 'components/Hooks/usePagination';
 
 interface Props {

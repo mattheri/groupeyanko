@@ -1,6 +1,14 @@
 import useViewportY from "components/Hooks/useViewportY";
 import { FC, useRef } from "react";
-import styles from './lightBlue.module.scss';
+import styled from 'styled-components';
+
+const Bg = styled.div`
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  background-color: #5b91cc;
+  transform-origin: right center;
+`;
 
 const LightBlue:FC = () => {
   const y = useViewportY();
@@ -22,7 +30,12 @@ const LightBlue:FC = () => {
     return value;
   }
 
-  return <div ref={ref} style={{ transform: `rotate(${rotate()}deg) translateY(${translate()}px)`, }} className={styles.lightBlue} />
+  return <Bg
+    ref={ref}
+    style={{ 
+      transform: `rotate(${rotate()}deg) translateY(${translate()}px)`, 
+    }}
+  />
 }
 
 export default LightBlue;

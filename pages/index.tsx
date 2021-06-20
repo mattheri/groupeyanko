@@ -1,13 +1,10 @@
 import React from "react";
 import Head from "next/head";
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
 import { GetStaticProps } from "next";
-import { Category } from "../next-env";
-import { Card } from "../components/Card/atom/Card";
+import { Category } from "next-env";
 import { useBreadcrumbs } from "../components/Hooks/useBreadcrumbs";
 import AxiosService from "services/AxiosService";
+import BigCardsController from "components/BigCard/organism/BigCardsController";
 
 type Props = {
   response: Category[];
@@ -24,30 +21,7 @@ export default function Home({ response }: Props) {
         <title>Proaxion - Catalogue</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Container>
-        <Row>
-          {response
-            .filter((category) => !category._links.up)
-            .map((category, i) => (
-              <Col
-                key={category.id}
-                xs={12}
-                md={6}
-                lg={4}
-                className="d-flex justify-content-center p-0"
-              >
-                <Card
-                  index={i}
-                  url={`/category/${category.id}`}
-                  description={
-                    category.description ? category.description : category.name
-                  }
-                  src={category.image.src}
-                />
-              </Col>
-            ))}
-        </Row>
-      </Container>
+      <BigCardsController categories={response} />
     </>
   );
 }

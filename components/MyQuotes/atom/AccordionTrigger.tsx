@@ -1,6 +1,6 @@
 import { EventHandler, FC } from 'react';
 import { Button as BootstrapButton, Card } from 'react-bootstrap';
-import { Button } from 'components/Button/atom/Button';
+import { Button } from 'components/Button/Button';
 import AddToCartIcon from './AddToCartIcon';
 
 interface Props {

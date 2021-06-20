@@ -2,12 +2,59 @@ import useRouterEvents, { RouterEventCallback } from 'components/Hooks/useRouter
 import { FC, useState } from 'react';
 import styles from './pageTransition.module.scss';
 import { useRouter } from 'next/router';
+import styled, { keyframes, css } from 'styled-components';
 
 enum TransitionStage {
 	In = 'in',
 	Out = 'out',
 	Current = 'current',
 }
+
+const InKeyframes = keyframes`
+	0% {
+		transform: translate3d(-50%, 0, 0) scale3d(0.9, 0.9, 0.9);
+		opacity: 0;
+	}
+	70% {
+		transform: translate3d(0, 0, 0) scale3d(0.9, 0.9, 0.9);
+		opacity: 1;
+	}
+	100% {
+		transform: translate3d(0, 0, 0) scale3d(1, 1, 1);
+		opacity: 1;
+	}
+`;
+
+const OutKeyframes = keyframes`
+	0% {
+	transform: translate3d(0, 0, 0) scale3d(1, 1, 1);
+	opacity: 1;
+	}
+	30% {
+		transform: translate3d(0, 0, 0) scale3d(0.9, 0.9, 0.9);
+		opacity: 1;
+	}
+	100% {
+		transform: translate3d(50%, 0, 0) scale3d(0.9, 0.9, 0.9);
+		opacity: 0;
+	}
+`;
+
+const In = css`
+	animation: ${InKeyframes} 0.5s cubic-bezier(0.87, 0, 0.13, 1) both;
+`;
+
+const Out = css`
+	animation: ${OutKeyframes} 0.5s cubic-bezier(0.87, 0, 0.13, 1) both;
+`;
+
+const Container = styled.div<{stage:TransitionStage}>`
+	${({ stage }) => {
+		if (stage === TransitionStage.In) return In;
+		
+		return Out;
+	}}
+`;
 
 const PageTransition:FC = ({ children }) => {
 	const [displayChildren, setDisplayChildren] = useState({
@@ -42,12 +89,12 @@ const PageTransition:FC = ({ children }) => {
 	useRouterEvents('routeChangeError', cancelAnimation);
 
 	return (
-		<div
+		<Container
 			onAnimationEnd={initiateInTransitionOnAnimationEnd}
-			className={styles[transitionStage]}
+			stage={transitionStage}
 		>
 			{displayChildren.current}
-		</div>
+		</Container>
 	);
 }
 

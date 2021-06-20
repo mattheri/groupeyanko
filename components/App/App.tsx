@@ -38,7 +38,6 @@ const App:FC<Props> = ({ Component, pageProps }) => {
             </Row>
           </Main>
       <Footer />
-      <Background />
     </>
   );
 }

@@ -9,7 +9,7 @@ import SuccessAlert from 'components/SuccessAlert/atom/SuccessAlert';
 import ErrorAlert from 'components/ErrorAlert/atom/ErrorAlert';
 import { hasErrors } from 'utils/hasErrors';
 import { InputController } from 'components/Input/InputController';
-import { Button } from 'components/Button/atom/Button';
+import { Button } from 'components/Button/Button';
 import regex from 'utils/regex';
 
 interface Props {

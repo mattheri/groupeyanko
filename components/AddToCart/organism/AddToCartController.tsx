@@ -1,8 +1,9 @@
 import { Product } from "next-env";
-import { AddToCartUI } from "../molecule/AddToCartUI";
+import AddToCart from "../molecule/AddToCart";
 import useCartFunctions from "../hook/useCartFunctions";
+import { FC } from "react";
 
-type AddToCartProps = {
+type Props = {
   product: Product;
   className?: string;
   useInput?: boolean;
@@ -18,13 +19,12 @@ type AddToCartProps = {
  * @param className String add an optional string to style the component
  * @param useInput Boolean add an input to manage the number of items. The input only accepts numbers and if set to 0, removes the item.
  */
-export function AddToCart({
+const AddToCartController:FC<Props> = ({
   product,
-  className,
   useInput,
   replaceAmount,
-  layout,
-}: AddToCartProps) {
+}) => {
+
   const {
     handleAdd,
     handleChange,
@@ -35,18 +35,17 @@ export function AddToCart({
   } = useCartFunctions(product, replaceAmount);
 
   return (
-    <AddToCartUI
+    <AddToCart
       cartNumber={number}
-      className={className}
       onAdd={handleAdd}
       onCartChange={addProductToCart}
       onChange={handleChange}
       onManageInput={manageUseInput}
       onRemove={handleRemove}
       product={product}
-      replaceAmount={replaceAmount}
       useInput={useInput}
-      useLayout={layout}
     />
   );
 }
+
+export default AddToCartController;

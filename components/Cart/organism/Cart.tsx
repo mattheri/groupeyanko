@@ -1,13 +1,10 @@
-import React, { useEffect, useContext, useState } from "react";
-import Popup from "reactjs-popup";
+import React, { useEffect, useState } from "react";
 import styles from "../cart.module.scss";
-import "reactjs-popup/dist/index.css";
 import { usePagination } from "components/Hooks/usePagination";
-import { CartContentEmpty } from "../atom/CartContentEmpty";
-import { CartContent } from "../molecule/CartContent";
-import { CartSvg } from "../atom/CartSvg";
-import { Badge } from "components/Badge/organism/Badge";
+import CartContentEmpty from "../atom/CartContentEmpty";
+import CartContent from "../molecule/CartContent";
 import useCart from "components/Hooks/useCart";
+import CartPopupTrigger from "../molecule/CartPopupTrigger";
 
 /**
  * Cart component. Receives the cart object from the Cart Context.
@@ -45,18 +42,7 @@ export function Cart() {
   );
 
   return (
-    <Popup
-      className={styles.popup}
-      trigger={
-        <div className={styles.cart}>
-          <CartSvg />
-          <Badge number={numberOfItems} />
-        </div>
-      }
-      position="bottom right"
-      on={["hover", "focus"]}
-      mouseLeaveDelay={500}
-    >
+    <CartPopupTrigger numberOfItems={numberOfItems}>
       {numberOfItems > 0 ? (
         <CartContent items={paginatedItems[pagination || 0]}>
           <Pagination className={styles.pagination} />
@@ -66,6 +52,6 @@ export function Cart() {
           Il n'y a aucun item dans votre panier pour le moment.
         </CartContentEmpty>
       )}
-    </Popup>
+    </CartPopupTrigger>
   );
 }

@@ -1,9 +1,5 @@
-import { ReactNode } from "react";
+import { FC } from "react";
 
-interface Props {
-  children?: ReactNode;
-}
+const CartContentEmpty:FC = ({ children }) => <div>{children}</div>;
 
-export function CartContentEmpty({ children }: Props) {
-  return <div>{children}</div>;
-}
+export default CartContentEmpty;

@@ -8,7 +8,7 @@ import { hasErrors } from 'utils/hasErrors';
 import { BasicUserInformation, UserInformation } from 'services/domain/User';
 import ApiService from 'services/ApiService';
 import { AxiosResponse } from 'axios';
-import { Button } from 'components/Button/atom/Button';
+import { Button } from 'components/Button/Button';
 import ErrorAlert from 'components/ErrorAlert/atom/ErrorAlert';
 import SuccessAlert from 'components/SuccessAlert/atom/SuccessAlert';
 

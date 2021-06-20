@@ -1,7 +1,7 @@
 import { Product } from "../../next-env";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import { AddToCart } from "../AddToCart/organism/AddToCart";
+import { AddToCart } from "../AddToCart/organism/AddToCartController";
 import styles from "./productsection.module.scss";
 
 type ProductProps = {

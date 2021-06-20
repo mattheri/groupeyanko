@@ -5,7 +5,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import FormUI from "../molecule/Form";
 import Col from 'react-bootstrap/Col';
-import { Button } from "../../Button/atom/Button";
+import { Button } from "../../Button/Button";
 import { hasErrors } from "../../../utils/hasErrors";
 import Alert from 'react-bootstrap/Alert';
 import regex from "utils/regex";

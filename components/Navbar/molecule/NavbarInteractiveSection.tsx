@@ -1,6 +1,6 @@
 import { Cart } from "components/Cart/organism/Cart";
 import { FC } from "react";
-import { Button } from 'components/Button/atom/Button';
+import { Button } from 'components/Button/Button';
 import NavbarAuthenticationSection from "./NavbarAuthenticationSection";
 import InteractiveSectionContainer from "../atom/InteractiveSectionContainer/InteractiveSectionContainer";
 

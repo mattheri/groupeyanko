@@ -1,14 +1,14 @@
-import { FC } from 'react';
-import styles from './badge.module.scss';
+import styled from 'styled-components';
+import theme from 'theme/theme';
 
-interface Props {
-  number: number;
-}
+const Badge = styled.article`
+  background-color: ${theme.colors.accent};
+  color: white;
+  border-radius: 50%;
+  width: 25px;
+  height: 25px;
+  display: grid;
+  place-items: center;
+`;
 
-export const Badge:FC<Props> = ({ number }) => {
-  return (
-    <article className={styles.badge}>
-      {number}
-    </article>
-  );
-}
+export default Badge;

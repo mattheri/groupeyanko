@@ -1,47 +1,50 @@
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import { CartItem } from "components/CartItem/atom/CartItem";
-import { ReactNode } from "react";
-import styles from "../cart.module.scss";
-import { Button } from "components/Button/atom/Button";
+import { Button } from "components/Button/Button";
+import { CartItem } from "components/CartItem/organism/CartItem";
 import { Cart } from "components/Context/CartContext";
+import React, { FC } from "react";
+import styled from 'styled-components';
 
 interface Props {
   items: { [x:string]:Cart }[];
-  children?: ReactNode;
 }
+
+const SubmitContainer = styled.div`
+	width: 100%;
+	display: flex;
+
+	> * {
+		flex: 1 0 100%;
+	}
+`;
 
 const DEFAULT_PLACEHOLDER_IMAGE = "/uploads/images/placeholder.png";
 
-export function CartContent({ items, children }: Props) {
-  return (
-    <Container fluid className="px-0">
-      {items && items.map((product) => (
-        Object.entries(product).map(([id, product]) => (
-          <Row key={product.id}>
-            <CartItem
-              product={product}
-              id={product.id.toString()}
-              name={product.name}
-              number={product.number}
-              image={
-                product.image ? product.image : DEFAULT_PLACEHOLDER_IMAGE
-              }
-            />
-          </Row>
-        )
-      )))}
-      {children}
-      <Row>
-        <Col>
-          <Button
-            className={styles.submit}
-            href="/quote"
-            text="Voir votre soumission"
-          />
-        </Col>
-      </Row>
-    </Container>
-  );
+const CartContent:FC<Props> = ({ items, children }) => {
+
+	return (
+		<>
+			{items && items.map((product) => (
+				Object.entries(product).map(([id, product]) => (
+					<CartItem
+						key={id}
+						product={product}
+						id={product.id.toString()}
+						name={product.name}
+						number={product.number}
+						image={
+							product.image ? product.image : DEFAULT_PLACEHOLDER_IMAGE
+						}
+					/>
+				)
+			)))}
+			{children}
+			<SubmitContainer>
+				<Button href="/quote">
+					Voir votre soumission
+				</Button>
+			</SubmitContainer>
+		</>
+	);
 }
+
+export default CartContent;

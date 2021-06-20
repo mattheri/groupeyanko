@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { Button } from 'components/Button/atom/Button';
+import { Button } from 'components/Button/Button';
 import cn from 'classnames';
 import styles from '../pagepagination.module.scss';
 import ForwardArrow from '../atom/ForwardArrow';
