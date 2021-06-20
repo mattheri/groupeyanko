@@ -1,6 +1,5 @@
 import useRouterEvents, { RouterEventCallback } from 'components/Hooks/useRouterEvents';
 import { FC, useState } from 'react';
-import styles from './pageTransition.module.scss';
 import { useRouter } from 'next/router';
 import styled, { keyframes, css } from 'styled-components';
 
