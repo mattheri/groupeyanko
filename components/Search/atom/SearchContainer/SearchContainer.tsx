@@ -1,18 +1,25 @@
 import { forwardRef, ForwardedRef, ReactNode, CSSProperties } from "react";
 import { motion } from 'framer-motion';
-import styles from './container.module.scss';
+import styled from 'styled-components';
+import theme from 'theme/theme';
 
 interface Props {
   children:ReactNode;
   style?:CSSProperties;
 }
 
+const Container = styled.div`
+  display: flex;
+  align-items: center;
+  position: relative;
+`;
+
 const SearchContainer = forwardRef(({ style, children }:Props, ref:ForwardedRef<HTMLDivElement>) => {
 
   return (
-    <motion.div style={style} ref={ref} className={styles.searchContainer}>
+    <Container as={motion.div} style={style} ref={ref}>
       {children}
-    </motion.div>
+    </Container>
   );
 });
 

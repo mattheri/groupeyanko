@@ -3,11 +3,22 @@ import Head from "next/head";
 import { GetStaticProps } from "next";
 import { Category } from "next-env";
 import { useBreadcrumbs } from "../components/Hooks/useBreadcrumbs";
-import AxiosService from "services/AxiosService";
 import BigCardsController from "components/BigCard/organism/BigCardsController";
+import StaticCategoryProps from "services/Categories/StaticCategoryProps";
 
 type Props = {
   response: Category[];
+};
+
+export const getStaticProps: GetStaticProps = async () => {
+  const parentCategories = await StaticCategoryProps.initialProps();
+
+  return {
+    props: {
+      response: parentCategories,
+    },
+    revalidate: 1,
+  };
 };
 
 export default function Home({ response }: Props) {
@@ -25,16 +36,3 @@ export default function Home({ response }: Props) {
     </>
   );
 }
-
-export const getStaticProps: GetStaticProps = async () => {
-  const response = await AxiosService.fetch({
-    url: 'products/categories?per_page=100&hide_empty=true',
-  })
-
-  return {
-    props: {
-      response: response.data,
-    },
-    revalidate: 1,
-  };
-};

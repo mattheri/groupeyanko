@@ -3,8 +3,7 @@ import Row from "react-bootstrap/Row";
 import Form from "react-bootstrap/Form";
 import { Button } from "../Button/Button";
 import Col from "react-bootstrap/Col";
-import Alert from "react-bootstrap/Alert";
-import { InputController } from "../Input/InputController";
+import InputController from "components/Input/organism/InputController";
 import ErrorAlert from "components/ErrorAlert/atom/ErrorAlert";
 
 type LoginFormProps = {
@@ -27,12 +26,22 @@ export function LoginFormUI({
       <ErrorAlert error={error} autoDismiss />
       <Form noValidate onSubmit={onSubmit}>
         <Form.Group>
-          <Form.Label>Email</Form.Label>
-          <InputController formik={formik} type="email" id="email" />
+          <InputController
+            label='Email'
+            required
+            formik={formik}
+            type="email"
+            id="email"
+          />
         </Form.Group>
         <Form.Group>
-          <Form.Label>Password</Form.Label>
-          <InputController formik={formik} type="password" id="password" />
+          <InputController
+            label='Mot de passe'
+            required
+            formik={formik}
+            type="password"
+            id="password"
+          />
         </Form.Group>
         <Form.Row>
           <Col className="d-flex justify-content-center">
@@ -46,7 +55,7 @@ export function LoginFormUI({
             className="text-dark"
             href="/forgotpassword"
             tertiary
-            onClick={() => close()}
+            onClick={close}
             text="Vous avez oublié votre mot de passe?"
           />
         </Col>
@@ -57,7 +66,7 @@ export function LoginFormUI({
           <Button
             className="ml-2"
             size="sm"
-            onClick={() => close()}
+            onClick={close}
             href="/signup"
             text="Créer un compte"
           />

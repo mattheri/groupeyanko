@@ -24,7 +24,7 @@ class CategoryService {
     return response.data;
   }
 
-  public async fetchCategory(categoryId:number):Promise<Category> {
+  public async fetchCategory(categoryId:number | string):Promise<Category> {
     const response:AxiosResponse<Category> = await this.axios.fetch({
       url: `products/categories/${categoryId}`,
       method: 'GET',
@@ -72,6 +72,19 @@ class CategoryService {
     });
 
     return response;
+  }
+
+  public async fetchParentCategories():Promise<Category[]> {
+    const response:AxiosResponse<Category[]> = await this.axios.fetch({
+      url: 'products/categories?per_page=100&hide_empty=true',
+      method: 'GET',
+    });
+
+    return this.filterParentCategories(response.data);
+  }
+
+  private filterParentCategories(categories:Category[]):Category[] {
+    return categories.filter((category) => !category._links.up);
   }
 }
 

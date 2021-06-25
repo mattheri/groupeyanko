@@ -2,8 +2,8 @@ import { FC } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Result, { ResultProps } from "../atom/Result/Result";
 import { Product } from "next-env";
-import styles from './container.module.scss';
 import SearchOverlay from "../atom/Overlay/SearchOverlay";
+import styled from 'styled-components';
 
 interface Props {
   results:Product[];
@@ -13,14 +13,28 @@ interface Props {
 
 const DEFAULT_PLACEHOLDER_IMAGE = "/uploads/images/placeholder.png";
 
+const Container = styled.section`
+  position: absolute;
+  display: grid;
+  top: 5rem;
+  z-index: 1000;
+  background-color: white;
+  width: 100%;
+  padding: 1rem;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  max-height: 40rem;
+  overflow-y: auto;
+`;
+
 const SearchResultsContainer:FC<Props> = ({ results, isOpen, onClick }) => {
   
   return(
     <AnimatePresence>
       {isOpen && (
         <>
-          <motion.section
-            className={styles.searchResults}
+          <Container
+            as={motion.section}
             initial={{ y: -10, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: -10, opacity: 0 }}
@@ -36,7 +50,7 @@ const SearchResultsContainer:FC<Props> = ({ results, isOpen, onClick }) => {
                 alt={alt}
               />
             ))}
-          </motion.section>
+          </Container>
           <SearchOverlay onClick={onClick} />
         </>
       )}

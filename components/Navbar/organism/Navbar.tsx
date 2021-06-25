@@ -1,29 +1,30 @@
 import React, { useState } from "react";
 import { useAuth } from "components/Hooks/useAuth";
-import NavbarContainer from "../atom/NavbarContainer/NavbarContainer";
-import Logo from "../atom/Logo/Logo";
-import NavbarInteractiveSection from "../molecule/NavbarInteractiveSection";
-import MobileNavbar from "../mobile/organism/MobileNavbar";
-import SearchController from "components/Search/organism/SearchController";
-import NavbarBreadcrumbs from "../atom/NavbarBreadcrumbs/NavbarBreadcrumbs";
+import Logo from "../atom/Logo";
+import Collapse from "../molecule/Collapse";
+import NavbarContainer from "../molecule/NavbarContainer";
+import Toggle from "../molecule/Toggle";
+import { Cart } from "components/Cart/organism/Cart";
+import Search from "../molecule/Search";
+import { Breadcrumbs } from "components/Breadcrumbs/organism/Breadcrumbs";
 
 export function Navbar() {
-  const [show, setShow] = useState(false);
+  const [isMobileNavbarOpen, setIsMobileNavbarOpen] = useState(false);
 
   const { isAuthenticated, signOut } = useAuth();
 
-  const handleShow = () => setShow(!show);
   const handleLogout = async () => await signOut();
 
+  const toggleMobileNavbar = () => setIsMobileNavbarOpen(!isMobileNavbarOpen);
+
   return (
-    <>
-      <MobileNavbar isAuthenticated={isAuthenticated} onLogout={handleLogout} onShow={handleShow} show={show} />
-      <NavbarContainer>
-        <Logo />
-        <SearchController />
-        <NavbarInteractiveSection isAuthenticated={isAuthenticated} onLogout={handleLogout} />
-      </NavbarContainer>
-      <NavbarBreadcrumbs />
-    </>
+    <NavbarContainer isOpen={isMobileNavbarOpen}>
+      <Logo />
+      <Search />
+      <Collapse isOpen={isMobileNavbarOpen} isAuthenticated={isAuthenticated} onLogout={handleLogout} />
+      <Cart />
+      <Toggle isOpen={isMobileNavbarOpen} onToggle={toggleMobileNavbar} />
+      <Breadcrumbs />
+    </NavbarContainer>
   );
 }

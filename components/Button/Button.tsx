@@ -1,34 +1,100 @@
 import { ButtonHTMLAttributes, FC } from "react";
 import Link from "next/link";
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import theme from "theme/theme";
 
-const StyledButton = styled.button<{primary:boolean,secondary:boolean,tertiary:boolean,size:'sm'|'lg'}>`
+type Block = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+
+type Size = 'sm' | 'lg';
+
+const Width = css<{block:Block}>`
+  width: ${({ block }) => block === 'xs' ? '100%' : 'fit-content'};
+
+  @media only screen and (${theme.mediaQueries.sm}) {
+    width: ${({ block }) => block === 'sm' ? '100%' : 'fit-content'};
+  }
+  @media only screen and (${theme.mediaQueries.md}) {
+    width: ${({ block }) => block === 'md' ? '100%' : 'fit-content'};
+  }
+  @media only screen and (${theme.mediaQueries.lg}) {
+    width: ${({ block }) => block === 'lg' ? '100%' : 'fit-content'};
+  }
+  @media only screen and (${theme.mediaQueries.xl}) {
+    width: ${({ block }) => block === 'xl' ? '100%' : 'fit-content'};
+  }
+`;
+
+const Padding = css<{size:Size}>`
   padding: ${({ size }) => size === 'sm' ? '0.3rem 0.5rem' : '1rem 1.2rem'};
-  font-family: ${theme.typography.heading};
+`;
+
+const FontSize = css<{size:Size}>`
   font-size: ${({ size }) => size === 'sm' ? '1.4rem' : '1.5rem'};
-  transition: transform 0.3s, background-color 0.2s, color 0.2s;
-  width: fit-content;
-  max-height: 4rem;
-  text-decoration: none;
+`;
+
+const Border = css<{secondary:boolean,tertiary:boolean}>`
   border: ${({ secondary, tertiary }) => {
     if (secondary) return `${theme.colors.accent} 2px solid`;
     if (tertiary) return '2px transparent solid';
 
     return 'none';
   }};
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 5px;
-  cursor: pointer;
+`;
+
+const Color = css<{tertiary:boolean}>`
   color: ${({ tertiary }) => tertiary ? theme.colors.dark : 'white'};
-  background-color: ${({ secondary, tertiary }) => {
+`;
+
+const BackgroundColor = css<{secondary:boolean,tertiary:boolean}>`
+    background-color: ${({ secondary, tertiary }) => {
     if (secondary) return 'transparent';
     if (tertiary) return 'transparent';
 
     return theme.colors.accent;
   }};
+`;
+
+const HoverBackgroundColor = css<{secondary:boolean,tertiary:boolean}>`
+  background-color: ${({ secondary, tertiary }) => {
+    if (secondary) return theme.colors.accent;
+    if (tertiary) return 'transparent';
+
+    return theme.colors.black;
+  }};
+`;
+
+const HoverColor = css<{tertiary:boolean}>`
+  color: ${({ tertiary }) => {
+    if (tertiary) return theme.colors.accent;
+
+    return 'white';
+  }};
+`;
+
+const HoverBorder = css<{secondary:boolean,tertiary:boolean}>`
+  border: ${({ secondary, tertiary }) => {
+    if (secondary || tertiary) return `${theme.colors.accent} 2px solid`;
+
+    return 'none';
+  }};
+`;
+
+const StyledButton = styled.button<{primary:boolean,secondary:boolean,tertiary:boolean,size:Size,block:Block}>`
+  ${Padding}
+  ${Width}
+  ${FontSize}
+  ${Border}
+  ${Color}
+  ${BackgroundColor}
+  font-family: ${theme.typography.heading};
+  transition: transform 0.3s, background-color 0.2s, color 0.2s;
+  max-height: 4rem;
+  text-decoration: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+  cursor: pointer;
 
   &:hover {
     text-decoration: none;
@@ -44,22 +110,9 @@ const StyledButton = styled.button<{primary:boolean,secondary:boolean,tertiary:b
   }
 
   &:hover {
-    background-color: ${({ primary, secondary, tertiary }) => {
-      if (secondary) return theme.colors.accent;
-      if (tertiary) return 'transparent';
-
-      return theme.colors.black;
-    }};
-    color: ${({ tertiary }) => {
-      if (tertiary) return theme.colors.accent;
-
-      return 'white';
-    }};
-    border: ${({ secondary, tertiary }) => {
-      if (secondary || tertiary) return `${theme.colors.accent} 2px solid`;
-
-      return 'none';
-    }}
+    ${HoverBackgroundColor}
+    ${HoverColor}
+    ${HoverBorder}
   }
 
   &:focus {
@@ -71,27 +124,17 @@ const StyledButton = styled.button<{primary:boolean,secondary:boolean,tertiary:b
     transform: scale(0.9);
   }
 `;
+
 interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
   text?:string;
   primary?: boolean;
   secondary?: boolean;
   tertiary?: boolean;
-  size?: "sm" | "lg";
+  size?:Size;
   href?:string;
+  block?:Block;
 }
 
-/**
- * Button component. It is made of of a Link component. See Next.js Link component: https://nextjs.org/docs/api-reference/next/link
- * If there is an onClick function
- *
- * @param href string represents the path. Optional only if an onClick props is
- * provided otherwise it is required see Next.js Routing: https://nextjs.org/docs/api-routes/introduction
- * @param text string the text to show on the button
- * @param primary boolean enables primary styling. This is enabled by default
- * @param secondary boolean enables secondary styling
- * @param tertiary boolean enables tertiary styling
- * @param onClick void function. Optional only if an href is provided otherwise it is required.
- */
 export const Button:FC<Props> = function ({
   href,
   text,
@@ -103,6 +146,7 @@ export const Button:FC<Props> = function ({
   disabled,
   children,
   type = "submit",
+  block,
 }) {
   if (!href) {
     return (
@@ -114,6 +158,7 @@ export const Button:FC<Props> = function ({
         secondary={secondary}
         tertiary={tertiary}
         size={size}
+        block={block}
       >
         {text || children}
       </StyledButton>
@@ -123,11 +168,12 @@ export const Button:FC<Props> = function ({
   return (
     <Link href={href}>
       <StyledButton
-        as='a'
         primary={primary}
         secondary={secondary}
         tertiary={tertiary}
         size={size}
+        onClick={onClick}
+        block={block}
       >
         {text || children}
       </StyledButton>

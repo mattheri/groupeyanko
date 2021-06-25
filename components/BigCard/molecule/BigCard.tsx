@@ -11,6 +11,7 @@ interface Props {
 const Container = styled.div`
 	width: 100%;
 	min-height: 33rem;
+	min-width: 30rem;
 	overflow: hidden;
 	position: relative;
 	cursor: pointer;

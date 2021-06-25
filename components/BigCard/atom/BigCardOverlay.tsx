@@ -13,6 +13,7 @@ const Container = styled.div`
 	position: relative;
 	display: grid;
 	place-items: center;
+	padding: 1rem;
 
 	&::after {
 		content: '';
@@ -30,6 +31,7 @@ const Heading = styled.h2`
 	font-weight: bold;
 	text-align: center;
 	z-index: 1;
+	font-size: 3rem;
 `;
 
 const DEFAULT_HREF = '/category';

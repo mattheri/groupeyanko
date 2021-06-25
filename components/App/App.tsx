@@ -1,13 +1,17 @@
 import { Breadcrumbs } from 'components/Breadcrumbs/organism/Breadcrumbs';
 import { Footer } from 'components/Footer/Footer';
 import useRouterEvents from 'components/Hooks/useRouterEvents';
-import Background from 'components/Background/Background';
 import LoaderController, { LoaderRef } from 'components/Loader/organism/LoaderRef';
 import Main from 'components/Main/Main';
 import { Navbar } from 'components/Navbar/organism/Navbar';
 import React, { FC, useRef } from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
 import PageTransition from 'components/PageTransition/PageTransition';
+import styled from 'styled-components';
+
+const MainCol = styled(Col)`
+  position: relative;
+`;
 
 interface Props {
   Component:any;
@@ -28,12 +32,11 @@ const App:FC<Props> = ({ Component, pageProps }) => {
           <Main>
             <Row>
               <Col>
-                <Container>
-                  <Breadcrumbs />
-                </Container>
+                <MainCol className='p-0'>
                   <PageTransition>
-                  <Component {...pageProps} />
+                    <Component {...pageProps} />
                   </PageTransition>
+                </MainCol>
               </Col>
             </Row>
           </Main>

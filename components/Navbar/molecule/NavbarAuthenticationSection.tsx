@@ -1,7 +1,8 @@
 import { FC } from "react";
 import { Button } from 'components/Button/Button';
-import { LoginFormController } from "components/LoginForm/LoginFormController";
+import LoginFormController from "components/LoginForm/LoginFormController";
 import { ModalPopup } from "components/ModalPopup/ModalPopup";
+import { Nav } from 'react-bootstrap';
 
 interface Props {
   isAuthenticated:boolean;
@@ -13,11 +14,11 @@ const NavbarAuthenticationSection:FC<Props> = ({ isAuthenticated, onLogout }) =>
   return (
     isAuthenticated ? (
       <>
-        <Button onClick={onLogout} text="Déconnexion" />
-        <Button href='/me' text='Profil' />
+        <Nav.Link block='xs' as={Button} onClick={onLogout}>Déconnexion</Nav.Link>
+        <Nav.Link block='xs' as={Button} href='/me'>Profil</Nav.Link>
       </>
     ) : (
-      <ModalPopup trigger={<Button text={"Connexion"} />}>
+      <ModalPopup trigger={<Nav.Link block='xs' as={Button}>Connexion</Nav.Link>}>
         <LoginFormController />
       </ModalPopup>
     )

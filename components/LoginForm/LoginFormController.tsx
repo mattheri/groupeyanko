@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, FC } from "react";
 import { useAuth } from "../Hooks/useAuth";
 import { useFormik } from "formik";
 import * as Yup from "yup";
@@ -7,11 +7,11 @@ import { LoginFormUI } from "./LoginFormUI";
 import { FormikValues } from "../../next-env";
 import regex from "utils/regex";
 
-type LoginFormProps = {
-  close?: () => void;
+interface Props {
+  close?:() => void;
 };
 
-export function LoginFormController({ close }: LoginFormProps) {
+const LoginFormController:FC<Props> = ({ close }) => {
   const [loginError, setLoginError] = useState("");
 
   const { handleAuth } = useAuth();
@@ -50,9 +50,11 @@ export function LoginFormController({ close }: LoginFormProps) {
 
   const handleLoginError = (e: string) => setLoginError(e);
 
+  const closeModal = () => close();
+
   return (
     <LoginFormUI
-      close={close}
+      close={closeModal}
       formik={formik}
       error={loginError}
       onSubmit={formik.handleSubmit}
@@ -60,3 +62,5 @@ export function LoginFormController({ close }: LoginFormProps) {
     />
   );
 }
+
+export default LoginFormController;

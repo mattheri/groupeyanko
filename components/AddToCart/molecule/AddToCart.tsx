@@ -1,12 +1,13 @@
 import React, { ChangeEvent } from "react";
 import { Product } from "next-env";
-import Form from "react-bootstrap/Form";
 import AddToCartContainer from "../atom/AddToCartContainer";
 import ChangeButton from "../atom/ChangeButton";
 import Amount from "../atom/Amount";
 import { FC } from "react";
 import styled from 'styled-components';
 import { Button } from "components/Button/Button";
+import Input from "components/Input/molecule/Input";
+import NoValidationInput from "components/Input/molecule/NoValidationInput";
 
 interface Props {
   onAdd: () => void;
@@ -64,11 +65,7 @@ const AddToCart:FC<Props> = ({
       <TopContainer>
         <ChangeButton disabled={cartNumber <= 1} onClick={onRemove} />
         {useInput ? (
-          <Form.Control
-            onChange={onChange}
-            type="text"
-            value={cartNumber}
-          />
+          <NoValidationInput onChange={onChange} value={`${cartNumber}`} />
         ) : (
           <Amount>{cartNumber}</Amount>
         )}

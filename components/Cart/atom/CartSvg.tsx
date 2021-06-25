@@ -10,8 +10,8 @@ const SVGContainer = styled.div`
 `;
 
 const Svg = styled.svg`
-  width: 3.3rem;
-  height: 3.3rem;
+  width: 4rem;
+  height: 4rem;
   color: ${theme.colors.dark};
 `;
 

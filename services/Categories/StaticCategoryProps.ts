@@ -43,6 +43,10 @@ class StaticCategoryProps {
     return { response, parentCategory, categoryName: category.name }
   }
 
+  public async initialProps() {
+    return this.categoryService.fetchParentCategories();
+  }
+
   private parseParams(paramsId:string | string[]):number {
     if (Array.isArray(paramsId)) return 0;
 

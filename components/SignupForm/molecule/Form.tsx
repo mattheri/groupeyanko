@@ -1,5 +1,5 @@
 import { FC, ChangeEvent } from "react";
-import { InputController } from "../../Input/InputController";
+import InputController from "../../Input/organism/InputController";
 import Form from "react-bootstrap/Form";
 import Col from "react-bootstrap/Col";
 import InformationForm from "components/InformationForm/InformationForm";
@@ -15,8 +15,13 @@ const FormUI: FC<Props> = ({ formik, onChange, children }) => {
       <Form.Row>
         <Col xs={12} md={6}>
           <Form.Group>
-            <Form.Label>Mot de passe *</Form.Label>
-            <InputController formik={formik} id="password" type="password" />
+            <InputController
+              label='Mot de passe'
+              required
+              formik={formik}
+              id="password"
+              type="password"
+            />
             <small>
               Le mot de passe doit contenir 8 caractères dont une lettre et un
               chiffre.
@@ -25,8 +30,13 @@ const FormUI: FC<Props> = ({ formik, onChange, children }) => {
         </Col>
         <Col xs={12} md={6}>
           <Form.Group>
-            <Form.Label>Entrez de nouveau le mot de passe *</Form.Label>
-            <InputController formik={formik} id="reType" type="password" />
+            <InputController
+              label='Entrez de nouveau le mot de passe'
+              required
+              formik={formik}
+              id="reType"
+              type="password"
+            />
           </Form.Group>
         </Col>
       </Form.Row>

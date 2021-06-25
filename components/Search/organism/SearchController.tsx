@@ -1,77 +1,36 @@
-import { useState, useEffect, useRef, ChangeEvent, FC, CSSProperties } from "react";
-import { Product } from "../../../next-env";
+import { useState, useEffect, useRef, ChangeEvent, FC } from "react";
 import { useClickOutside } from "../../Hooks/useClickOutside";
-import ApiService from "services/ApiService";
 import SearchContainer from "../atom/SearchContainer/SearchContainer";
 import SearchInput from "../atom/SearchInput/SearchInput";
 import MagnifyingGlass from "../atom/MagnifyingGlass/MagnifyingGlass";
 import SearchResultsContainer from "../molecule/SearchResultContainer";
 import useViewportY from "components/Hooks/useViewportY";
+import useDebouncedValue from "../hook/useDebouncedValue";
+import useSearchResults from "../hook/useSearchResult";
 
-interface Props {
-  style?:CSSProperties;
-}
-
-const SearchController:FC<Props> = ({ style }) => {
-  const [query, setQuery] = useState("");
-  const [results, setResults] = useState<Product[]>([]);
+const SearchController:FC = () => {
+  const [value, setValue] = useState("");
   const [open, setOpen] = useState(false);
   const [inputOpen, setInputOpen] = useState(false);
-  let timer: any;
-  let totalArgs = [];
 
-  const debounce = (func: any, time: number, args: any) => {
-    totalArgs = [...args];
+  const query = useDebouncedValue(value, 500);
+  const results = useSearchResults(query);
 
-    return () => {
-      while (!timer) {
-        timer = setTimeout(() => {
-          func(totalArgs.join(""));
-          timer = false;
-        }, time);
-      }
-    };
-  };
-  const debounced = (val: string) => debounce(setQuery, 500, val)();
-
-  const handleChange = (change: ChangeEvent<HTMLInputElement>) =>
-    debounced(change.target.value);
-
-  useEffect(() => {
-    if (query) {
-      (async () => {
-        try {
-          const response = await ApiService.fetch({
-            url: '/api/search',
-            method: 'POST',
-            data: {
-              query,
-            }
-          });
-          if (response.status !== 200) {
-            throw new Error(response.statusText);
-          }
-          setResults(response.data);
-        } catch (e) {
-          setResults([]);
-        }
-      })();
-    }
-  }, [query]);
+  const changeSearchValue = (event:ChangeEvent<HTMLInputElement>) => setValue(event.target.value);
 
   const searchRef = useRef<HTMLDivElement>(null);
   const y = useViewportY();
 
-  const handleOpen = () =>
-    !!(query && results.length) ? setOpen(true) : setOpen(false);
+  const handleOpen = () => !!(query && results.length) ? setOpen(true) : setOpen(false);
+  
   const handleOpenWhenClickOutsie = () => {
-    setQuery("");
-    setResults([]);
+    setValue("");
     setInputOpen(false);
     return setOpen(false);
   };
 
   useEffect(() => handleOpen(), [query, results.length]);
+
   useEffect(() => {
     if (y > 10) handleOpenWhenClickOutsie();
   }, [y]);
@@ -82,7 +41,7 @@ const SearchController:FC<Props> = ({ style }) => {
 
   return (
     <SearchContainer ref={searchRef}>
-      <SearchInput onChange={handleChange} isOpen={inputOpen} />
+      <SearchInput onChange={changeSearchValue} isOpen={inputOpen} value={value} />
       <MagnifyingGlass isInputOpen={inputOpen} onClick={openInput} />
       <SearchResultsContainer results={results} isOpen={open} onClick={handleOpenWhenClickOutsie} />
     </SearchContainer>

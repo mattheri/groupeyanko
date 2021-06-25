@@ -1,4 +1,4 @@
-import { InputController } from 'components/Input/InputController';
+import InputController from 'components/Input/organism/InputController';
 import { FC } from 'react';
 import { Form as BootstrapForm, Col } from 'react-bootstrap';
 
@@ -13,8 +13,7 @@ const Form:FC<Props> = ({ formik, children }) => {
       <BootstrapForm.Row>
         <Col>
           <BootstrapForm.Group>
-            <BootstrapForm.Label>Email *</BootstrapForm.Label>
-            <InputController formik={formik} id='email' />
+            <InputController label='Email' required formik={formik} id='email' />
           </BootstrapForm.Group>
         </Col>
       </BootstrapForm.Row>

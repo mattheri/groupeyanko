@@ -33,7 +33,7 @@ class ProductService {
     return response.data;
   }
 
-  public async fetchProduct(productId:number):Promise<Product> {
+  public async fetchProduct(productId:number | string):Promise<Product> {
     const response:AxiosResponse<Product> = await this.axios.fetch({
       url: `products/${productId}`,
       method: 'GET',

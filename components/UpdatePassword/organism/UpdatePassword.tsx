@@ -1,16 +1,12 @@
 import React, { FC, useState } from 'react';
-import { Form, Col } from 'react-bootstrap';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import { AxiosResponse } from 'axios';
 import { QuerySuccessMessage } from 'services/domain/Database';
 import ApiService from 'services/ApiService';
-import SuccessAlert from 'components/SuccessAlert/atom/SuccessAlert';
-import ErrorAlert from 'components/ErrorAlert/atom/ErrorAlert';
 import { hasErrors } from 'utils/hasErrors';
-import { InputController } from 'components/Input/InputController';
-import { Button } from 'components/Button/Button';
 import regex from 'utils/regex';
+import UpdatePasswordForm from '../molecule/UpdatePasswordForm';
 
 interface Props {
   userEmail:string;
@@ -70,45 +66,12 @@ const UpdatePassword:FC<Props> = ({ userEmail }) => {
 
   const validate = hasErrors(formik.values, formik.errors);
 
-  return(
-    <>
-      <SuccessAlert success={success} autoDismiss />
-      <ErrorAlert error={error} />
-      <Form onSubmit={formik.handleSubmit}>
-      <Form.Row>
-        <Col xs={12}>
-          <Form.Group>
-            <Form.Label>Ancien mot de passe *</Form.Label>
-            <InputController formik={formik} id="oldPassword" type="password" />
-          </Form.Group>
-        </Col>
-        <Col xs={12}>
-          <Form.Group>
-            <Form.Label>Nouveau mot de passe *</Form.Label>
-            <InputController formik={formik} id="newPassword" type="password" />
-            <small>
-              Le mot de passe doit contenir 8 caractères dont une lettre et un
-              chiffre.
-            </small>
-          </Form.Group>
-        </Col>
-        <Col xs={12}>
-          <Form.Group>
-            <Form.Label>Entrez de nouveau le mot de passe *</Form.Label>
-            <InputController formik={formik} id="reType" type="password" />
-          </Form.Group>
-        </Col>
-      </Form.Row>
-      <Form.Row>
-        <Button
-          className="mt-4 w-100 w-lg-50"
-          disabled={validate()}
-          text="Mettre mon mot de passe à jour"
-        />
-      </Form.Row>
-      </Form>
-    </>
-  );
+  return <UpdatePasswordForm
+    error={error}
+    formik={formik} onSubmit={formik.handleSubmit}
+    success={success}
+    validate={validate}
+    />
 }
 
 export default UpdatePassword;

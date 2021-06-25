@@ -6,7 +6,7 @@ import { Button } from "../Button/Button";
 import Col from "react-bootstrap/Col";
 import { useAuth } from "../Hooks/useAuth";
 import { useFormik } from "formik";
-import { InputController } from "../Input/InputController";
+import InputController from "../Input/organism/InputController";
 import * as Yup from "yup";
 import { hasErrors } from "../../utils/hasErrors";
 import ErrorAlert from "components/ErrorAlert/atom/ErrorAlert";
@@ -54,12 +54,10 @@ export function LoginForm({ close }: LoginFormProps) {
       <ErrorAlert error={loginError} />
       <Form noValidate onSubmit={formik.handleSubmit}>
         <Form.Group>
-          <Form.Label>Email</Form.Label>
-          <InputController formik={formik} type="email" id="email" />
+          <InputController label='Email' required formik={formik} type="email" id="email" />
         </Form.Group>
         <Form.Group>
-          <Form.Label>Password</Form.Label>
-          <InputController formik={formik} type="password" id="password" />
+          <InputController label='Mot de passe' required formik={formik} type="password" id="password" />
         </Form.Group>
         <Form.Row>
           <Col className="d-flex justify-content-center">

@@ -1,5 +1,5 @@
 import { FC, ChangeEvent } from "react";
-import { InputController } from "components/Input/InputController";
+import InputController from "components/Input/organism/InputController";
 import Form from "react-bootstrap/Form";
 import Col from "react-bootstrap/Col";
 import ProvinceSelect from "./ProvinceSelect";
@@ -14,32 +14,26 @@ const InformationForm: FC<Props> = ({ formik, onChange }) => {
       <Form.Row>
         <Col xs={12} md={6}>
           <Form.Group>
-            <Form.Label>Prénom *</Form.Label>
-            <InputController formik={formik} id="firstname" type="text" />
+            <InputController required label='Prénom' formik={formik} id="firstname" type="text" />
           </Form.Group>
         </Col>
         <Col xs={12} md={6}>
           <Form.Group>
-            <Form.Label>Nom *</Form.Label>
-            <InputController formik={formik} id="lastname" type="text" />
+            <InputController label='Nom' required formik={formik} id="lastname" type="text" />
           </Form.Group>
         </Col>
       </Form.Row>
       <Form.Group>
-        <Form.Label>Courriel *</Form.Label>
-        <InputController formik={formik} id="email" type="email" />
+        <InputController label='Courriel' required formik={formik} id="email" type="email" />
       </Form.Group>
       <Form.Group>
-        <Form.Label>Compagnie</Form.Label>
-        <InputController formik={formik} id="company" type="text" />
+        <InputController label='Compagnie' formik={formik} id="company" type="text" />
       </Form.Group>
       <Form.Group>
-        <Form.Label>Téléphone *</Form.Label>
-        <InputController formik={formik} id="phoneNumber" type="text" />
+        <InputController label='Téléphone' required formik={formik} id="phoneNumber" type="text" />
       </Form.Group>
       <Form.Group>
-        <Form.Label>Adresse *</Form.Label>
-        <InputController formik={formik} id="address" type="text" />
+        <InputController label='Adresse' required formik={formik} id="address" type="text" />
       </Form.Group>
       <Form.Row>
         <Col xs={12} md={6} lg={4}>
@@ -49,14 +43,14 @@ const InformationForm: FC<Props> = ({ formik, onChange }) => {
         </Col>
         <Col xs={12} md={6} lg={4}>
           <Form.Group>
-            <Form.Label>Ville *</Form.Label>
-            <InputController formik={formik} id="city" type="text" />
+            <InputController label='Ville' required formik={formik} id="city" type="text" />
           </Form.Group>
         </Col>
         <Col xs={12} md={6} lg={4}>
           <Form.Group>
-            <Form.Label>Code Postal *</Form.Label>
             <InputController
+              label='Code Postal'
+              required
               formik={formik}
               id="postalCode"
               type="text"

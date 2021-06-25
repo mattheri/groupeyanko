@@ -1,5 +1,5 @@
 import { FC, ChangeEvent } from "react";
-import { InputController } from "../../Input/InputController";
+import InputController from "components/Input/organism/InputController";
 import Form from "react-bootstrap/Form";
 import InformationForm from "components/InformationForm/InformationForm";
 interface Props {
@@ -12,10 +12,8 @@ const FormUI: FC<Props> = ({ formik, onChange, children }) => {
     <Form onSubmit={formik.handleSubmit} noValidate>
       <InformationForm formik={formik} onChange={onChange} />
       <Form.Row>
-        <Form.Label>
-          Message (optionnel)
-        </Form.Label>
         <InputController
+          label='Message (optionnel)'
           formik={formik}
           id="message"
           as="textarea"

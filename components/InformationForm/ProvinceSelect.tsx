@@ -1,6 +1,5 @@
 import { FC } from "react";
-import { InputController } from "components/Input/InputController";
-import FormLabel from "react-bootstrap/FormLabel";
+import InputController from "components/Input/organism/InputController";
 
 interface Props {
   formik: any;
@@ -11,8 +10,7 @@ interface Props {
 const ProvinceSelect: FC<Props> = ({ formik, id, label }) => {
   return (
     <>
-      <FormLabel htmlFor={id}>{label}</FormLabel>
-      <InputController formik={formik} id={id} as="select">
+      <InputController label='Province' formik={formik} id={id} as="select">
         <option value="Québec">Québec</option>
         <option value="Alberta">Alberta</option>
         <option value="Colombie-Britannique">Colombie Britannique</option>

@@ -9,6 +9,8 @@ const Badge = styled.article`
   height: 25px;
   display: grid;
   place-items: center;
+  position: absolute;
+  top: 2rem;
 `;
 
 export default Badge;

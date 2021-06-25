@@ -1,6 +1,5 @@
 @keyframes open {
   0% {
-    transform: translateY(0);
     opacity: 0;
   }
 
@@ -10,8 +9,8 @@
 }
 
 [role="tooltip"].popup-content {
-  width: 300px !important;
-  z-index: 1000 !important;
+  width: 290px !important;
+  z-index: 9999 !important;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 0px 3px;
   -webkit-animation: open 0.3s cubic-bezier(0.38, 0.1, 0.36, 0.9) forwards;
   animation: open 0.3s cubic-bezier(0.38, 0.1, 0.36, 0.9) forwards;

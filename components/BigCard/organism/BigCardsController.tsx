@@ -1,6 +1,5 @@
 import { Category } from "next-env";
 import { FC } from "react";
-import usePrimaryCategories from "../hook/usePrimaryCategories";
 import styled from 'styled-components';
 import BigCard from "../molecule/BigCard";
 
@@ -18,11 +17,10 @@ const Container = styled.section`
 `;
 
 const BigCardsController:FC<Props> = ({ categories }) => {
-	const primaryCategories = usePrimaryCategories(categories);
 
 	return (
 		<Container>
-			{primaryCategories.map((category) => (
+			{categories.map((category) => (
 				<BigCard category={category} key={category.id} />
 			))}
 		</Container>

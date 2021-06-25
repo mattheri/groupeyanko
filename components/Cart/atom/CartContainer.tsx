@@ -1,15 +1,18 @@
 import styled from "styled-components";
+import theme from "theme/theme";
 
 const CartContainer = styled.div`
 	width: fit-content;
   cursor: pointer;
   position: relative;
-  display: grid;
-  grid-template-rows: repeat(2, 1rem);
   margin: 0;
   padding: 0;
-  grid-column: 2;
   grid-row: 1;
+  justify-self: end;
+  
+  @media only screen and (${theme.mediaQueries.lg}) {
+    grid-column: 3;
+  }
 `;
 
 export default CartContainer;

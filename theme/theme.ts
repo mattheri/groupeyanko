@@ -19,11 +19,11 @@ const theme = {
   },
   get mediaQueries() {
     return {
-      xs: `(max-width: ${this.breakpoints.xs}px)`,
-      sm: `(min-width: ${this.breakpoints.sm}px)`,
-      md: `(min-width: ${this.breakpoints.md}px)`,
-      lg: `(min-width: ${this.breakpoints.lg}px)`,
-      xl: `(min-width: ${this.breakpoints.xl}px)`,
+      xs: `max-width: ${this.breakpoints.xs}px`,
+      sm: `min-width: ${this.breakpoints.sm}px`,
+      md: `min-width: ${this.breakpoints.md}px`,
+      lg: `min-width: ${this.breakpoints.lg}px`,
+      xl: `min-width: ${this.breakpoints.xl}px`,
     }
   }
 }
