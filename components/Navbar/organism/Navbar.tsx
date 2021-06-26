@@ -6,7 +6,7 @@ import NavbarContainer from "../molecule/NavbarContainer";
 import Toggle from "../molecule/Toggle";
 import { Cart } from "components/Cart/organism/Cart";
 import Search from "../molecule/Search";
-import { Breadcrumbs } from "components/Breadcrumbs/organism/Breadcrumbs";
+import BreadcrumbsController from "components/Breadcrumbs/organism/BreadcrumbsController";
 
 export function Navbar() {
   const [isMobileNavbarOpen, setIsMobileNavbarOpen] = useState(false);
@@ -24,7 +24,7 @@ export function Navbar() {
       <Collapse isOpen={isMobileNavbarOpen} isAuthenticated={isAuthenticated} onLogout={handleLogout} />
       <Cart />
       <Toggle isOpen={isMobileNavbarOpen} onToggle={toggleMobileNavbar} />
-      <Breadcrumbs />
+      <BreadcrumbsController />
     </NavbarContainer>
   );
 }

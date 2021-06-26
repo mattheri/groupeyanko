@@ -1,12 +1,12 @@
 import Breadcrumb from "react-bootstrap/Breadcrumb";
-import Link from "next/link";
 import styled from 'styled-components';
 import theme from "theme/theme";
 import { Button } from "components/Button/Button";
+import { BreadcrumbLink } from "../presenter/BreadcrumbsPresenter";
+import { FC } from "react";
 
-type BreadcrumbProps = {
-  navigationState: [string, string][];
-  asPath: string;
+interface Props {
+  breadcrumbs:BreadcrumbLink[];
 };
 
 const BreadcrumbContainer = styled.div`
@@ -34,14 +34,14 @@ const BreadcrumbItem = styled(Breadcrumb.Item)`
   padding: 0;
 `;
 
-export function BreadcrumbUI({ navigationState, asPath }: BreadcrumbProps) {
+const Breadcrumbs:FC<Props> = ({ breadcrumbs }) => {
   return (
     <BreadcrumbContainer>
       <BreadcrumbList>
-        {navigationState.map(([key, value]) => {
+        {breadcrumbs.map(({ name, url }) => {
           return (
-            <BreadcrumbItem as={Button} key={key} href={value} size='sm' active={asPath === value}>
-              {key}
+            <BreadcrumbItem as={Button} key={url} href={url} size='sm'>
+              {name}
             </BreadcrumbItem>
           );
         })}
@@ -49,3 +49,5 @@ export function BreadcrumbUI({ navigationState, asPath }: BreadcrumbProps) {
     </BreadcrumbContainer>
   );
 }
+
+export default Breadcrumbs;

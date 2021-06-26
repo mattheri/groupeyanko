@@ -1,7 +1,11 @@
-import AxiosService from "services/AxiosService";
-import CategoryService from "services/Categories/CategoryService";
-import ProductService from "services/Products/ProductService";
+import { AxiosResponse } from "axios";
+import { Category, Product } from "next-env";
+import ApiService from "services/ApiService";
 
+export interface BreadcrumbLink {
+	name:string;
+	url:string;
+}
 class BreadcrumbsPresenter {
 	private static instance:BreadcrumbsPresenter;
 	private constructor() {}
@@ -12,17 +16,38 @@ class BreadcrumbsPresenter {
 		return BreadcrumbsPresenter.instance;
 	}
 
-	public async text(path:string):Promise<string> {
-		const [domain, query] = path.split('/');
+	public async getBreadcrumbLinks(breadcrumbLinks:BreadcrumbLink[], url:string) {
+		const name = await this.getURLName(url);
+		const isPresent = this.breadcrumbLinkIsPresent(breadcrumbLinks, name);
+		const condition = isPresent ?? false;
+
+		if (typeof condition === 'number' && condition >= 0) {
+			const index = condition;
+			return this.removeUnusedBreadcrumbLinks(breadcrumbLinks, index);
+		}
+		
+		const newBreadcrumbLink:BreadcrumbLink = {
+			name,
+			url,
+		};
+		return this.addToBreadcrumbLinksList(breadcrumbLinks, newBreadcrumbLink);
+	}
+
+	private async getURLName(path:string):Promise<string> {
+		const [, domain, query] = path.split('/');
 		const staticPath = this.isStaticPath(`/${domain}`);
 
 		if (staticPath) return this.constantsNames[staticPath[0]];
 
 		switch(domain) {
 			case 'product':
-				return this.product(query);
+				const product = await this.product(query);
+
+				return product.name;
 			default:
-				return this.category(query);
+				const category = await this.category(query);
+	
+				return category.name;
 		}
 	}
 
@@ -53,15 +78,37 @@ class BreadcrumbsPresenter {
 	}
 
 	private async product(id:string) {
-		const product = await ProductService.fetchProduct(id);
+		const response:AxiosResponse<Product> = await ApiService.fetch({
+			url: `/api/product/${id}`,
+			method: 'GET',
+		});
 
-		return product.name;
+		return response.data;
 	}
 
 	private async category(id:string) {
-		const category = await CategoryService.fetchCategory(id);
+		const response:AxiosResponse<Category> = await ApiService.fetch({
+			url: `/api/category/${id}`,
+			method: 'GET'
+		});
 
-		return category.name;
+		return response.data;
+	}
+
+	private breadcrumbLinkIsPresent(breadcrumbLinks:BreadcrumbLink[], name:string) {
+		const index = breadcrumbLinks.findIndex((breadcrumbLink) => breadcrumbLink.name === name);
+
+		if (index < 0) return null;
+	
+		return index;
+	}
+
+	private removeUnusedBreadcrumbLinks(breadcrumbLinks:BreadcrumbLink[], index:number) {
+		return breadcrumbLinks.filter((breadcrumbLink, i) => i <= index && breadcrumbLink);
+	}
+
+	private addToBreadcrumbLinksList(breadcrumbLinks:BreadcrumbLink[], newBreadcrumbLink:BreadcrumbLink) {
+		return [...breadcrumbLinks, newBreadcrumbLink];
 	}
 }
 

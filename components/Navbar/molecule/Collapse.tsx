@@ -23,6 +23,7 @@ const NavbarCollapse = styled.div<{isOpen:boolean}>`
 		grid-row: 1;
 		grid-column: 4;
 		height: 100%;
+		transition: none;
 	}
 `;
 

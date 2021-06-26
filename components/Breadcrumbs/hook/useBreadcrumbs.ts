@@ -1,18 +1,20 @@
+import useRouterEvents from "components/Hooks/useRouterEvents";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import BreadcrumbsPresenter from "../presenter/BreadcrumbsPresenter";
+import BreadcrumbsPresenter, { BreadcrumbLink } from "../presenter/BreadcrumbsPresenter";
 
 const useBreadcrumbs = () => {
-	const [breadcrumbs, setBreadcrumbs] = useState([]);
-	const router = useRouter();
+	const [breadcrumbs, setBreadcrumbs] = useState<BreadcrumbLink[]>([]);
 
-	const text = async () => {
-		console.log(await BreadcrumbsPresenter.text(router.asPath));
+	const updateBreadcrumbWithName = async (url:string) => {
+		const upToDateBreadcrumbLinks = await BreadcrumbsPresenter.getBreadcrumbLinks(breadcrumbs, url);
+
+		setBreadcrumbs(upToDateBreadcrumbLinks);
 	}
 
-	useEffect(() => {
-		text();
-	}, [router.asPath]);
+	useRouterEvents('routeChangeStart', updateBreadcrumbWithName);
+
+	return breadcrumbs;
 }
 
 export default useBreadcrumbs;

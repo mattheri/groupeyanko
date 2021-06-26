@@ -14,6 +14,8 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  align-items: center;
+  height: 100%;
 
   @media only screen and (${theme.mediaQueries.lg}) {
     flex-direction: row;

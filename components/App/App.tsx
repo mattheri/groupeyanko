@@ -1,4 +1,3 @@
-import { Breadcrumbs } from 'components/Breadcrumbs/organism/Breadcrumbs';
 import { Footer } from 'components/Footer/Footer';
 import useRouterEvents from 'components/Hooks/useRouterEvents';
 import LoaderController, { LoaderRef } from 'components/Loader/organism/LoaderRef';
