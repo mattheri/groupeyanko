@@ -11,14 +11,6 @@ type Props = {
   layout?: boolean;
 };
 
-/**
- * Set of buttons to add an item to the cart. Has a add button, remove button and a add to cart button.
- * Pass only the product to be added should the user press on 'Add to cart'. State is managed internally.
- *
- * @param product Product type from next.env.d.ts. Required. Used to add to the cart Context
- * @param className String add an optional string to style the component
- * @param useInput Boolean add an input to manage the number of items. The input only accepts numbers and if set to 0, removes the item.
- */
 const AddToCartController:FC<Props> = ({
   product,
   useInput,

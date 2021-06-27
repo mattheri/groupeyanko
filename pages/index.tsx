@@ -2,7 +2,6 @@ import React from "react";
 import Head from "next/head";
 import { GetStaticProps } from "next";
 import { Category } from "types";
-import { useBreadcrumbs } from "../components/Hooks/useBreadcrumbs";
 import BigCardsController from "components/BigCard/organism/BigCardsController";
 import StaticCategoryProps from "services/Categories/StaticCategoryProps";
 

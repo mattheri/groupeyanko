@@ -1,6 +1,5 @@
 import useRouterEvents from "components/Hooks/useRouterEvents";
-import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import BreadcrumbsPresenter, { BreadcrumbLink } from "../presenter/BreadcrumbsPresenter";
 
 const useBreadcrumbs = () => {
