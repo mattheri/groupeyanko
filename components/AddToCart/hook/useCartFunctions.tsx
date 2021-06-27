@@ -1,6 +1,6 @@
 import useCart from "components/Hooks/useCart";
 import { useState, ChangeEvent } from "react";
-import { Product } from "next-env";
+import { Product } from 'next-env';
 
 function useCartFunctions(product: Product, replaceAmount: boolean) {
   const [number, setNumber] = useState(1);
