@@ -2,7 +2,7 @@ import InformationForm from 'components/InformationForm/InformationForm';
 import { FC, ChangeEvent, useState } from 'react';
 import { Form } from 'react-bootstrap';
 import { useFormik } from 'formik';
-import { FormikValues } from 'next-env';
+import { FormikValues } from 'types';
 import * as Yup from 'yup';
 import { hasErrors } from 'utils/hasErrors';
 import { BasicUserInformation, UserInformation } from 'services/domain/User';

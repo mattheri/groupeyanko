@@ -1,5 +1,5 @@
 import React, { ChangeEvent } from "react";
-import { Product } from "next-env";
+import { Product } from "types";
 import AddToCartContainer from "../atom/AddToCartContainer";
 import ChangeButton from "../atom/ChangeButton";
 import Amount from "../atom/Amount";

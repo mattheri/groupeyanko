@@ -1,5 +1,5 @@
 import { AxiosResponse } from "axios";
-import { Product } from "next-env";
+import { Product } from "types";
 import { useState, useEffect } from "react";
 import ApiService from "services/ApiService";
 

@@ -1,5 +1,5 @@
 import React, { useState, createContext } from "react";
-import { Product } from "next-env";
+import { Product } from "types";
 import { useSetCartStorage } from "components/Hooks/useSetCartStorage";
 export interface CartContextState {
     [key: string]: Cart

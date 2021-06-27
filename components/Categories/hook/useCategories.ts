@@ -1,4 +1,4 @@
-import { Category } from "next-env";
+import { Category } from "types";
 import { useEffect, useState } from "react";
 import ApiService from "services/ApiService";
 import { ApiResponse } from "services/domain/Api";

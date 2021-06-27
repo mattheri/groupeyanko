@@ -1,7 +1,7 @@
 import { FC } from "react";
 import styles from "../filter.module.scss";
 import Col from "react-bootstrap/Col";
-import { Category } from "next-env";
+import { Category } from "types";
 import FilterUL from "components/Filter/molecule/FilterUL";
 import cn from 'classnames';
 

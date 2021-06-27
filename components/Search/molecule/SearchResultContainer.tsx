@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Result, { ResultProps } from "../atom/Result/Result";
-import { Product } from "next-env";
+import { Product } from "types";
 import SearchOverlay from "../atom/Overlay/SearchOverlay";
 import styled from 'styled-components';
 

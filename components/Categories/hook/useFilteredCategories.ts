@@ -1,4 +1,4 @@
-import { Category } from "next-env";
+import { Category } from "types";
 
 export interface FilteredCategories {
   currentCategoryId:number;

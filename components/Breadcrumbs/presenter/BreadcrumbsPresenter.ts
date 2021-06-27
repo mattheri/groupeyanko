@@ -1,4 +1,4 @@
-import { Category, Product } from "next-env";
+import { Category, Product } from "types";
 import ApiService from "services/ApiService";
 import { ApiResponse } from "services/domain/Api";
 

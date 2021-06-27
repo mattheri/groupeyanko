@@ -1,5 +1,5 @@
 import React, { useState, ChangeEvent, useContext } from "react";
-import { FormikValues } from "next-env";
+import { FormikValues } from "types";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import FormUI from "../molecule/Form";

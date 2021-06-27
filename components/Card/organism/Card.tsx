@@ -1,6 +1,6 @@
 import React from "react";
 import Link from 'components/Link/Link';
-import { Product } from "next-env";
+import { Product } from "types";
 import AddToCartController from "components/AddToCart/organism/AddToCartController";
 import CardContainer from "../atom/CardContainer";
 import InnerCard from "../atom/InnerCard";

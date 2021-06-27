@@ -4,7 +4,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { hasErrors } from "../../utils/hasErrors";
 import { LoginFormUI } from "./LoginFormUI";
-import { FormikValues } from "../../next-env";
+import { FormikValues } from "types";
 import regex from "utils/regex";
 
 interface Props {

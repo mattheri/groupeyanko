@@ -1,5 +1,5 @@
 import { AxiosResponse } from "axios";
-import { Category, WooHeaders } from "../../next-env";
+import { Category, WooHeaders } from "types";
 import AxiosService from '../AxiosService';
 
 class CategoryService {

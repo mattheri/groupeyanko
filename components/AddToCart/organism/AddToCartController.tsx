@@ -1,4 +1,4 @@
-import { Product } from "next-env";
+import { Product } from "types";
 import AddToCart from "../molecule/AddToCart";
 import useCartFunctions from "../hook/useCartFunctions";
 import { FC } from "react";

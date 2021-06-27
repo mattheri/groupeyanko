@@ -1,7 +1,7 @@
 import { FC } from "react";
 import CategoriesGrid from "components/CategoriesGrid/organism/CategoriesGrid";
 import ProductsGrid from "components/ProductsGrid/ProductsGrid";
-import { Category, Product } from "next-env";
+import { Category, Product } from "types";
 import StaticCategoryProps from "services/Categories/StaticCategoryProps";
 import { GetStaticPaths, GetStaticProps } from "next";
 import Head from "next/head";

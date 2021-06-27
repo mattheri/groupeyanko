@@ -1,5 +1,5 @@
 import { Cart, CartContext, CartContextState } from 'components/Context/CartContext';
-import { Product } from 'next-env';
+import { Product } from 'types';
 import { useContext } from 'react';
 
 const useCart = () => {

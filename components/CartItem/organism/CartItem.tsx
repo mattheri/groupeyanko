@@ -1,5 +1,5 @@
 import React from "react";
-import { Product } from "next-env";
+import { Product } from "types";
 import useCart from "components/Hooks/useCart";
 import ArticleContainer from "../atom/ArticleContainer";
 import Item from "../molecule/Item";
@@ -18,7 +18,7 @@ type CartItemProps = {
  * with this component. It directly removes it from the Cart Context.
  *
  * @param id number the product id
- * @param image Image type defined in next-env.d.ts. Receives the Image object
+ * @param image Image type defined in @types/types.d.ts. Receives the Image object
  * @param name string. The name of the product
  * @param number number. The number of times this product is shown
  */

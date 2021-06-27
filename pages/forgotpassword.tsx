@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import ApiService from "services/ApiService";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { FormikValues } from "next-env";
+import { FormikValues } from "types";
 import { hasErrors } from "utils/hasErrors";
 import EmailSent from "components/PasswordReset/molecule/EmailSent";
 import PasswordReset from "components/PasswordReset/organism/PasswordReset";

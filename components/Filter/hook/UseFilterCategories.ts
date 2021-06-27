@@ -1,4 +1,4 @@
-import { Category } from "../../../next-env";
+import { Category } from "types";
 
 function useFilterCategories(categories: Category[]) {
   const subCategories = (id:number) => categories.filter((category) => category.parent === id);

@@ -1,6 +1,6 @@
 import AddToCartController from "components/AddToCart/organism/AddToCartController";
 import { Button } from "components/Button/Button";
-import { Product } from "next-env";
+import { Product } from "types";
 import { FC } from "react";
 import styled from 'styled-components';
 

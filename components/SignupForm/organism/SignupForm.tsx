@@ -1,5 +1,5 @@
 import React, { useState, ChangeEvent } from "react";
-import { FormData, FormikValues } from "../../../next-env";
+import { FormData, FormikValues } from "types";
 import { useAuth } from "../../Hooks/useAuth";
 import { useFormik } from "formik";
 import * as Yup from "yup";

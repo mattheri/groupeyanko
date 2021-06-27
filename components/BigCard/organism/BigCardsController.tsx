@@ -1,4 +1,4 @@
-import { Category } from "next-env";
+import { Category } from "types";
 import { FC } from "react";
 import styled from 'styled-components';
 import BigCard from "../molecule/BigCard";

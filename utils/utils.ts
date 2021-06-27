@@ -1,5 +1,5 @@
 // import { init, send } from "emailjs-com";
-import { FormData } from "../next-env";
+import { FormData } from "types";
 
 /**
  * Some of the data passed in the API have HTML Tags in it. This will remove the tags and return a normal

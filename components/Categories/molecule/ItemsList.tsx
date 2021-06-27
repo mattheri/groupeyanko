@@ -1,4 +1,4 @@
-import { Category } from "next-env";
+import { Category } from "types";
 import { FC } from "react";
 import List from "../atom/List";
 import ListItem from "./ListItem";

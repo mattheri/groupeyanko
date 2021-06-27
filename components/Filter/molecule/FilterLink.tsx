@@ -1,6 +1,6 @@
 import { FC } from "react";
 import Link from "next/link";
-import { Category } from "../../../next-env";
+import { Category } from "types";
 import FilterUL from "./FilterUL";
 
 interface Props {

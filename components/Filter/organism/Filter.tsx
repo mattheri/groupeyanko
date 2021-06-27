@@ -1,5 +1,5 @@
 import { useEffect, useState, useContext } from "react";
-import { Category } from "../../../next-env";
+import { Category } from "types";
 import FilterUI from "../molecule/FilterUI";
 import useFilterCategories from "../hook/UseFilterCategories";
 import ApiService from "services/ApiService";

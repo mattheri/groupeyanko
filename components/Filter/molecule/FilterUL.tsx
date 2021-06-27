@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Category } from "../../../next-env";
+import { Category } from "types";
 import FilterLink from "./FilterLink";
 
 interface Props {

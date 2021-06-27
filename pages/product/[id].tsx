@@ -1,6 +1,6 @@
 import React from "react";
 import Container from "react-bootstrap/Container";
-import { Product } from "next-env";
+import { Product } from "types";
 import { ProductSection } from "components/Product/ProductSection";
 import StaticProductsProps from "services/Products/StaticProductsProps";
 import { GetStaticPaths, GetStaticProps } from "next";

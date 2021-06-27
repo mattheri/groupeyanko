@@ -1,5 +1,5 @@
 import { GetStaticPropsContext } from "next";
-import { Category, Product } from "next-env";
+import { Category, Product } from "types";
 import ProductService from "../Products/ProductService";
 import CategoryService from "./CategoryService";
 

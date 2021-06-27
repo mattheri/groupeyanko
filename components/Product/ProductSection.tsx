@@ -1,4 +1,4 @@
-import { Product } from "../../next-env";
+import { Product } from "types";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import AddToCart from "../AddToCart/organism/AddToCartController";
