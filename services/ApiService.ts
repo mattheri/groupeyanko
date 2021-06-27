@@ -1,7 +1,6 @@
 import { AxiosRequestConfig, AxiosResponse } from "axios";
 import AxiosService from "./AxiosService";
-
-type ApiRequestConfig = Omit<AxiosRequestConfig, "baseURL">;
+import { ApiQueryParams } from "./domain/Api";
 
 class ApiService {
   private static instance:ApiService;
@@ -16,17 +15,16 @@ class ApiService {
     return ApiService.instance;
   }
 
-  public async fetch(params:ApiRequestConfig):Promise<AxiosResponse<any>> {
-    return this.axiosService.fetch({
+  public async get(params:ApiQueryParams):Promise<AxiosResponse<any>> {
+    return this.axiosService.get({
       ...params,
-      baseURL: "",
+      baseURL: '',
     });
   }
 
-  public async post(params:Omit<ApiRequestConfig, "method">):Promise<AxiosResponse<any>> {
-    return this.axiosService.fetch({
+  public async post(params:ApiQueryParams):Promise<AxiosResponse<any>> {
+    return this.axiosService.post({
       ...params,
-      method: 'POST',
       baseURL: '',
     })
   }

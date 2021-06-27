@@ -16,18 +16,16 @@ class CategoryService {
   }
 
   public async fetchCategoriesByParentId(categoryId:number):Promise<Category[]> {
-    const response:AxiosResponse<Category[]> = await this.axios.fetch({
+    const response:AxiosResponse<Category[]> = await this.axios.get({
       url: `products/categories?parent=${categoryId}&per_page=100&hide_empty=true`,
-      method: 'GET',
     });
 
     return response.data;
   }
 
   public async fetchCategory(categoryId:number | string):Promise<Category> {
-    const response:AxiosResponse<Category> = await this.axios.fetch({
+    const response:AxiosResponse<Category> = await this.axios.get({
       url: `products/categories/${categoryId}`,
-      method: 'GET',
     });
 
     return response.data;
@@ -66,18 +64,16 @@ class CategoryService {
   }
 
   private async fetchCategoriesPerPage(page:number):Promise<AxiosResponse<Category[]>> {
-    const response:AxiosResponse<Category[]> = await this.axios.fetch({
+    const response:AxiosResponse<Category[]> = await this.axios.get({
       url: `products/categories?per_page=100&hide_empty=true&page=${page}`,
-      method: 'GET',
     });
 
     return response;
   }
 
   public async fetchParentCategories():Promise<Category[]> {
-    const response:AxiosResponse<Category[]> = await this.axios.fetch({
+    const response:AxiosResponse<Category[]> = await this.axios.get({
       url: 'products/categories?per_page=100&hide_empty=true',
-      method: 'GET',
     });
 
     return this.filterParentCategories(response.data);

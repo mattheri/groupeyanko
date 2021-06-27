@@ -16,27 +16,24 @@ class ProductService {
   }
 
   public async searchProduct(query:string):Promise<Product[]> {
-    const response:AxiosResponse<Product[]> = await this.axios.fetch({
+    const response:AxiosResponse<Product[]> = await this.axios.get({
       url: `products?search=${query}`,
-      method: 'GET',
     });
 
     return response.data;
   }
 
   public async fetchProductsByCategory(categoryId:number):Promise<Product[]> {
-    const response:AxiosResponse<Product[]> = await this.axios.fetch({
+    const response:AxiosResponse<Product[]> = await this.axios.get({
       url: `products?category=${categoryId}&per_page=100`,
-      method: 'GET',
     });
 
     return response.data;
   }
 
   public async fetchProduct(productId:number | string):Promise<Product> {
-    const response:AxiosResponse<Product> = await this.axios.fetch({
+    const response:AxiosResponse<Product> = await this.axios.get({
       url: `products/${productId}`,
-      method: 'GET',
     });
 
     return response.data;
@@ -75,9 +72,8 @@ class ProductService {
   }
 
   private async fetchProductsPerPage(page:number):Promise<AxiosResponse<Product[]>> {
-    const response:AxiosResponse<Product[]> = await this.axios.fetch({
+    const response:AxiosResponse<Product[]> = await this.axios.get({
       url: `products?per_page=100&page=${page}`,
-      method: 'GET',
     });
 
     return response;

@@ -1,6 +1,6 @@
-import { AxiosResponse } from "axios";
 import { Category, Product } from "next-env";
 import ApiService from "services/ApiService";
+import { ApiResponse } from "services/domain/Api";
 
 export interface BreadcrumbLink {
 	name:string;
@@ -17,6 +17,7 @@ class BreadcrumbsPresenter {
 	}
 
 	public async getBreadcrumbLinks(breadcrumbLinks:BreadcrumbLink[], url:string) {
+		if (url === '/') return this.isHome(breadcrumbLinks);
 		const name = await this.getURLName(url);
 		const isPresent = this.breadcrumbLinkIsPresent(breadcrumbLinks, name);
 		const condition = isPresent ?? false;
@@ -53,7 +54,6 @@ class BreadcrumbsPresenter {
 
 	private get constants() {
 		const CONSTANTS = {
-			index: '/',
 			profile: '/me',
 			quote: '/quote',
 			quotesent: '/quotesent',
@@ -65,7 +65,6 @@ class BreadcrumbsPresenter {
 
 	private get constantsNames() {
 		return {
-			index: 'Accueil',
 			profile: 'Profil',
 			quote: 'Envoyer ma soumission',
 			quotesent: 'Soumission envoyée',
@@ -78,18 +77,16 @@ class BreadcrumbsPresenter {
 	}
 
 	private async product(id:string) {
-		const response:AxiosResponse<Product> = await ApiService.fetch({
+		const response:ApiResponse<Product> = await ApiService.get({
 			url: `/api/product/${id}`,
-			method: 'GET',
 		});
 
 		return response.data;
 	}
 
 	private async category(id:string) {
-		const response:AxiosResponse<Category> = await ApiService.fetch({
+		const response:ApiResponse<Category> = await ApiService.get({
 			url: `/api/category/${id}`,
-			method: 'GET'
 		});
 
 		return response.data;
@@ -108,7 +105,11 @@ class BreadcrumbsPresenter {
 	}
 
 	private addToBreadcrumbLinksList(breadcrumbLinks:BreadcrumbLink[], newBreadcrumbLink:BreadcrumbLink) {
-		return [...breadcrumbLinks, newBreadcrumbLink];
+		return [...new Set([...breadcrumbLinks, newBreadcrumbLink])];
+	}
+
+	private isHome(breadcrumbLinks:BreadcrumbLink[]) {
+		return this.removeUnusedBreadcrumbLinks(breadcrumbLinks, 0);
 	}
 }
 

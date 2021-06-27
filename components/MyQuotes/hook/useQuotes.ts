@@ -1,7 +1,6 @@
-import { AxiosResponse } from 'axios';
-import useLogger from 'components/Hooks/useLogger';
 import { useState, useEffect } from 'react';
 import ApiService from 'services/ApiService';
+import { ApiResponse } from 'services/domain/Api';
 import { Quote, Quotes } from 'services/domain/Quote';
 
 const useQuotes = (userId:string) => {
@@ -10,8 +9,8 @@ const useQuotes = (userId:string) => {
 
   const fetchQuotes = async () => {
     try {
-      const response:AxiosResponse<Quotes[]> = await ApiService.fetch({
-        url: `/api/quote/${userId}`
+      const response:ApiResponse<Quotes[]> = await ApiService.get({
+        url: `/api/quote/${userId}`,
       });
 
       if (response.status === 200 && Object.keys(response.data).length) {

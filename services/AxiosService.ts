@@ -1,6 +1,7 @@
 import axios, { AxiosRequestConfig } from 'axios';
 import { Agent } from 'http';
 import { Agent as SecureAgent } from 'https';
+import { AxiosRequestConfiguration } from './domain/Api';
 
 class AxiosService {
   private static instance:AxiosService;
@@ -8,9 +9,17 @@ class AxiosService {
     this.init();
   }
 
-  public async fetch(params:AxiosRequestConfig) {
+  public async get(params:AxiosRequestConfiguration) {
     try {
-      return axios(params);
+      return axios({ ...params, method: 'GET' });
+    } catch(e) {
+      throw new Error(e);
+    }
+  }
+
+  public async post(params:AxiosRequestConfiguration) {
+    try {
+      return axios({ ...params, method: 'POST' });
     } catch(e) {
       throw new Error(e);
     }

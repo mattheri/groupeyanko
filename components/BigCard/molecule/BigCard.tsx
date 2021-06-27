@@ -30,7 +30,7 @@ const BigCard:FC<Props> = ({ category }) => {
 			<BigCardOverlay id={category.id}>
 				{category.description ? category.description : category.name}
 			</BigCardOverlay>
-			<BigCardImage backgroundImage={category.image.src} />
+			<BigCardImage src={category.image.src} alt={category.name} />
 		</Container>
 	);
 }

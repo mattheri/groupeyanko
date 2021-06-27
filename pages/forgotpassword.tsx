@@ -1,6 +1,5 @@
 import React from "react";
 import { useRouter } from "next/router";
-import { useBreadcrumbs } from "../components/Hooks/useBreadcrumbs";
 import ApiService from "services/ApiService";
 import { useFormik } from "formik";
 import * as Yup from "yup";
@@ -10,17 +9,6 @@ import EmailSent from "components/PasswordReset/molecule/EmailSent";
 import PasswordReset from "components/PasswordReset/organism/PasswordReset";
 
 export default function ForgotPassword() {
-  const { setNavigationState } = useBreadcrumbs();
-
-  React.useEffect(
-    () =>
-      setNavigationState([
-        "Réinitialisation de mot de passe",
-        "/forgotpassword",
-      ]),
-    []
-  );
-
   const initialValues = {
     email: '',
   };
@@ -29,9 +17,8 @@ export default function ForgotPassword() {
   const router = useRouter();
 
   const onSubmit = async (values:FormikValues<typeof initialValues>) => {
-    const response = await ApiService.fetch({
+    const response = await ApiService.post({
       url: '/api/resetPassword',
-      method: 'POST',
       data: {
         email: values.email,
       }

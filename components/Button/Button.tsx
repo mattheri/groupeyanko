@@ -87,7 +87,7 @@ const StyledButton = styled.button<{primary:boolean,secondary:boolean,tertiary:b
   ${Color}
   ${BackgroundColor}
   font-family: ${theme.typography.heading};
-  transition: transform 0.3s, background-color 0.2s, color 0.2s;
+  transition: transform 0.3s, background-color 0.2s, color 0.2s, width 0.2s;
   max-height: 4rem;
   text-decoration: none;
   display: flex;

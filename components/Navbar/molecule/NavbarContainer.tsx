@@ -12,6 +12,7 @@ const StyledNavbar = styled.nav`
 	grid-template-rows: auto auto 5rem auto;
 	grid-template-columns: 75% 10% 15%;
 	align-items: center;
+	position: relative;
 	
 	@media only screen and (${theme.mediaQueries.lg}) {
 		padding-right: 10rem;

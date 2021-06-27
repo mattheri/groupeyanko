@@ -22,10 +22,6 @@ export const getStaticProps: GetStaticProps = async () => {
 };
 
 export default function Home({ response }: Props) {
-  const { setNavigationState } = useBreadcrumbs();
-
-  React.useEffect(() => setNavigationState(["Accueil", "/"]), []);
-
   return (
     <>
       <Head>

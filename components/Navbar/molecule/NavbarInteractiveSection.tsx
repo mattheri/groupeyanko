@@ -4,6 +4,7 @@ import NavbarAuthenticationSection from "./NavbarAuthenticationSection";
 import { Nav } from 'react-bootstrap';
 import styled from 'styled-components';
 import theme from "theme/theme";
+import Categories from "components/Categories/organism/Categories";
 
 interface Props {
   isAuthenticated:boolean;
@@ -26,7 +27,8 @@ const NavbarInteractiveSection:FC<Props> = ({ isAuthenticated, onLogout }) => {
 
   return (
     <Container>
-      <Nav.Link as={Button} block='xs' href="/" tertiary>Catalogue</Nav.Link>
+      <Nav.Link as={Button} block='xs' href="/" tertiary>Accueil</Nav.Link>
+      <Categories />
       <NavbarAuthenticationSection isAuthenticated={isAuthenticated} onLogout={onLogout} />
     </Container>
   );

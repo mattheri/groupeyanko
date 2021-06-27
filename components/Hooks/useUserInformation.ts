@@ -1,6 +1,6 @@
-import { AxiosResponse } from 'axios';
 import { useEffect, useState } from 'react';
 import ApiService from 'services/ApiService';
+import { ApiResponse } from 'services/domain/Api';
 import { ClientUser } from 'services/domain/User';
 import { useAuth } from './useAuth';
 
@@ -9,9 +9,8 @@ const useUserInformation = () => {
   const { isAuthenticated, userId } = useAuth();
   
   const fetchUser = async () => {
-    const response:AxiosResponse<ClientUser> = await ApiService.fetch({
+    const response:ApiResponse<ClientUser> = await ApiService.post({
       url: '/api/user',
-      method: 'POST',
       data: {
         queryUser: userId
       }

@@ -3,6 +3,7 @@ import { AppContext } from "../Context/AppContext";
 import { useRouter } from "next/router";
 import ApiService from "services/ApiService";
 import { BasicUserInformation, UserInformation } from "services/domain/User";
+import { ApiResponse } from "services/domain/Api";
 
 type UseAuthProps = {
   email?: string;
@@ -18,16 +19,15 @@ export function useAuth() {
     onError?: (e:string) => void,
   ) => {
     try {
-      const response = await ApiService.fetch({
+      const response:ApiResponse<UserInformation> = await ApiService.post({
         url: '/api/login',
-        method: 'POST',
         data: {
           email,
           password,
         }
       });
 
-      const user:UserInformation = response.data;
+      const user = response.data;
 
       if (response.status === 200) {
         login(user);
@@ -44,12 +44,11 @@ export function useAuth() {
     callback?: () => void
   ) => {
     try {
-      const response = await ApiService.fetch({
+      const response:ApiResponse<UserInformation> = await ApiService.post({
         url: '/api/signup',
-        method: 'POST',
         data: formData,
       });
-      const user:UserInformation = response.data;
+      const user = response.data;
       if (response.status !== 200) {
         throw new Error(
           "L'utilisateur existe déjà. Veuillez vous connecter ou utiliser une autre adresse courriel."
@@ -70,9 +69,8 @@ export function useAuth() {
   };
 
   const signOut = async () => {
-    const response = await ApiService.fetch({
+    const response:ApiResponse<boolean> = await ApiService.post({
       url: '/api/signout',
-      method: 'POST'
     });
 
     const isSignedOut = response.data;

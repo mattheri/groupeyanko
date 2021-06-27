@@ -1,4 +1,4 @@
-import React, { useState, useEffect, createContext } from "react";
+import React, { useState, createContext } from "react";
 import { Product } from "next-env";
 import { useSetCartStorage } from "components/Hooks/useSetCartStorage";
 export interface CartContextState {
@@ -16,16 +16,6 @@ interface NumberOfItems {
 
 export interface Cart extends Product, NumberOfItems { };
 
-
-/**
- * Context that contains the state of the user. It will automatically try to detect
- * the 'cart' in local storage. If a cart is found, sets it as the user's cart automatically.
- * Otherwise, inits the cart with an empty object.
- * 
- * Provides 2 functions to manage the items in the cart.
- * 
- * See documentation on React Context here: https://reactjs.org/docs/context.html
- */
 export function CartContextProvider<T>(props: React.PropsWithChildren<T>) {
 
     const { cart, setCartInLocalStorage } = useSetCartStorage();

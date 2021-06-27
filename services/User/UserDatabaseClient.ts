@@ -31,9 +31,8 @@ class UserDatabaseClient {
 
     if (!!customer) return customer.docs.map((doc) => ({ id: doc.id, ...doc.data() }))[0];
 
-    const response:AxiosResponse<WooCommerceCustomer[]> = await this.axiosService.fetch({
+    const response:AxiosResponse<WooCommerceCustomer[]> = await this.axiosService.get({
       url: `customers?email=${email}`,
-      method: 'GET'
     });
 
     const previousCustomer = response.data[0];

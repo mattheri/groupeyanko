@@ -35,12 +35,11 @@ class StaticCategoryProps {
   public async props({ params }:GetStaticPropsContext) {
     let response:Category[] | Product[];
     const id = this.parseParams(params.id);
-    const category = await this.categoryService.fetchCategory(id);
-    const parentCategory = !!category.parent ? await this.categoryService.fetchCategory(category.parent) : null;
     response = await this.categoryService.fetchCategoriesByParentId(id);
+    const name = (await this.categoryService.fetchCategory(id)).name;
 
     if (!response || !response.length) response = await this.productService.fetchProductsByCategory(id);
-    return { response, parentCategory, categoryName: category.name }
+    return { response, name }
   }
 
   public async initialProps() {
