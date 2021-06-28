@@ -20,11 +20,15 @@ export function CartContextProvider<T>(props: React.PropsWithChildren<T>) {
 
     const { cart, setCartInLocalStorage } = useSetCartStorage();
 
-    function getCart() {
+    const initializeCart = () => {
+        if (cart === null) {
+            setCartInLocalStorage({});
+        }
+
         return cart;
     }
 
-    const cartDefault = getCart();
+    const cartDefault = initializeCart();
 
     const [cartState, setCartState] = useState<CartContextState>(cartDefault);
 

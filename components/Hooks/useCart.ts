@@ -7,7 +7,7 @@ const useCart = () => {
 
   const addProductToCart = (product: Product, number: number) => {
       const cartProduct:Cart = { ...product, number: number };
-      if (cart.hasOwnProperty(`${product.id}`)) {
+      if (product.id in cart) {
         cartProduct.number = cart[`${product.id}`].number + number;
       }
 
