@@ -1,8 +1,9 @@
 import firebase from "firebase/app";
 import "firebase/auth";
 import "firebase/firestore";
+import { IFirebase } from 'services/domain/Database';
 
-class Firebase {
+class Firebase implements IFirebase {
   constructor() {
     this._init();
   }
@@ -23,7 +24,7 @@ class Firebase {
       : firebase.app();
   }
 
-  auth() {
+  public get auth() {
     return {
       login: async (email: string, password: string) => {
         try {
@@ -65,7 +66,8 @@ class Firebase {
 
       sendPasswordReset: async (email: string) => {
         try {
-          return await firebase.auth().sendPasswordResetEmail(email);
+          await firebase.auth().sendPasswordResetEmail(email);
+          return { status: 200, message: 'Courriel envoyé avec succès' };
         } catch (e) {
           console.log({
             code: e.code,
@@ -77,12 +79,30 @@ class Firebase {
       currentUser: firebase.auth().currentUser,
 
       signout: async () => firebase.auth().signOut(),
+
+      updatePassword: async (email:string, oldPassword:string, newPassword:string) => {
+        try {
+          await this.auth.login(email, oldPassword);
+          await firebase.auth().currentUser.updatePassword(newPassword);
+          return { status: 200, message: 'Mot de passe modifié avec succès' };
+        } catch (e) {
+          console.log({
+            code: e.code,
+            message: e.message,
+          })
+        }
+      }
     };
   }
 
-  firestore() {
+  public get firestore() {
     return {
       db: firebase.firestore(),
+      array: {
+        push: firebase.firestore.FieldValue.arrayUnion,
+        remove: firebase.firestore.FieldValue.arrayRemove,
+      },
+      timestamp:firebase.firestore.Timestamp.now().toMillis(),
     };
   }
 }

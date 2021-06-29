@@ -1,31 +1,50 @@
-import React from "react";
-import { useSetUserCookie } from "../Hooks/useSetUserCookie";
-import { FormData } from "../../next-env";
-import Firebase from "../../utils/Firebase";
+import { AxiosResponse } from "axios";
+import useLocalStorage from "components/Hooks/useLocalStorage";
+import useLogger from "components/Hooks/useLogger";
+import { useState, createContext, PropsWithChildren, useEffect } from "react";
+import ApiService from "services/ApiService";
+import { BasicUserInformation, UserInformation } from "services/domain/User";
 
-export const AppContext = React.createContext(null);
+const EMPTY_USER_INFORMATIONS:Omit<AppState, "wooId" | "id" | "connected"> = {
+  address: '',
+  city: '',
+  company: '',
+  email: '',
+  firstname: '',
+  lastname: '',
+  phoneNumber: '',
+  postalCode: '',
+  province: '',
+}
 
-type UserData = Omit<FormData, "password" | "reType" | "message">;
+export const AppContext = createContext({ 
+  id:'',
+  connected: false,
+  login: (u:UserInformation) => {},
+  logout: () => {},
+  userInformations: EMPTY_USER_INFORMATIONS,
+  updateUserInformation: (informations:BasicUserInformation) => {}
+});
 
-export type User = {
-  id: string;
-  email: string;
-  name?: string;
-  picture?: string;
-  isVerified: boolean;
-  additionalUserInformation?: UserData;
-};
+interface AppState extends UserInformation {
+  connected:boolean;
+  id:string | null;
+}
 
-export type AppContextState = {
-  connected: boolean;
-  user: User;
-  locale: "fr" | "en";
-};
-
-export type AppContextTuple = [
-  AppContextState,
-  React.Dispatch<React.SetStateAction<AppContextState>>
-];
+const EMPTY_USER:AppState = {
+  address: '',
+  city: '',
+  company: '',
+  connected: false,
+  email: '',
+  firstname: '',
+  id: null,
+  lastname: '',
+  phoneNumber: '',
+  postalCode: '',
+  province: '',
+  wooId: 0,
+}
 
 /**
  * Context that contains the state of the user. It will automatically try to detect
@@ -34,19 +53,73 @@ export type AppContextTuple = [
  *
  * See documentation on React Context here: https://reactjs.org/docs/context.html
  */
-export function AppContextProvider<T>(props: React.PropsWithChildren<T>) {
-  const { user, handleSetCookie } = useSetUserCookie();
+export function AppContextProvider<T>(props: PropsWithChildren<T>) {
+  const { setItem, getItem, removeItem } = useLocalStorage();
 
-  const [appState, setAppState] = React.useState<AppContextState>({
-    connected: Firebase.auth().currentUser ? true : false,
-    user: user ? user.user : {},
-    locale: "fr",
+  const userId:string = getItem('user');
+  useLogger(userId);
+
+  const [appState, setAppState] = useState<AppState>({
+    connected: false,
+    id: null,
+    ...EMPTY_USER,
   });
 
-  React.useEffect(() => handleSetCookie(appState), [appState]);
+  const userInformations = async (id:string) => {
+    const response:AxiosResponse<UserInformation> = await ApiService.post({
+      url: '/api/user',
+      data: {
+        id
+      }
+    });
+
+    return response.data;
+  }
+
+  const connected = appState.connected;
+  const id = appState.id;
+  const currentUserInformations:Omit<UserInformation, "wooId" | "id"> = {
+    address: appState.address,
+    city: appState.city,
+    company: appState.company,
+    email: appState.email,
+    firstname: appState.firstname,
+    lastname: appState.lastname,
+    phoneNumber: appState.phoneNumber,
+    postalCode: appState.postalCode,
+    province: appState.province,
+  }
+
+  const logout = () => {
+    removeItem('user');
+    setAppState({
+      ...EMPTY_USER
+    });
+  }
+
+  const login = (userInformation:UserInformation) => {
+    setItem('user', userInformation.id);
+    setAppState({
+      connected: true,
+      ...userInformation
+    })
+  }
+
+  const updateUserInformation = (information:BasicUserInformation) => {
+    setAppState((state) => ({ ...state, ...information }));
+  }
+
+  useEffect(() => {
+    if (!!userId && !appState.connected) {
+      (async () => {
+        const user = await userInformations(userId);
+        login(user)
+      })();
+    }
+  }, [userId, appState.connected]);
 
   return (
-    <AppContext.Provider value={[appState, setAppState]}>
+    <AppContext.Provider value={{ id, connected, login, logout, userInformations: currentUserInformations, updateUserInformation }}>
       {props.children}
     </AppContext.Provider>
   );

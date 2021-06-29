@@ -1,10 +1,14 @@
-@use '../../styles/variables.scss' as v;
+@use 'styles/variables.scss' as v;
 
 .filter {
   position: relative;
   z-index: 997;
   width: fit-content;
-  margin-top: 3rem;
+  margin-top: 5rem;
+  margin-left: 3rem;
+  transform: translate3d(-100%, 0, 0);
+  opacity: 0;
+  transition: opacity 0.2s, transform 0.2s;
 
   ul {
     list-style: none;
@@ -15,11 +19,16 @@
   }
 }
 
+.open {
+  transform: translate3d(0, 0, 0);
+  opacity: 1;
+}
+
 .filterBtnContainer {
   display: flex;
 }
 
 .search {
-  max-height: 2.5rem;
+  max-height: 4rem;
   margin-bottom: 1rem;
 }

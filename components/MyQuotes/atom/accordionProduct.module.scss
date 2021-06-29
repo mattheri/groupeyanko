@@ -1,0 +1,33 @@
+.product {
+  padding: 1rem 1rem 1rem 0;
+  display: flex;
+  .product_image_container {
+    max-width: 10rem;
+    max-height: 8rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    padding: 1rem;
+    .product_image {
+      width: auto;
+      height: 100%;
+    }
+  }
+
+  .product_description_container {
+    width: 100%;
+    max-height: 8rem;
+    display: flex;
+    justify-content: space-between;
+    .product_description {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 90%;
+    }
+
+    &:last-child {
+      align-self: center;
+    }
+  }
+}

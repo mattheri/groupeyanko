@@ -1,8 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { GET } from '../../utils/utils';
+import ProductService from 'services/Products/ProductService';
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
-    const response = await GET(`products?search=${req.body.query}`);
+    const results = await ProductService.searchProduct(req.body.query);
 
-    res.send(JSON.stringify(response.data));
+    res.send(JSON.stringify(results));
 }

@@ -1,6 +1,5 @@
-import React from 'react';
 import Container from 'react-bootstrap/Container';
-import Link from 'next/link';
+import Link from 'components/Link/Link';
 
 export default function QuoteSent() {
     return (
