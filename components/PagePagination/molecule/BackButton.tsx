@@ -1,27 +1,29 @@
 import { FC } from 'react';
 import { Button } from 'components/Button/Button';
-import cn from 'classnames';
-import styles from '../pagepagination.module.scss';
-import DoubleArrowBack from '../atom/DoubleArrowBack';
-
-type Fn = (curr:number) => number;
+import BackArrow from '../atom/BackArrow';
+import styled from 'styled-components';
+import theme from 'theme/theme';
+import { RightRadius } from '../atom/Radiuses';
 
 interface Props {
-  toggle:(fn:Fn) => void;
+  toggle:() => void;
   active:number;
 }
 
+const StyledButton = styled(Button)`
+  ${RightRadius}
+`;
+
 const BackButton:FC<Props> = ({ toggle, active }) => {
-  const backOnePage = () => toggle((curr) => curr = curr - 1);
 
   return (
-    <Button 
-      className={cn([styles.paginationControls, styles.rightRadius])}
+    <StyledButton
+      type='button'
       disabled={active === 0}
-      onClick={backOnePage}
+      onClick={toggle}
     >
-      <DoubleArrowBack />
-    </Button>
+      <BackArrow />
+    </StyledButton>
   )
 };
 

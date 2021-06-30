@@ -1,23 +1,7 @@
 import React from "react";
-import { PagePagination } from "../PagePagination/PagePagination";
+import { PagePagination } from "../PagePagination/organism/PagePagination";
 import chunk from "lodash/chunk";
 
-/**
- * Hook that paginates over an array of element. It keeps an internal state of the page you're at.
- * Returns a Pagination element.
- *
- * @param itemsToPaginate array of items to be paginated
- * @param itemsPerPage number of items per page to show
- * @example
- * const { paginatedItems, pagination, Pagination } = usePagination(array, 9);
- * ...
- * return(
- *  <>
- *      {paginatedItems[pagination].map(item => <div>{item}</div>)}
- *      <Pagination />
- *  </>
- * );
- */
 export function usePagination<T>(itemsToPaginate: T[], itemsPerPage: number) {
   const [pagination, setPagination] = React.useState(0);
   const paginatedItems = chunk(itemsToPaginate, itemsPerPage);
@@ -28,12 +12,15 @@ export function usePagination<T>(itemsToPaginate: T[], itemsPerPage: number) {
     className?: string;
   }
 
-  const handleSetPagination = (v: number | ((prevState: number) => number)) =>
-    setPagination(v);
+  const handleSetPagination = (selected:number) => {
+    console.log(selected);
+    setPagination(selected);
+  };
+
   const paginationProps = {
-    length: paginatedItems.length,
+    pageCount: paginatedItems.length,
     active: pagination,
-    toggle: handleSetPagination,
+    onPageChange: handleSetPagination,
   };
 
   return {
@@ -42,7 +29,7 @@ export function usePagination<T>(itemsToPaginate: T[], itemsPerPage: number) {
     paginationProps: {
       length: paginatedItems.length,
       active: pagination,
-      toggle: setPagination,
+      toggle: handleSetPagination,
     },
     Pagination: ({ className }: Props) => (
       <PagePagination className={className} {...paginationProps} />

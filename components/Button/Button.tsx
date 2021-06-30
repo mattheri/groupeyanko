@@ -147,6 +147,7 @@ export const Button:FC<Props> = function ({
   children,
   type = "submit",
   block,
+  ...rest
 }) {
   if (!href) {
     return (
@@ -159,6 +160,7 @@ export const Button:FC<Props> = function ({
         tertiary={tertiary}
         size={size}
         block={block}
+        {...rest}
       >
         {text || children}
       </StyledButton>
@@ -174,6 +176,7 @@ export const Button:FC<Props> = function ({
         size={size}
         onClick={onClick}
         block={block}
+        {...rest}
       >
         {text || children}
       </StyledButton>

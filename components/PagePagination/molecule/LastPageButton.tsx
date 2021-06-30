@@ -1,8 +1,8 @@
 import { FC } from 'react';
 import { Button } from 'components/Button/Button';
-import cn from 'classnames';
-import styles from '../pagepagination.module.scss';
 import DoubleArrowForward from '../atom/DoubleArrowForward';
+import styled from 'styled-components';
+import { RightRadius } from '../atom/Radiuses';
 
 interface Props {
   toggle:(n:number) => void;
@@ -10,17 +10,21 @@ interface Props {
   length:number
 }
 
+const StyledButton = styled(Button)`
+  ${RightRadius}
+`;
+
 const LastPageButton:FC<Props> = ({ toggle, active, length }) => {
   const goToLastPage = () => toggle(length - 1);
 
   return (
-    <Button 
-      className={cn([styles.paginationControls, styles.rightRadius])}
+    <StyledButton
       disabled={active === length - 1}
       onClick={goToLastPage}
+      type='button'
     >
       <DoubleArrowForward />
-    </Button>
+    </StyledButton>
   )
 };
 

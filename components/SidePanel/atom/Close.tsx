@@ -1,7 +1,6 @@
 import { Button } from "components/Button/Button";
 import { FC } from "react";
 import styled from "styled-components";
-import theme from "theme/theme";
 
 interface Props {
 	onClick:() => void;

@@ -1,28 +1,28 @@
 import { FC } from 'react';
 import { Button } from 'components/Button/Button';
-import cn from 'classnames';
-import styles from '../pagepagination.module.scss';
 import ForwardArrow from '../atom/ForwardArrow';
-
-type Fn = (curr:number) => number;
+import styled from 'styled-components';
+import { LeftRadius } from '../atom/Radiuses';
 
 interface Props {
-  toggle:(fn:Fn) => void;
+  toggle:() => void;
   active:number;
   length:number;
 }
 
+const StyledButton = styled(Button)`
+  ${LeftRadius}
+`;
+
 const ForwardButton:FC<Props> = ({ toggle, active, length }) => {
-  const forwardOnePage = () => toggle((curr) => curr = curr + 1);
 
   return (
-    <Button 
-      className={cn([styles.paginationControls, styles.leftRadius])}
+    <StyledButton
       disabled={active === length - 1}
-      onClick={forwardOnePage}
+      onClick={toggle}
     >
       <ForwardArrow />
-    </Button>
+    </StyledButton>
   )
 };
 
