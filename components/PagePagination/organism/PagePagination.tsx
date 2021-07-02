@@ -1,47 +1,46 @@
-import React from "react";
-import FirstPageButton from "../molecule/FirstPageButton";
-import LastPageButton from "../molecule/LastPageButton";
-import ForwardButton from "../molecule/ForwardButton";
-import BackButton from "../molecule/BackButton";
+import { FC, useEffect } from "react";
 import Indexes from "../molecule/Indexes";
 import usePaginate from "../hook/usePaginate";
 import PaginationContainer from "../atom/PaginationContainer";
+import BackControls from "../molecule/BackControls";
+import NextControls from "../molecule/NextControls";
 
 type Selected = number;
 
-type PaginationProps = {
+type Props = {
   pageCount: number;
   active: number;
   onPageChange:(selected:Selected) => void;
-  className?: string;
+  fullWidth?:boolean;
   max?: number;
 };
 
-export function PagePagination({
+const PagePagination:FC<Props> = ({
   pageCount,
   active,
   onPageChange,
-  className,
-  max = 3,
-}: PaginationProps) {
+  fullWidth = false,
+  max = 2,
+}) => {
   const onPreviousClick = () => onPageChange(active - 1);
   const onNextClick = () => onPageChange(active + 1);
-  const scrollToTop = () => document.body.scrollTo(0, 0);
+  const onFirstPageRequested = () => onPageChange(0);
+  const onLastPageRequested = () => onPageChange(pageCount - 1);
+  const onPageChangeRequested = (page:number) => onPageChange(page);
 
-  const decoratedOnPageChange = (item:Selected) => {
-    onPageChange(item);
-    scrollToTop();
-  }
+  const { indexes } = usePaginate(pageCount, active, max);
 
-  const indexes = usePaginate(pageCount, active, max);
+  useEffect(() => {
+    if (pageCount === active) onPageChange(pageCount - 1);
+  }, [pageCount]);
 
   return (
-    <PaginationContainer>
-      <FirstPageButton active={active} toggle={decoratedOnPageChange} />
-      <BackButton active={active} toggle={onPreviousClick} />
-      <Indexes pages={indexes} onPageChange={decoratedOnPageChange} active={active} />
-      <ForwardButton active={active} length={pageCount} toggle={onNextClick} />
-      <LastPageButton active={active} length={pageCount} toggle={decoratedOnPageChange} />
+    <PaginationContainer fullWidth={fullWidth}>
+      <BackControls onFirstPage={onFirstPageRequested} onPreviousPage={onPreviousClick} active={active} />
+      <Indexes pages={indexes} onPageChange={onPageChangeRequested} active={active} />
+      <NextControls active={active} length={pageCount} onLastPage={onLastPageRequested} onNextPage={onNextClick} />
     </PaginationContainer>
   );
 }
+
+export default PagePagination;

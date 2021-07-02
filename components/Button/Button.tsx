@@ -25,7 +25,7 @@ const Width = css<{block:Block}>`
 `;
 
 const Padding = css<{size:Size}>`
-  padding: ${({ size }) => size === 'sm' ? '0.3rem 0.5rem' : '1rem 1.2rem'};
+  padding: ${({ size }) => size === 'sm' ? '0.5rem 0.8rem' : '1rem 1.2rem'};
 `;
 
 const FontSize = css<{size:Size}>`

@@ -3,10 +3,14 @@ import { usePagination } from "components/Hooks/usePagination";
 import CartContentEmpty from "../atom/CartContentEmpty";
 import CartContent from "../molecule/CartContent";
 import useCart from "components/Hooks/useCart";
-import CartPopupTrigger from "../molecule/CartPopupTrigger";
+import CartContainer from "../atom/CartContainer";
+import Badge from "components/Badge/organism/Badge";
+import CartSvg from "../atom/CartSvg";
+import SidePanel from "components/SidePanel/organism/Panel";
 
 export function Cart() {
   const [numberOfItems, setNumberOfItems] = useState(0);
+  const [isOpen, setIsOpen] = useState(true);
   const { cart } = useCart();
 
   const mapCartToArray = () =>
@@ -36,17 +40,26 @@ export function Cart() {
     3
   );
 
+  const toggleSidePanel = () => setIsOpen(!isOpen);
+  const closeSidePanel = () => setIsOpen(false);
+
   return (
-    <CartPopupTrigger numberOfItems={numberOfItems}>
+    <>
+    <CartContainer onClick={toggleSidePanel}>
+      <CartSvg />
+      <Badge>{numberOfItems}</Badge>
+    </CartContainer>
+    <SidePanel isOpen={isOpen} onClick={toggleSidePanel} onClose={closeSidePanel}>
       {numberOfItems > 0 ? (
         <CartContent items={paginatedItems[pagination || 0]}>
-          <Pagination />
+          <Pagination fullWidth max={1} />
         </CartContent>
       ) : (
         <CartContentEmpty>
           Il n'y a aucun item dans votre panier pour le moment.
         </CartContentEmpty>
       )}
-    </CartPopupTrigger>
+    </SidePanel>
+    </>
   );
 }

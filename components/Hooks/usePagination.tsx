@@ -1,5 +1,5 @@
 import React from "react";
-import { PagePagination } from "../PagePagination/organism/PagePagination";
+import PagePagination from "../PagePagination/organism/PagePagination";
 import chunk from "lodash/chunk";
 
 export function usePagination<T>(itemsToPaginate: T[], itemsPerPage: number) {
@@ -9,18 +9,16 @@ export function usePagination<T>(itemsToPaginate: T[], itemsPerPage: number) {
   React.useDebugValue(paginatedItems);
 
   interface Props {
-    className?: string;
+    fullWidth?:boolean;
+    max?:number;
   }
 
-  const handleSetPagination = (selected:number) => {
-    console.log(selected);
-    setPagination(selected);
-  };
+  const onPageChangeRequested = (selected:number) => setPagination(selected);
 
   const paginationProps = {
     pageCount: paginatedItems.length,
     active: pagination,
-    onPageChange: handleSetPagination,
+    onPageChange: onPageChangeRequested,
   };
 
   return {
@@ -29,10 +27,10 @@ export function usePagination<T>(itemsToPaginate: T[], itemsPerPage: number) {
     paginationProps: {
       length: paginatedItems.length,
       active: pagination,
-      toggle: handleSetPagination,
+      toggle: onPageChangeRequested,
     },
-    Pagination: ({ className }: Props) => (
-      <PagePagination className={className} {...paginationProps} />
+    Pagination: ({ fullWidth, max }: Props) => (
+      <PagePagination fullWidth={fullWidth} max={max} {...paginationProps} />
     ),
   };
 }

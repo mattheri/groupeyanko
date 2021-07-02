@@ -9,6 +9,7 @@ const Container = styled.div`
 	width: 100%;
 	display: flex;
 	flex-wrap: wrap;
+	max-width: 15rem;
 `;
 
 const AddToCartContainer:FC<Props> = ({ className, children }) => {

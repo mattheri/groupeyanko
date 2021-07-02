@@ -2,7 +2,6 @@ import { FC } from 'react';
 import { Button } from 'components/Button/Button';
 import BackArrow from '../atom/BackArrow';
 import styled from 'styled-components';
-import theme from 'theme/theme';
 import { RightRadius } from '../atom/Radiuses';
 
 interface Props {

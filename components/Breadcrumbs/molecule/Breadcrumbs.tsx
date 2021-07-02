@@ -31,7 +31,7 @@ const BreadcrumbList = styled.ol`
 `;
 
 const BreadcrumbItem = styled(Breadcrumb.Item)`
-  padding: 0;
+  padding: 0.3rem 0.8rem;
 `;
 
 const Breadcrumbs:FC<Props> = ({ breadcrumbs }) => {

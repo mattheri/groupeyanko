@@ -49,14 +49,22 @@ const BorderRight = css`
 
 const StyledButton = styled(Button)<{first:boolean, last:boolean, active:boolean}>`
 	${IndexButtonOnlyCSS}
-	${({ first }) => first && LeftRadius && BorderLeft};
-	${({ last }) => last && RightRadius && BorderRight};
+	&:first-of-type {
+		${LeftRadius && BorderLeft};
+	}
+	&:last-of-type {
+		${RightRadius && BorderRight}
+	}
 	${({ active }) => active && Active};
+`;
+
+const IndexesContainer = styled.div`
+	display: flex;
 `;
 
 const Indexes:FC<Props> = ({ pages, onPageChange, active }) => {	
 	return(
-		<>
+		<IndexesContainer>
 			{pages.map((page) => (
 				<StyledButton
 					type='button'
@@ -70,7 +78,7 @@ const Indexes:FC<Props> = ({ pages, onPageChange, active }) => {
 						{page}
 					</StyledButton>
 			))}
-		</>
+		</IndexesContainer>
 	);
 }
 

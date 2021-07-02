@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, ChangeEvent, FC } from "react";
-import { useClickOutside } from "../../Hooks/useClickOutside";
+import useClickOutside from "../../Hooks/useClickOutside";
 import SearchContainer from "../atom/SearchContainer/SearchContainer";
 import SearchInput from "../atom/SearchInput/SearchInput";
 import MagnifyingGlass from "../atom/MagnifyingGlass/MagnifyingGlass";
@@ -13,7 +13,7 @@ const SearchController:FC = () => {
   const [open, setOpen] = useState(false);
   const [inputOpen, setInputOpen] = useState(false);
 
-  const query = useDebouncedValue(value, 500);
+  const query = useDebouncedValue(value, 200);
   const results = useSearchResults(query);
 
   const changeSearchValue = (event:ChangeEvent<HTMLInputElement>) => setValue(event.target.value);

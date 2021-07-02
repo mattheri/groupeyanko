@@ -1,17 +1,26 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { FC } from "react";
 import { Container } from "react-bootstrap";
 
-const StyledContainer = styled.div`
-	display: flex;
-	justify-content: center;
-	padding: 1rem 0;
+interface Props {
+	fullWidth:boolean;
+}
+
+const FullWidthCSS = css<{fluid:boolean}>`
+	justify-content: ${({ fluid }) => fluid ? 'space-between' : 'center'};
 `;
 
-const PaginationContainer:FC = ({ children }) => {
+const StyledContainer = styled.div<{fluid:boolean}>`
+	display: flex;
+	padding: 1rem 0;
+	margin-top: auto;
+	${FullWidthCSS}
+`;
+
+const PaginationContainer:FC<Props> = ({ fullWidth, children }) => {
 	
 	return(
-		<StyledContainer as={Container}>
+		<StyledContainer as={Container} fluid={fullWidth}>
 			{children}
 		</StyledContainer>
 	);

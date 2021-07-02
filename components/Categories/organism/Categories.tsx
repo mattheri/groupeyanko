@@ -1,7 +1,7 @@
-import { FC, useState, useEffect } from "react";
+import { FC, useState } from "react";
 import useCategories from "../hook/useCategories";
 import CategoriesPanelToggle from "../molecule/CategoriesPanelToggle";
-import Panel from "../../SidePanel/organism/Panel";
+import Panel from "components/SidePanel/organism/Panel";
 import ParentItemList from "../molecule/ParentItemList";
 
 const Categories:FC = () => {
@@ -9,15 +9,12 @@ const Categories:FC = () => {
 	const categories = useCategories();
 
 	const toggleCategoriesPanel = () => setIsOpen(!isOpen);
-
-	useEffect(() => {
-		document.querySelector('html').style.overflow = isOpen ? 'hidden' : 'auto';
-	}, [isOpen]);
+	const closeSidePanel = () => setIsOpen(false);
 
 	return(
 		<>
 			<CategoriesPanelToggle onClick={toggleCategoriesPanel} isOpen={isOpen} />
-			<Panel isOpen={isOpen} onClick={toggleCategoriesPanel}>
+			<Panel isOpen={isOpen} onClick={toggleCategoriesPanel} onClose={closeSidePanel}>
 				{categories.map((filteredCategory) => (
 					<ParentItemList onClick={toggleCategoriesPanel} key={filteredCategory.currentCategoryId} category={filteredCategory} />
 				))}

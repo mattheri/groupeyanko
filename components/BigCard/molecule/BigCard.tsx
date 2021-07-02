@@ -3,18 +3,25 @@ import { FC } from "react";
 import styled from 'styled-components';
 import BigCardImage from "../atom/BigCardImage";
 import BigCardOverlay from "../atom/BigCardOverlay";
+import theme from "theme/theme";
 
 interface Props {
 	category:Category;
+	isFeatured:boolean;
 }
 
-const Container = styled.div`
-	width: 100%;
+const Container = styled.div<{isFeatured:boolean}>`
+	width: 33%;
 	min-height: 33rem;
-	min-width: 30rem;
 	overflow: hidden;
 	position: relative;
 	cursor: pointer;
+	order: ${({ isFeatured }) => isFeatured ? 0 : 1};
+	flex: 1 0 100%;
+
+	@media only screen and (${theme.mediaQueries.sm}) {
+		flex: 1 0 ${({ isFeatured }) => isFeatured ? '66%' : 'calc(33% - 1rem)'};
+	}
 
 	&:hover {
 		article {
@@ -23,10 +30,10 @@ const Container = styled.div`
 	}
 `;
 
-const BigCard:FC<Props> = ({ category }) => {
+const BigCard:FC<Props> = ({ category, isFeatured }) => {
 
 	return (
-		<Container>
+		<Container isFeatured={isFeatured}>
 			<BigCardOverlay id={category.id}>
 				{category.description ? category.description : category.name}
 			</BigCardOverlay>

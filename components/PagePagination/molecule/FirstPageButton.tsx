@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { LeftRadius } from '../atom/Radiuses';
 
 interface Props {
-  toggle:(n:number) => void;
+  toggle:() => void;
   active:number;
 }
 
@@ -14,12 +14,11 @@ const StyledButton = styled(Button)`
 `;
 
 const FirstPageButton:FC<Props> = ({ toggle, active }) => {
-  const goToFirstPage = () => toggle(0);
 
   return (
     <StyledButton
       disabled={active === 0}
-      onClick={goToFirstPage}
+      onClick={toggle}
     >
       <DoubleArrowBack />
     </StyledButton>

@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { RightRadius } from '../atom/Radiuses';
 
 interface Props {
-  toggle:(n:number) => void;
+  toggle:() => void;
   active:number;
   length:number
 }
@@ -15,12 +15,10 @@ const StyledButton = styled(Button)`
 `;
 
 const LastPageButton:FC<Props> = ({ toggle, active, length }) => {
-  const goToLastPage = () => toggle(length - 1);
-
   return (
     <StyledButton
       disabled={active === length - 1}
-      onClick={goToLastPage}
+      onClick={toggle}
       type='button'
     >
       <DoubleArrowForward />
