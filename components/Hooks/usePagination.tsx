@@ -2,7 +2,7 @@ import React from "react";
 import PagePagination from "../PagePagination/organism/PagePagination";
 import chunk from "lodash/chunk";
 
-export function usePagination<T>(itemsToPaginate: T[], itemsPerPage: number) {
+function usePagination<T>(itemsToPaginate: T[], itemsPerPage: number) {
   const [pagination, setPagination] = React.useState(0);
   const paginatedItems = chunk(itemsToPaginate, itemsPerPage);
 
@@ -34,3 +34,5 @@ export function usePagination<T>(itemsToPaginate: T[], itemsPerPage: number) {
     ),
   };
 }
+
+export default usePagination;

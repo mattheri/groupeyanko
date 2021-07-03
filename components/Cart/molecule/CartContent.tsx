@@ -20,7 +20,7 @@ const SubmitContainer = styled.div`
 const DEFAULT_PLACEHOLDER_IMAGE = "/uploads/images/placeholder.png";
 
 const CartContent:FC<Props> = ({ items, children }) => {
-
+	
 	return (
 		<>
 			{items && items.map((product) => (
@@ -32,7 +32,7 @@ const CartContent:FC<Props> = ({ items, children }) => {
 						name={product.name}
 						number={product.number}
 						image={
-							product.image ? product.image : DEFAULT_PLACEHOLDER_IMAGE
+							product.images[0] ? product.images[0].src : DEFAULT_PLACEHOLDER_IMAGE
 						}
 					/>
 				)

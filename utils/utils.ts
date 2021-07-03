@@ -7,8 +7,7 @@ import { FormData } from "types";
  *
  * @param value string, the value to remove HTML Tags from
  */
-export const sanitizeHTML = (value: string) =>
-  value.replace(/(<([^>]+)>)/gi, "");
+export const sanitizeHTML = (value: string) => value.replace(/(<([^>]+)>)/gi, "");
 
 // /**
 //  * Will build the a table containing links to the products. Then it inits emailsjs.

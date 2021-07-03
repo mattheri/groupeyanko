@@ -7,7 +7,7 @@ const theme = {
     xl: 1200,
   },
   colors: {
-    primary: '#1f285d',
+    primary: '#5065AB',
     accent: '#5065AB',
     dark: '#111111',
     black: '#000000',

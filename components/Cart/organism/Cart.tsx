@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { usePagination } from "components/Hooks/usePagination";
+import usePagination from "components/Hooks/usePagination";
 import CartContentEmpty from "../atom/CartContentEmpty";
 import CartContent from "../molecule/CartContent";
 import useCart from "components/Hooks/useCart";
@@ -10,7 +10,7 @@ import SidePanel from "components/SidePanel/organism/Panel";
 
 export function Cart() {
   const [numberOfItems, setNumberOfItems] = useState(0);
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
   const { cart } = useCart();
 
   const mapCartToArray = () =>

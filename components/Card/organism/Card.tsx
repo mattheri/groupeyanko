@@ -35,7 +35,7 @@ export function Card({
     <CardContainer>
       <Link href={url}>
         <InnerCard>
-          <CardImage backgroundImageSource={src} />
+          <CardImage src={src} alt={description} />
           <CardDescription>{description}</CardDescription>
         </InnerCard>
       </Link>

@@ -20,8 +20,8 @@ export function Navbar() {
   return (
     <NavbarContainer isOpen={isMobileNavbarOpen}>
       <Logo />
-      <Search />
       <Collapse isOpen={isMobileNavbarOpen} isAuthenticated={isAuthenticated} onLogout={handleLogout} />
+      <Search />
       <Cart />
       <Toggle isOpen={isMobileNavbarOpen} onToggle={toggleMobileNavbar} />
       <BreadcrumbsController />

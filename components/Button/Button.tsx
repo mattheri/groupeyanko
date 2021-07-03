@@ -7,22 +7,87 @@ type Block = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 
 type Size = 'sm' | 'lg';
 
-const Width = css<{block:Block}>`
-  width: ${({ block }) => block === 'xs' ? '100%' : 'fit-content'};
-
-  @media only screen and (${theme.mediaQueries.sm}) {
-    width: ${({ block }) => block === 'sm' ? '100%' : 'fit-content'};
-  }
-  @media only screen and (${theme.mediaQueries.md}) {
-    width: ${({ block }) => block === 'md' ? '100%' : 'fit-content'};
-  }
-  @media only screen and (${theme.mediaQueries.lg}) {
-    width: ${({ block }) => block === 'lg' ? '100%' : 'fit-content'};
-  }
-  @media only screen and (${theme.mediaQueries.xl}) {
-    width: ${({ block }) => block === 'xl' ? '100%' : 'fit-content'};
+const WidthXs = css`
+  @media only screen and (${theme.mediaQueries.xs}) {
+    width: 100%;
   }
 `;
+
+const WidthSm = css`
+  @media only screen and (${theme.mediaQueries.sm}) {
+    width: 100%;
+  }
+`;
+
+const WidthMd = css`
+  @media only screen and (${theme.mediaQueries.md}) {
+    width: 100%;
+  }
+`;
+
+const WidthLg = css`
+  @media only screen and (${theme.mediaQueries.lg}) {
+    width: 100%;
+  }
+`;
+
+const WidthXl = css`
+  @media only screen and (${theme.mediaQueries.xl}) {
+    width: 100%;
+  }
+`;
+
+const WidthXsFit = css`
+  @media only screen and (${theme.mediaQueries.xs}) {
+    width: fit-content;
+  }
+`;
+
+const WidthSmFit = css`
+  @media only screen and (${theme.mediaQueries.sm}) {
+    width: fit-content;
+  }
+`;
+
+const WidthMdFit = css`
+  @media only screen and (${theme.mediaQueries.md}) {
+    width: fit-content;
+  }
+`;
+
+const WidthLgFit = css`
+  @media only screen and (${theme.mediaQueries.lg}) {
+    width: fit-content;
+  }
+`;
+
+const WidthXlFit = css`
+  @media only screen and (${theme.mediaQueries.xl}) {
+    width: fit-content;
+  }
+`;
+
+const DefaultWidth = css`
+  width: fit-content;
+`;
+
+const Width = css<{block:Block,fit:Block}>`
+  ${DefaultWidth};
+  ${({ block, fit }) => {
+    if (block === 'xs') return WidthXs;
+    if (fit === 'xs') return WidthXsFit;
+    if (block === 'sm') return WidthSm;
+    if (fit === 'sm') return WidthSmFit;
+    if (block === 'md') return WidthMd;
+    if (fit === 'md') return WidthMdFit;
+    if (block === 'lg') return WidthLg;
+    if (fit === 'lg') return WidthLgFit;
+    if (block === 'xl') return WidthXl;
+    if (fit === 'xl') return WidthXlFit;
+  }};
+`;
+
+console.log(Width);
 
 const Padding = css<{size:Size}>`
   padding: ${({ size }) => size === 'sm' ? '0.5rem 0.8rem' : '1rem 1.2rem'};
@@ -79,7 +144,7 @@ const HoverBorder = css<{secondary:boolean,tertiary:boolean}>`
   }};
 `;
 
-const StyledButton = styled.button<{primary:boolean,secondary:boolean,tertiary:boolean,size:Size,block:Block}>`
+const StyledButton = styled.button<{primary:boolean,secondary:boolean,tertiary:boolean,size:Size,block:Block,fit:Block}>`
   ${Padding}
   ${Width}
   ${FontSize}
@@ -133,6 +198,7 @@ interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
   size?:Size;
   href?:string;
   block?:Block;
+  fit?:Block;
 }
 
 export const Button:FC<Props> = function ({
@@ -147,6 +213,7 @@ export const Button:FC<Props> = function ({
   children,
   type = "submit",
   block,
+  fit,
   ...rest
 }) {
   if (!href) {
@@ -160,6 +227,7 @@ export const Button:FC<Props> = function ({
         tertiary={tertiary}
         size={size}
         block={block}
+        fit={fit}
         {...rest}
       >
         {text || children}
@@ -176,6 +244,7 @@ export const Button:FC<Props> = function ({
         size={size}
         onClick={onClick}
         block={block}
+        fit={fit}
         {...rest}
       >
         {text || children}

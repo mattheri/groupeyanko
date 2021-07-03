@@ -9,9 +9,11 @@ const CartContainer = styled.div`
   padding: 0;
   grid-row: 1;
   justify-self: end;
-  
+  align-self: flex-end;
+
   @media only screen and (${theme.mediaQueries.lg}) {
     grid-column: 3;
+    align-self: center;
   }
 `;
 

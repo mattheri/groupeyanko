@@ -4,7 +4,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { Product } from 'types';
 import { Card } from '../Card/organism/Card';
-import { usePagination } from '../Hooks/usePagination';
+import usePagination from '../Hooks/usePagination';
 
 interface Props {
   response:Product[];

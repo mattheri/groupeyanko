@@ -8,13 +8,15 @@ interface Props {
 
 const StyledNavbar = styled.nav`
 	padding: 1rem;
-	display: grid;
-	grid-template-rows: auto auto 5rem auto;
-	grid-template-columns: 75% 10% 15%;
-	align-items: center;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
 	position: relative;
+	gap: 1rem;
+	transition: height 0.35s;
 	
 	@media only screen and (${theme.mediaQueries.lg}) {
+		display: grid;
 		padding-right: 10rem;
 		padding-left: 10rem;
 		grid-template-rows: repeat(2, auto);

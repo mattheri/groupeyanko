@@ -1,6 +1,6 @@
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
-import { QuoteProduct } from "../components/QuoteProduct/QuoteProduct";
+import QuoteProductController from "../components/QuoteProduct/QuoteProductController";
 import { QuoteForm } from "../components/QuoteForm/organism/QuoteForm";
 import NoItemsInCart from "../components/NoItemsInCart/NoItemsInCart";
 import useCart from "components/Hooks/useCart";
@@ -29,11 +29,7 @@ export default function Quote() {
 
   return (
     <Container className="p-2 pt-5">
-      <Row>
-        {cart && Object.entries(cart).map(([key, product]) => {
-          return <QuoteProduct product={product} />;
-        })}
-      </Row>
+      <QuoteProductController />
       {cart && Object.keys(cart).length > 0 ? (
         <QuoteForm cart={cart} onQuoteSent={onQuoteSent} />
       ) : (

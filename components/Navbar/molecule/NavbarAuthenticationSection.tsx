@@ -14,11 +14,11 @@ const NavbarAuthenticationSection:FC<Props> = ({ isAuthenticated, onLogout }) =>
   return (
     isAuthenticated ? (
       <>
-        <Nav.Link block='xs' as={Button} tertiary href='/me'>Profil</Nav.Link>
-        <Nav.Link block='xs' as={Button} onClick={onLogout}>Déconnexion</Nav.Link>
+        <Button block='xs' fit='lg' tertiary href='/me'>Profil</Button>
+        <Button block='xs' fit='lg' onClick={onLogout}>Déconnexion</Button>
       </>
     ) : (
-      <ModalPopup trigger={<Nav.Link block='xs' as={Button}>Connexion</Nav.Link>}>
+      <ModalPopup trigger={<Button block='xs' fit='lg'>Connexion</Button>}>
         <LoginFormController />
       </ModalPopup>
     )

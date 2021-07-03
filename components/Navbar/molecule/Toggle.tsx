@@ -10,8 +10,9 @@ interface Props {
 
 const ToggleContainer = styled.div`
 	display: block;
-	grid-row: 1;
-	justify-self: end;
+	position: absolute;
+	top: 0;
+	right: 0;
 
 	@media only screen and (${theme.mediaQueries.lg}) {
 		display: none;
