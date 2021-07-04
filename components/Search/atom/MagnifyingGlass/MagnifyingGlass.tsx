@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { motion, AnimatePresence } from 'framer-motion';
-import { Button } from 'react-bootstrap';
+import Button from 'react-bootstrap/Button';
 import styled from 'styled-components';
 
 interface Props {

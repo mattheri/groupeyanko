@@ -1,5 +1,5 @@
 import { FC, ForwardedRef, forwardRef } from "react";
-import { Button } from 'components/Button/Button';
+import Button from 'components/Button/Button'
 import NavbarAuthenticationSection from "./NavbarAuthenticationSection";
 import { Nav } from 'react-bootstrap';
 import styled from 'styled-components';

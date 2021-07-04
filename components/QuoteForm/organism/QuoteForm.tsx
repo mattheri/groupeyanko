@@ -4,7 +4,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import FormUI from "../molecule/Form";
 import Col from 'react-bootstrap/Col';
-import { Button } from "components/Button/Button";
+import Button from 'components/Button/Button'
 import { hasErrors } from "utils/hasErrors";
 import Alert from 'react-bootstrap/Alert';
 import { useRouter } from "next/router";

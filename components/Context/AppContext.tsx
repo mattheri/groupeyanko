@@ -1,6 +1,5 @@
 import { AxiosResponse } from "axios";
 import useLocalStorage from "components/Hooks/useLocalStorage";
-import useLogger from "components/Hooks/useLogger";
 import { useState, createContext, PropsWithChildren, useEffect } from "react";
 import ApiService from "services/ApiService";
 import { BasicUserInformation, UserInformation } from "services/domain/User";
@@ -46,18 +45,10 @@ const EMPTY_USER:AppState = {
   wooId: 0,
 }
 
-/**
- * Context that contains the state of the user. It will automatically try to detect
- * the 'user' cookie. If this cookie is present, it will be updated with the information
- * from this cookie. Otherwise, it will render the application with a user in the state.
- *
- * See documentation on React Context here: https://reactjs.org/docs/context.html
- */
 export function AppContextProvider<T>(props: PropsWithChildren<T>) {
   const { setItem, getItem, removeItem } = useLocalStorage();
 
   const userId:string = getItem('user');
-  useLogger(userId);
 
   const [appState, setAppState] = useState<AppState>({
     connected: false,

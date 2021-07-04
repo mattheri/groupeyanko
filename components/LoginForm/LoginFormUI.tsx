@@ -1,7 +1,7 @@
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Form from "react-bootstrap/Form";
-import { Button } from "../Button/Button";
+import Button from 'components/Button/Button'
 import Col from "react-bootstrap/Col";
 import InputController from "components/Input/organism/InputController";
 import ErrorAlert from "components/ErrorAlert/atom/ErrorAlert";

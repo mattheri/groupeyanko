@@ -1,4 +1,4 @@
-import { Button } from "components/Button/Button";
+import Button from 'components/Button/Button'
 import { FC } from "react";
 import styled from "styled-components";
 

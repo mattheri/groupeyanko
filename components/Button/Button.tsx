@@ -1,4 +1,4 @@
-import { ButtonHTMLAttributes, FC } from "react";
+import { ButtonHTMLAttributes, FC, forwardRef, ForwardedRef } from "react";
 import Link from "next/link";
 import styled, { css } from 'styled-components';
 import theme from "theme/theme";
@@ -86,8 +86,6 @@ const Width = css<{block:Block,fit:Block}>`
     if (fit === 'xl') return WidthXlFit;
   }};
 `;
-
-console.log(Width);
 
 const Padding = css<{size:Size}>`
   padding: ${({ size }) => size === 'sm' ? '0.5rem 0.8rem' : '1rem 1.2rem'};
@@ -199,9 +197,10 @@ interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
   href?:string;
   block?:Block;
   fit?:Block;
+  ref?:ForwardedRef<HTMLButtonElement>
 }
 
-export const Button:FC<Props> = function ({
+const Button:FC<Props> = forwardRef(({
   href,
   text,
   primary = true,
@@ -215,10 +214,11 @@ export const Button:FC<Props> = function ({
   block,
   fit,
   ...rest
-}) {
+}, ref) => {
   if (!href) {
     return (
       <StyledButton
+        ref={ref}
         type={type}
         disabled={disabled}
         onClick={onClick}
@@ -238,6 +238,7 @@ export const Button:FC<Props> = function ({
   return (
     <Link href={href}>
       <StyledButton
+        ref={ref}
         primary={primary}
         secondary={secondary}
         tertiary={tertiary}
@@ -251,4 +252,6 @@ export const Button:FC<Props> = function ({
       </StyledButton>
     </Link>
   );
-};
+});
+
+export default Button;

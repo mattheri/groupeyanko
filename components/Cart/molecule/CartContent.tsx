@@ -1,4 +1,4 @@
-import { Button } from "components/Button/Button";
+import Button from 'components/Button/Button'
 import { CartItem } from "components/CartItem/organism/CartItem";
 import { Cart } from "components/Context/CartContext";
 import React, { FC } from "react";

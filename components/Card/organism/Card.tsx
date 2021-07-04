@@ -1,11 +1,10 @@
-import React from "react";
+import React, { FC, useState } from "react";
 import Link from 'components/Link/Link';
 import { Product } from "types";
 import AddToCartController from "components/AddToCart/organism/AddToCartController";
 import CardContainer from "../atom/CardContainer";
-import InnerCard from "../atom/InnerCard";
-import CardImage from "../atom/CardImage";
 import CardDescription from "../molecule/CardDescription";
+import AddToCartContainer from "../atom/AddToCartContainer";
 
 export interface CardProps {
   src: string;
@@ -16,34 +15,28 @@ export interface CardProps {
   index?: number;
 }
 
-/**
- * A card component that uses next Link component for page prefetching. See https://nextjs.org/docs/api-reference/next/link
- *
- * @param url string. required
- * @param src string. The image source. It is used in a background image.
- * @param description string. Description of the product/category
- * @param addToCart boolean. Enables a "add to cart UI on the card itself"
- */
-export function Card({
+const Card:FC<CardProps> = ({
   url,
   src,
   description,
   addToCart,
   product,
-}: CardProps) {
+}) => {
+  const [isMouseOver, setIsMouseOver] = useState(false);
+
+  const onMouseEnter = () => setIsMouseOver(true);
+  const onMouseLeave = () => setIsMouseOver(false);
+
   return (
-    <CardContainer>
+    <CardContainer onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
       <Link href={url}>
-        <InnerCard>
-          <CardImage src={src} alt={description} />
-          <CardDescription>{description}</CardDescription>
-        </InnerCard>
+        <CardDescription src={src} alt={src} isMouseOver={isMouseOver}>{description}</CardDescription>
       </Link>
-      {addToCart && (
-        <>
-          <AddToCartController product={product} />
-        </>
-      )}
+      <AddToCartContainer isMouseOver={isMouseOver}>
+        <AddToCartController product={product} />
+      </AddToCartContainer>
     </CardContainer>
   );
 }
+
+export default Card;

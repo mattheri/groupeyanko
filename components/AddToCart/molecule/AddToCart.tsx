@@ -5,7 +5,7 @@ import ChangeButton from "../atom/ChangeButton";
 import Amount from "../atom/Amount";
 import { FC } from "react";
 import styled from 'styled-components';
-import { Button } from "components/Button/Button";
+import Button from 'components/Button/Button'
 import NoValidationInput from "components/Input/molecule/NoValidationInput";
 
 interface Props {

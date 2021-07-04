@@ -1,5 +1,5 @@
 import AddToCartController from "components/AddToCart/organism/AddToCartController";
-import { Button } from "components/Button/Button";
+import Button from 'components/Button/Button'
 import { Product } from "types";
 import { FC } from "react";
 import styled from 'styled-components';

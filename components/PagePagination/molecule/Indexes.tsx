@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 import { FC } from "react";
-import { Button } from "components/Button/Button";
+import Button from 'components/Button/Button'
 import { LeftRadius, RightRadius } from "../atom/Radiuses";
 import { Active } from "../atom/Active";
 import theme from "theme/theme";

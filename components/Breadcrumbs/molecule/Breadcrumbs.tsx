@@ -1,7 +1,7 @@
 import Breadcrumb from "react-bootstrap/Breadcrumb";
 import styled from 'styled-components';
 import theme from "theme/theme";
-import { Button } from "components/Button/Button";
+import Button from 'components/Button/Button'
 import { BreadcrumbLink } from "../presenter/BreadcrumbsPresenter";
 import { FC } from "react";
 

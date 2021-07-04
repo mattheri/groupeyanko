@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Button } from 'components/Button/Button';
+import Button from 'components/Button/Button'
 import LoginFormController from "components/LoginForm/LoginFormController";
 import { ModalPopup } from "components/ModalPopup/ModalPopup";
 import { Nav } from 'react-bootstrap';

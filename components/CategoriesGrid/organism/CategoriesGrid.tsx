@@ -3,8 +3,9 @@ import { Category } from 'types';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import { Card } from 'components/Card/organism/Card';
+import Card from 'components/Card/organism/Card';
 import usePagination from 'components/Hooks/usePagination';
+import BigCardsController from 'components/BigCard/organism/BigCardsController';
 
 interface Props {
   response:Category[];
@@ -18,27 +19,7 @@ const CategoriesGrid:FC<Props> = ({ response }) => {
 
   return(
     <>
-      <Container>
-        <Row>
-          {paginatedItems[pagination].map((category) => (
-            <Col
-              key={category.id}
-              xs={12}
-              md={6}
-              lg={4}
-              className="d-flex justify-content-center p-0"
-            >
-              <Card
-                url={`/category/${category.id}`}
-                description={
-                  category.description ? category.description : category.name
-                }
-                src={category.image.src}
-              />
-            </Col>
-          ))}
-        </Row>
-      </Container>
+      <BigCardsController categories={paginatedItems[pagination]} />
       <Pagination />
     </>
   );

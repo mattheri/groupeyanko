@@ -1,4 +1,4 @@
-import { Button } from "components/Button/Button";
+import Button from 'components/Button/Button'
 import ErrorAlert from "components/ErrorAlert/atom/ErrorAlert";
 import InputController from "components/Input/organism/InputController";
 import SuccessAlert from "components/SuccessAlert/atom/SuccessAlert";

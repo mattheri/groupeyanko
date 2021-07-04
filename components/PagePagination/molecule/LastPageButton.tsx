@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { Button } from 'components/Button/Button';
+import Button from 'components/Button/Button'
 import DoubleArrowForward from '../atom/DoubleArrowForward';
 import styled from 'styled-components';
 import { RightRadius } from '../atom/Radiuses';
