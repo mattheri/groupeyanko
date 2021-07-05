@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useAuth } from "components/Hooks/useAuth";
 import Logo from "../atom/Logo";
 import Collapse from "../molecule/Collapse";
-import NavbarContainer from "../molecule/NavbarContainer";
+import NavbarContainer from "../atom/NavbarContainer";
 import Toggle from "../molecule/Toggle";
 import { Cart } from "components/Cart/organism/Cart";
 import Search from "../molecule/Search";
@@ -16,9 +16,10 @@ export function Navbar() {
   const handleLogout = async () => await signOut();
 
   const toggleMobileNavbar = () => setIsMobileNavbarOpen(!isMobileNavbarOpen);
+  const closeMobileNavbar = () => isMobileNavbarOpen && setIsMobileNavbarOpen(false);
 
   return (
-    <NavbarContainer isOpen={isMobileNavbarOpen}>
+    <NavbarContainer onClick={closeMobileNavbar}>
       <Logo />
       <Collapse isOpen={isMobileNavbarOpen} isAuthenticated={isAuthenticated} onLogout={handleLogout} />
       <Search />
