@@ -17,6 +17,7 @@ interface Props {
   useInput: boolean;
   cartNumber: number;
   product: Product;
+  label:string;
 };
 
 const DEFAULT_PLACEHOLDER_IMAGE = "/uploads/images/placeholder.png";
@@ -48,6 +49,7 @@ const AddToCart:FC<Props> = ({
   useInput,
   cartNumber,
   product,
+  label,
 }) => {
   const productImage = product.images.length ? product.images[0].src : DEFAULT_PLACEHOLDER_IMAGE;
   const PRODUCT = {
@@ -73,9 +75,7 @@ const AddToCart:FC<Props> = ({
       </TopContainer>
       <BottomContainer>
         <Button onClick={onClick} primary>
-          {useInput
-            ? "Mettre à jour"
-            : "Ajouter au panier"}
+          {label}
         </Button>
       </BottomContainer>
     </AddToCartContainer>

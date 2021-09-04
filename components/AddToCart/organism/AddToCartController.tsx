@@ -2,13 +2,13 @@ import { Product } from "types";
 import AddToCart from "../molecule/AddToCart";
 import useCartFunctions from "../hook/useCartFunctions";
 import { FC } from "react";
+import useCart from "components/Hooks/useCart";
 
-type Props = {
-  product: Product;
-  className?: string;
-  useInput?: boolean;
-  replaceAmount?: boolean;
-  layout?: boolean;
+interface Props {
+  product:Product;
+  useInput?:boolean;
+  replaceAmount?:boolean;
+  label?:string;
 };
 
 const AddToCartController:FC<Props> = ({
@@ -26,6 +26,10 @@ const AddToCartController:FC<Props> = ({
     number,
   } = useCartFunctions(product, replaceAmount);
 
+  const { productInCart } = useCart();
+
+  const label = productInCart(product.id.toString()) ? "Mettre à jour" : "Ajouter au panier";
+
   return (
     <AddToCart
       cartNumber={number}
@@ -36,6 +40,7 @@ const AddToCartController:FC<Props> = ({
       onRemove={handleRemove}
       product={product}
       useInput={useInput}
+      label={label}
     />
   );
 }

@@ -16,7 +16,7 @@ const ImageContainer = styled.div`
 const CardImage:FC<Props> = ({ src, alt }) => {
 	return (
 		<ImageContainer>
-			<Image src={src} alt={alt} layout='fill' objectFit='contain' />
+			<Image unoptimized src={src} alt={alt} layout='fill' objectFit='contain' />
 		</ImageContainer>
 	);
 };

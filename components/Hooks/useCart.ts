@@ -1,6 +1,8 @@
 import { Cart, CartContext, CartContextState } from 'components/Context/CartContext';
 import { Product } from 'types';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
+import ApiService from 'services/ApiService';
+import { ApiResponse } from 'services/domain/Api';
 
 const useCart = () => {
   const { cart, setCart } = useContext(CartContext);
@@ -14,8 +16,17 @@ const useCart = () => {
       return setCart((state) => ({ ...state, [`${product.id}`]: cartProduct }));
   }
 
-  const changeProductQuantity = (id: string, number?: number, noSubstract?:boolean) => {
-    if (!cart.hasOwnProperty(`${id}`)) return;
+  const changeProductQuantity = async (id: string, number?: number, noSubstract?:boolean) => {
+    if (!cart.hasOwnProperty(`${id}`)) {
+      const response:ApiResponse<Product> = await ApiService.get({
+        url: `/api/product/${id}`,
+      });
+      const product = response.data;
+
+      if (response.status === 200) {
+        addProductToCart(product, number);
+      }
+    }
 
     if (!number || number < 0) {
       return setCart(cart => {
@@ -41,12 +52,15 @@ const useCart = () => {
 
   const mergeToCart = (products:CartContextState) => setCart((state) => ({ ...state, ...products }));
 
+  const productInCart = (id: string) => cart.hasOwnProperty(`${id}`);
+
   return {
     cart,
     addProductToCart,
     changeProductQuantity,
     resetCart,
     mergeToCart,
+    productInCart,
   }
 }
 

@@ -1,26 +1,38 @@
 import { Product } from "types";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import AddToCart from "../AddToCart/organism/AddToCartController";
+import { Row, Col } from "react-bootstrap";
+import AddToCart from "components/AddToCart/organism/AddToCartController";
 import styles from "./productsection.module.scss";
+import Carousel from "components/Carousel/organism/Carousel";
+import ProductImage from "./atom/ProductImage";
+import { FC } from "react";
 
-type ProductProps = {
-  product: Product;
+interface Props {
+  product:Product;
 };
 
-export function ProductSection({ product }: ProductProps) {
+const DEFAULT_IMAGE_PLACEHOLDER = "/uploads/images/placeholder.png";
+
+const ProductSection:FC<Props> = ({ product }) => {
   return (
     <section className={styles.product}>
       <Row>
         <Col className="py-5" xs={12} md={6}>
-          <img
-            className={styles.productImage}
-            src={
-              product.images[0]
-                ? product.images[0].src
-                : "/uploads/images/placeholder.png"
-            }
-          />
+          {product.images.length > 1 ? (
+            <Carousel>
+              {product.images.map((image, index) => (
+                <ProductImage
+                  src={image.src || DEFAULT_IMAGE_PLACEHOLDER}
+                  alt={image.alt}
+                  key={index}
+                />
+              ))}
+            </Carousel>
+          ) : (
+            <ProductImage 
+              src={product.images[0].src || DEFAULT_IMAGE_PLACEHOLDER} 
+              alt={product.images[0].alt || product.name} 
+            />
+          )}
         </Col>
         <Col className="py-5" xs={12} md={6}>
           <h3>{product.name}</h3>
@@ -28,7 +40,6 @@ export function ProductSection({ product }: ProductProps) {
           <AddToCart
             useInput
             replaceAmount
-            className={styles.addTo}
             product={product}
           />
         </Col>
@@ -42,3 +53,5 @@ export function ProductSection({ product }: ProductProps) {
     </section>
   );
 }
+
+export default ProductSection;

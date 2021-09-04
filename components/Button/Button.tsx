@@ -1,11 +1,39 @@
 import { ButtonHTMLAttributes, FC, forwardRef, ForwardedRef } from "react";
 import Link from "next/link";
-import styled, { css } from 'styled-components';
+import styled, { css, keyframes } from 'styled-components';
 import theme from "theme/theme";
 
 type Block = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 
 type Size = 'sm' | 'lg';
+
+const ButtonLoadingAnimation = keyframes`
+  from {
+      transform: rotate(0turn);
+  }
+
+  to {
+      transform: rotate(1turn);
+  }
+`;
+
+const LoadingAnimation = css`
+  &::after {
+    content: "";
+    position: absolute;
+    width: 1.6rem;
+    height: 1.6rem;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    border: 4px solid transparent;
+    border-top-color: #ffffff;
+    border-radius: 50%;
+    animation: ${ButtonLoadingAnimation} 1s ease infinite;
+  }
+`;
 
 const WidthXs = css`
   @media only screen and (${theme.mediaQueries.xs}) {
@@ -142,13 +170,14 @@ const HoverBorder = css<{secondary:boolean,tertiary:boolean}>`
   }};
 `;
 
-const StyledButton = styled.button<{primary:boolean,secondary:boolean,tertiary:boolean,size:Size,block:Block,fit:Block}>`
+const StyledButton = styled.button<{primary:boolean,secondary:boolean,tertiary:boolean,size:Size,block:Block,fit:Block,loading:boolean}>`
   ${Padding}
   ${Width}
   ${FontSize}
   ${Border}
   ${Color}
   ${BackgroundColor}
+  ${({ loading }) => loading && LoadingAnimation}
   font-family: ${theme.typography.heading};
   transition: transform 0.3s, background-color 0.2s, color 0.2s, width 0.2s;
   max-height: 4rem;
@@ -158,6 +187,7 @@ const StyledButton = styled.button<{primary:boolean,secondary:boolean,tertiary:b
   align-items: center;
   border-radius: 5px;
   cursor: pointer;
+  position: relative;
 
   &:hover {
     text-decoration: none;
@@ -197,7 +227,8 @@ interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
   href?:string;
   block?:Block;
   fit?:Block;
-  ref?:ForwardedRef<HTMLButtonElement>
+  ref?:ForwardedRef<HTMLButtonElement>;
+  loading?:boolean;
 }
 
 const Button:FC<Props> = forwardRef(({
@@ -213,6 +244,7 @@ const Button:FC<Props> = forwardRef(({
   type = "submit",
   block,
   fit,
+  loading = false,
   ...rest
 }, ref) => {
   if (!href) {
@@ -228,9 +260,10 @@ const Button:FC<Props> = forwardRef(({
         size={size}
         block={block}
         fit={fit}
+        loading={loading}
         {...rest}
       >
-        {text || children}
+        {loading ? "" : text || children}
       </StyledButton>
     );
   }
@@ -246,9 +279,10 @@ const Button:FC<Props> = forwardRef(({
         onClick={onClick}
         block={block}
         fit={fit}
+        loading={loading}
         {...rest}
       >
-        {text || children}
+        {loading ? "" : text || children}
       </StyledButton>
     </Link>
   );
