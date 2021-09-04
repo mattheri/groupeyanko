@@ -1,6 +1,6 @@
 import { FC } from "react";
 import CategoriesGrid from "components/CategoriesGrid/organism/CategoriesGrid";
-import ProductsGrid from "components/ProductsGrid/ProductsGrid";
+import ProductsGrid from "components/ProductsGrid/organism/ProductsGrid";
 import { Category, Product } from "types";
 import StaticCategoryProps from "services/Categories/StaticCategoryProps";
 import { GetStaticPaths, GetStaticProps } from "next";
