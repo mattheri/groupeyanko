@@ -11,6 +11,7 @@ interface Props {
 const DEFAULT_PLACEHOLDER_IMAGE = "/uploads/images/placeholder.png";
 
 const Products:FC<Props> = ({ products, pageIndex }) => {
+	console.log(products);
 	return(
 		<>
 			{products[pageIndex].map((product, i) => (
@@ -25,6 +26,7 @@ const Products:FC<Props> = ({ products, pageIndex }) => {
 								: DEFAULT_PLACEHOLDER_IMAGE
 						}
 						product={product}
+						addToCart
 					/>
 				</ProductCol>
 			))}

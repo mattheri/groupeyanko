@@ -4,7 +4,7 @@ import LoaderController, { LoaderRef } from 'components/Loader/organism/LoaderRe
 import Main from 'components/Main/Main';
 import { Navbar } from 'components/Navbar/organism/Navbar';
 import React, { FC, useRef } from 'react';
-import { Col, Container, Row } from 'react-bootstrap';
+import { Col, Row } from 'react-bootstrap';
 import PageTransition from 'components/PageTransition/PageTransition';
 import styled from 'styled-components';
 

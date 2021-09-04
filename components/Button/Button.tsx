@@ -2,6 +2,7 @@ import { ButtonHTMLAttributes, FC, forwardRef, ForwardedRef } from "react";
 import Link from "next/link";
 import styled, { css, keyframes } from 'styled-components';
 import theme from "theme/theme";
+import useReRender from "components/Hooks/useReRender";
 
 type Block = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 
@@ -247,6 +248,7 @@ const Button:FC<Props> = forwardRef(({
   loading = false,
   ...rest
 }, ref) => {
+
   if (!href) {
     return (
       <StyledButton

@@ -3,18 +3,18 @@ import AddToCart from "../molecule/AddToCart";
 import useCartFunctions from "../hook/useCartFunctions";
 import { FC } from "react";
 import useCart from "components/Hooks/useCart";
+import useReRender from "components/Hooks/useReRender";
 
 interface Props {
   product:Product;
   useInput?:boolean;
   replaceAmount?:boolean;
-  label?:string;
 };
 
 const AddToCartController:FC<Props> = ({
   product,
   useInput,
-  replaceAmount,
+  replaceAmount
 }) => {
 
   const {

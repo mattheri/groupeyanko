@@ -9,7 +9,7 @@ interface Props {
 
 const ImageContainer = styled.div`
 	width: 100%;
-	height: 100%;
+	height: 30vh;
 `;
 
 const ProductImage:FC<Props> = ({ src, alt }) => {

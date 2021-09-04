@@ -32,6 +32,25 @@ export interface Category {
   [key: string]: any;
 }
 
+export interface RelatedProducts {
+  classes: [];
+  context: string;
+  date: string;
+  excerpt: string;
+  format: boolean;
+  id: number;
+  img: {
+    alt_text: string;
+    height: number;
+    width: number;
+    src: string;
+  };
+  rel: string;
+  title: string;
+  url: string;
+  [key: string]: any;
+}
+
 export interface Product {
   readonly id: number;
   name: string;
@@ -49,24 +68,7 @@ export interface Product {
   };
   categories: Pick<Category, "id" | "name" | "slug">[];
   images: Image[];
-  ["jetpack-related-posts"]: {
-    classes: [];
-    context: string;
-    date: string;
-    excerpt: string;
-    format: boolean;
-    id: number;
-    img: {
-      alt_text: string;
-      height: number;
-      width: number;
-      src: string;
-    };
-    rel: string;
-    title: string;
-    url: string;
-    [key: string]: any;
-  }[];
+  ["jetpack-related-posts"]:RelatedProducts[];
   [key: string]: any;
 }
 

@@ -28,13 +28,15 @@ const Card:FC<CardProps> = ({
   const onMouseLeave = () => setIsMouseOver(false);
 
   return (
-    <CardContainer onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
+    <CardContainer onMouseEnter={addToCart && onMouseEnter} onMouseLeave={addToCart && onMouseLeave}>
       <Link href={url}>
         <CardDescription src={src} alt={src} isMouseOver={isMouseOver}>{description}</CardDescription>
       </Link>
-      <AddToCartContainer isMouseOver={isMouseOver}>
-        <AddToCartController product={product} />
-      </AddToCartContainer>
+      {addToCart ? (
+        <AddToCartContainer isMouseOver={isMouseOver}>
+          <AddToCartController product={product} />
+        </AddToCartContainer>
+      ) : null}
     </CardContainer>
   );
 }
