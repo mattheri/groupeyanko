@@ -9,7 +9,7 @@ interface Props {
 
 const ProductCrossSell:FC<Props> = ({ relatedProducts }) => {
 	return(
-		<Row>
+		<Row className="justify-center">
 			{relatedProducts.map((product, index) => (
 				<Col key={product.id}>
 					<Card

@@ -4,8 +4,9 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import cn from 'classnames';
+import { FC } from 'react';
 
-export function Footer() {
+const Footer:FC = () => {
     return (
         <Container fluid className='px-0 mx-0' as='footer'>
             <Row className={cn({
@@ -17,3 +18,5 @@ export function Footer() {
         </Container>
     );
 }
+
+export default Footer;

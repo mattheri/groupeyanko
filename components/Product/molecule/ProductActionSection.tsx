@@ -12,7 +12,7 @@ interface Props {
 const ProductActionSection:FC<Props> = ({ product }) => {
 	const { name, short_description } = product;
 	return(
-		<Col className="py-5" xs={12} md={6}>
+		<Col className="py-5 d-flex align-items-center justify-content-center flex-column" xs={12} md={6}>
 			<ProductTitle title={name} />
 			<ProductDescription description={short_description} />
 			<AddToCart
