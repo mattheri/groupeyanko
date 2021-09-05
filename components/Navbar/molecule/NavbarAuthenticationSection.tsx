@@ -1,8 +1,7 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import Button from 'components/Button/Button'
 import LoginFormController from "components/LoginForm/LoginFormController";
-import { ModalPopup } from "components/ModalPopup/ModalPopup";
-import { Nav } from 'react-bootstrap';
+import Modal from "components/Modal/Modal";
 
 interface Props {
   isAuthenticated:boolean;
@@ -10,6 +9,10 @@ interface Props {
 }
 
 const NavbarAuthenticationSection:FC<Props> = ({ isAuthenticated, onLogout }) => {
+  const [openModal, setOpenModal] = useState(false);
+
+  const onOpenModal = () => setOpenModal(true);
+  const onCloseModal = () => setOpenModal(false);
 
   return (
     isAuthenticated ? (
@@ -18,9 +21,12 @@ const NavbarAuthenticationSection:FC<Props> = ({ isAuthenticated, onLogout }) =>
         <Button block='xs' fit='lg' onClick={onLogout}>Déconnexion</Button>
       </>
     ) : (
-      <ModalPopup trigger={<Button block='xs' fit='lg'>Connexion</Button>}>
-        <LoginFormController />
-      </ModalPopup>
+      <>
+        <Button onClick={onOpenModal} block='xs' fit='lg'>Connexion</Button>
+        <Modal isOpen={openModal} onClose={onCloseModal} withBackdrop>
+          <LoginFormController close={onCloseModal} />
+        </Modal>
+      </>
     )
   );
 }

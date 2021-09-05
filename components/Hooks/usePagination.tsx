@@ -1,6 +1,6 @@
 import React from "react";
 import PagePagination from "../PagePagination/organism/PagePagination";
-import chunk from "lodash/chunk";
+import { chunk } from "utils/utils";
 
 function usePagination<T>(itemsToPaginate: T[], itemsPerPage: number) {
   const [pagination, setPagination] = React.useState(0);

@@ -1,4 +1,4 @@
-import Footer from 'components/Footer/Footer';
+import Footer from 'components/Footer/organism/Footer';
 import useRouterEvents from 'components/Hooks/useRouterEvents';
 import LoaderController, { LoaderRef } from 'components/Loader/organism/LoaderRef';
 import Main from 'components/Main/Main';
@@ -7,6 +7,7 @@ import React, { FC, useRef } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import PageTransition from 'components/PageTransition/PageTransition';
 import styled from 'styled-components';
+import Head from 'next/head';
 
 const MainCol = styled(Col)`
   position: relative;
@@ -26,6 +27,20 @@ const App:FC<Props> = ({ Component, pageProps }) => {
 
   return(
     <>
+      <Head>
+        <link
+          rel="preload"
+          href="/fonts/Baloo_2/Baloo2-Regular.ttf"
+          as="font"
+          crossOrigin=""
+        />
+        <link
+          rel="preload"
+          href="/fonts/Mark Pro Bold/Mark Pro Bold.ttf"
+          as="font"
+          crossOrigin=""
+        />
+      </Head>
       <LoaderController ref={loaderRef} />
         <Navbar />
           <Main>
@@ -39,7 +54,6 @@ const App:FC<Props> = ({ Component, pageProps }) => {
               </Col>
             </Row>
           </Main>
-      <Footer />
     </>
   );
 }

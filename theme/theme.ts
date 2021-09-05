@@ -14,8 +14,8 @@ const theme = {
     grayNeutral: '#7a7a7a',
   },
   typography: {
-    heading: 'Mark Pro',
-    body: "'Baloo 2', cursive",
+    heading: 'Mark Pro, sans-serif',
+    body: "'Baloo 2', sans-serif",
   },
   get mediaQueries() {
     return {

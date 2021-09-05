@@ -1,15 +1,15 @@
-import { useState } from "react";
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Form from "react-bootstrap/Form";
-import Button from 'components/Button/Button'
-import Col from "react-bootstrap/Col";
-import { useAuth } from "../Hooks/useAuth";
+import Button from 'components/Button/Button';
+import ErrorAlert from "components/ErrorAlert/atom/ErrorAlert";
 import { useFormik } from "formik";
-import InputController from "../Input/organism/InputController";
+import { useState } from "react";
+import Col from "react-bootstrap/Col";
+import Container from "react-bootstrap/Container";
+import Form from "react-bootstrap/Form";
+import Row from "react-bootstrap/Row";
 import * as Yup from "yup";
 import { hasErrors } from "../../utils/hasErrors";
-import ErrorAlert from "components/ErrorAlert/atom/ErrorAlert";
+import { useAuth } from "../Hooks/useAuth";
+import InputController from "../Input/organism/InputController";
 
 type LoginFormProps = {
   close?: () => void;
@@ -71,7 +71,7 @@ export function LoginForm({ close }: LoginFormProps) {
             className="text-dark"
             href="/forgotpassword"
             tertiary
-            onClick={() => close()}
+            onClick={close}
             text="Vous avez oublié votre mot de passe?"
           />
         </Col>
@@ -82,7 +82,7 @@ export function LoginForm({ close }: LoginFormProps) {
           <Button
             className="ml-2"
             size="sm"
-            onClick={() => close()}
+            onClick={close}
             href="/signup"
             text="Créer un compte"
           />

@@ -1,8 +1,8 @@
-import { FC, useState } from "react";
-import { Col, Row } from "react-bootstrap";
+import { FC } from "react";
+import { Col } from "react-bootstrap";
 import { RelatedProducts } from "types";
 import ProductTitle from "../atom/ProductTitle";
-import chunk from "lodash/chunk";
+import { chunk } from "utils/utils";
 import Carousel from "components/Carousel/organism/Carousel";
 import ProductCrossSell from "./ProductCrossSell";
 import useMediaQuery from "components/Hooks/useMediaQuery";

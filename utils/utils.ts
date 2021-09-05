@@ -9,6 +9,21 @@ import { FormData } from "types";
  */
 export const sanitizeHTML = (value: string) => value.replace(/(<([^>]+)>)/gi, "");
 
+export const chunk = <T extends unknown>(array:T[], size:number):T[][] => {
+	size = Math.max(Number(size), 0);
+	const length = array?.length || 0;
+	if (!length || size < 1) return [];
+	let index = 0;
+	let resIndex = 0;
+	const result = new Array<T[]>(Math.ceil(length / size));
+
+	while (index < length) {
+		result[resIndex++] = array.slice(index, (index += size));
+	}
+
+	return result;
+}
+
 // /**
 //  * Will build the a table containing links to the products. Then it inits emailsjs.
 //  * Once the email table is done, it will send the data to emailjs API to send the email to the customer.

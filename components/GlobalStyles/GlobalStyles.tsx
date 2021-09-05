@@ -17,6 +17,7 @@ const GlobalStyles = createGlobalStyle`
 
 	body {
 		font-size: 1.5rem;
+		font-family: ${theme.typography.body};
 	}
 
 	a {
@@ -26,7 +27,6 @@ const GlobalStyles = createGlobalStyle`
 
 	* {
 		box-sizing: border-box;
-		font-family: ${theme.typography.body};
 	}
 
 	h1,
@@ -38,9 +38,6 @@ const GlobalStyles = createGlobalStyle`
 		${theme.typography.heading};
 	}
 
-	.googlebtn {
-		color: ${theme.colors.dark};
-	}
 `;
 
 export default GlobalStyles;
