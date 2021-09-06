@@ -27,8 +27,13 @@ class StaticProductsProps {
   public async props({ params }:GetStaticPropsContext) {
     const id = this.parseParams(params.id);
     const product = await this.productService.fetchProduct(id);
+    const relatedProductsList = product["jetpack-related-posts"];
+    const relatedProducts = await Promise.all(relatedProductsList.map(async (relatedProduct) => await this.productService.fetchProduct(relatedProduct.id)));
 
-    return product;
+    return {
+      product,
+      relatedProducts,
+    }
   }
 
   private parseParams(paramsId:string | string[]):number {

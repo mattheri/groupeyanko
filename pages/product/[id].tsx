@@ -7,7 +7,8 @@ import { GetStaticPaths, GetStaticProps } from "next";
 import Head from "next/head";
 
 type ProductPageProps = {
-  product: Product;
+  product:Product;
+  relatedProducts:Product[];
 };
 
 export const getStaticPaths:GetStaticPaths = async () => {
@@ -20,22 +21,23 @@ export const getStaticPaths:GetStaticPaths = async () => {
 };
 
 export const getStaticProps:GetStaticProps = async (context) => {
-  const product = await StaticProductsProps.props(context);
+  const { product, relatedProducts } = await StaticProductsProps.props(context);
 
   return {
     props: {
-      product
+      product,
+      relatedProducts
     },
     revalidate: 1,
   }
 };
 
-export default function ProductPage({ product }: ProductPageProps) {
+export default function ProductPage({ product, relatedProducts }: ProductPageProps) {
 
   return (
     <Container>
       <Head><title>Proaxion - {product.name}</title></Head>
-      <ProductSection product={product} />
+      <ProductSection product={product} relatedProducts={relatedProducts} />
     </Container>
   );
 }

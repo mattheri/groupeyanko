@@ -6,15 +6,16 @@ import ProductLowerSection from "../molecule/ProductLowerSection";
 
 interface Props {
   product:Product;
+  relatedProducts:Product[];
 };
 
 const DEFAULT_IMAGE_PLACEHOLDER = "/uploads/images/placeholder.png";
 
-const ProductSection:FC<Props> = ({ product }) => {
+const ProductSection:FC<Props> = ({ product, relatedProducts }) => {
   return (
     <ProductSectionContainer>
       <ProductUpperSection product={product} placeholder={DEFAULT_IMAGE_PLACEHOLDER} />
-      <ProductLowerSection product={product} />
+      <ProductLowerSection product={product} relatedProducts={relatedProducts} />
     </ProductSectionContainer>
   );
 }
