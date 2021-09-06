@@ -1,101 +1,259 @@
-import React from 'react';
+import { ButtonHTMLAttributes, FC, forwardRef, ForwardedRef } from "react";
 import Link from "next/link";
-import styles from "./button.module.scss";
-import cn from "classnames";
-import { motion } from 'framer-motion';
+import styled, { css, keyframes } from 'styled-components';
+import theme from "theme/theme";
 
-export type ButtonProps = {
-    href: string,
-    text: string,
-    primary?: boolean,
-    secondary?: boolean,
-    tertiary?: boolean,
-    size?: 'sm' | 'lg',
-    onClick?: (e?: React.MouseEvent<HTMLAnchorElement> | React.MouseEvent<HTMLButtonElement, MouseEvent>) => void,
-    className?: string,
-    disabled?: boolean,
-    layout?: boolean
-} | {
-    href?: string,
-    text?: string,
-    primary?: boolean,
-    secondary?: boolean,
-    tertiary?: boolean,
-    size?: 'sm' | 'lg',
-    onClick: (e?: React.MouseEvent<HTMLAnchorElement> | React.MouseEvent<HTMLButtonElement, MouseEvent>) => void,
-    className?: string,
-    disabled?: boolean,
-    layout?: boolean
-}
+type Block = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 
-/**
- * Button component. It is made of of a Link component. See Next.js Link component: https://nextjs.org/docs/api-reference/next/link
- * If there is an onClick function 
- * 
- * @param href string represents the path. Optional only if an onClick props is 
- * provided otherwise it is required see Next.js Routing: https://nextjs.org/docs/api-routes/introduction
- * @param text string the text to show on the button
- * @param primary boolean enables primary styling. This is enabled by default
- * @param secondary boolean enables secondary styling
- * @param tertiary boolean enables tertiary styling
- * @param onClick void function. Optional only if an href is provided otherwise it is required.
- */
-export function Button({
-    href,
-    text,
-    primary = true,
-    secondary,
-    tertiary,
-    size = 'lg',
-    onClick,
-    className,
-    disabled,
-    children,
-    layout
-}: React.PropsWithChildren<ButtonProps>) {
-    if (onClick && !href) {
-        return (
-            <motion.button
-                layout={layout}
-                whileTap={{ scale: 0.6 }}
-                transition={{
-                    duration: 0.1,
-                    layoutX: { duration: 0.3, damping: 1000 },
-                    layoutY: { duration: 0.3, damping: 1000 }
-                }}
-                disabled={disabled} onClick={(e) => {
-                e.preventDefault();
-                onClick(e);
-            }} className={cn({
-                [styles.button]: true,
-                [styles.primary]: !primary || !secondary || !tertiary ? true : primary,
-                [styles.secondary]: secondary,
-                [styles.tertiary]: tertiary,
-                [styles.small]: size === 'sm',
-                [className]: className
-            })}>
-                {text || children}
-            </motion.button>
-        );
+type Size = 'sm' | 'lg';
+
+const WidthXs = css`
+  @media only screen and (${theme.mediaQueries.xs}) {
+    width: 100%;
+  }
+`;
+
+const WidthSm = css`
+  @media only screen and (${theme.mediaQueries.sm}) {
+    width: 100%;
+  }
+`;
+
+const WidthMd = css`
+  @media only screen and (${theme.mediaQueries.md}) {
+    width: 100%;
+  }
+`;
+
+const WidthLg = css`
+  @media only screen and (${theme.mediaQueries.lg}) {
+    width: 100%;
+  }
+`;
+
+const WidthXl = css`
+  @media only screen and (${theme.mediaQueries.xl}) {
+    width: 100%;
+  }
+`;
+
+const WidthXsFit = css`
+  @media only screen and (${theme.mediaQueries.xs}) {
+    width: fit-content;
+  }
+`;
+
+const WidthSmFit = css`
+  @media only screen and (${theme.mediaQueries.sm}) {
+    width: fit-content;
+  }
+`;
+
+const WidthMdFit = css`
+  @media only screen and (${theme.mediaQueries.md}) {
+    width: fit-content;
+  }
+`;
+
+const WidthLgFit = css`
+  @media only screen and (${theme.mediaQueries.lg}) {
+    width: fit-content;
+  }
+`;
+
+const WidthXlFit = css`
+  @media only screen and (${theme.mediaQueries.xl}) {
+    width: fit-content;
+  }
+`;
+
+const DefaultWidth = css`
+  width: fit-content;
+`;
+
+const Width = css<{block:Block,fit:Block}>`
+  ${DefaultWidth};
+  ${({ block, fit }) => {
+    if (block === 'xs') return WidthXs;
+    if (fit === 'xs') return WidthXsFit;
+    if (block === 'sm') return WidthSm;
+    if (fit === 'sm') return WidthSmFit;
+    if (block === 'md') return WidthMd;
+    if (fit === 'md') return WidthMdFit;
+    if (block === 'lg') return WidthLg;
+    if (fit === 'lg') return WidthLgFit;
+    if (block === 'xl') return WidthXl;
+    if (fit === 'xl') return WidthXlFit;
+  }};
+`;
+
+const Padding = css<{size:Size}>`
+  padding: ${({ size }) => size === 'sm' ? '0.5rem 0.8rem' : '1rem 1.2rem'};
+`;
+
+const FontSize = css<{size:Size}>`
+  font-size: ${({ size }) => size === 'sm' ? '1.4rem' : '1.5rem'};
+`;
+
+const Border = css<{secondary:boolean,tertiary:boolean}>`
+  border: ${({ secondary, tertiary }) => {
+    if (secondary) return `${theme.colors.accent} 2px solid`;
+    if (tertiary) return '2px transparent solid';
+
+    return 'none';
+  }};
+`;
+
+const Color = css<{tertiary:boolean}>`
+  color: ${({ tertiary }) => tertiary ? theme.colors.dark : 'white'};
+`;
+
+const BackgroundColor = css<{secondary:boolean,tertiary:boolean}>`
+    background-color: ${({ secondary, tertiary }) => {
+    if (secondary) return 'transparent';
+    if (tertiary) return 'transparent';
+
+    return theme.colors.accent;
+  }};
+`;
+
+const HoverBackgroundColor = css<{secondary:boolean,tertiary:boolean}>`
+  background-color: ${({ secondary, tertiary }) => {
+    if (secondary) return theme.colors.accent;
+    if (tertiary) return 'transparent';
+
+    return theme.colors.black;
+  }};
+`;
+
+const HoverColor = css<{tertiary:boolean}>`
+  color: ${({ tertiary }) => {
+    if (tertiary) return theme.colors.accent;
+
+    return 'white';
+  }};
+`;
+
+const HoverBorder = css<{secondary:boolean,tertiary:boolean}>`
+  border: ${({ secondary, tertiary }) => {
+    if (secondary || tertiary) return `${theme.colors.accent} 2px solid`;
+
+    return 'none';
+  }};
+`;
+
+const StyledButton = styled.button<{primary:boolean,secondary:boolean,tertiary:boolean,size:Size,block:Block,fit:Block}>`
+  ${Padding}
+  ${Width}
+  ${FontSize}
+  ${Border}
+  ${Color}
+  ${BackgroundColor}
+  font-family: ${theme.typography.heading};
+  transition: transform 0.3s, background-color 0.2s, color 0.2s, width 0.2s;
+  max-height: 4rem;
+  text-decoration: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+  cursor: pointer;
+  position: relative;
+
+  &:hover {
+    text-decoration: none;
+  }
+
+  &:disabled {
+    color: gray;
+
+    &:hover {
+      background-color: ${theme.colors.accent};
+      color: gray;
     }
+  }
 
-    return (
-        <Link href={href}>
-            <motion.a
-                layout={layout}
-                whileTap={{ scale: 0.6 }}
-                transition={{ duration: 0.1 }}
-                onClick={onClick}
-                className={cn({
-                    [styles.button]: true,
-                    [styles.primary]: !primary || !secondary || !tertiary ? true : primary,
-                    [styles.secondary]: secondary,
-                    [styles.tertiary]: tertiary,
-                    [styles.small]: size === 'sm',
-                    [className]: className
-            })}>
-                {text}
-            </motion.a>
-        </Link>
-    );
+  &:hover {
+    ${HoverBackgroundColor}
+    ${HoverColor}
+    ${HoverBorder}
+  }
+
+  &:focus {
+    border: none;
+    outline: none;
+  }
+
+  &:active {
+    transform: scale(0.9);
+  }
+`;
+
+interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
+  text?:string;
+  primary?: boolean;
+  secondary?: boolean;
+  tertiary?: boolean;
+  size?:Size;
+  href?:string;
+  block?:Block;
+  fit?:Block;
+  ref?:ForwardedRef<HTMLButtonElement>;
 }
+
+const Button:FC<Props> = forwardRef(({
+  href,
+  text,
+  primary = true,
+  secondary,
+  tertiary,
+  size = "lg",
+  onClick,
+  disabled,
+  children,
+  type = "submit",
+  block,
+  fit,
+  ...rest
+}, ref) => {
+
+  if (!href) {
+    return (
+      <StyledButton
+        ref={ref}
+        type={type}
+        disabled={disabled}
+        onClick={onClick}
+        primary={primary}
+        secondary={secondary}
+        tertiary={tertiary}
+        size={size}
+        block={block}
+        fit={fit}
+        {...rest}
+      >
+        {text || children}
+      </StyledButton>
+    );
+  }
+
+  return (
+    <Link href={href}>
+      <StyledButton
+        ref={ref}
+        primary={primary}
+        secondary={secondary}
+        tertiary={tertiary}
+        size={size}
+        onClick={onClick}
+        block={block}
+        fit={fit}
+        {...rest}
+      >
+        {text || children}
+      </StyledButton>
+    </Link>
+  );
+});
+
+export default Button;

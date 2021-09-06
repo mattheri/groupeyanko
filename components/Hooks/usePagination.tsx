@@ -1,28 +1,25 @@
 import React from "react";
-import { PagePagination } from "../PagePagination/PagePagination";
-import chunk from "lodash/chunk";
+import PagePagination from "../PagePagination/organism/PagePagination";
+import { chunk } from "utils/utils";
 
-/**
- * Hook that paginates over an array of element. It keeps an internal state of the page you're at.
- * Returns a Pagination element. Add {...props} to the element otherwise, you will have an error.
- *
- * @param itemsToPaginate array of items to be paginated
- * @param itemsPerPage number of items per page to show
- * @example
- * const { paginatedItems, pagination, props, Pagination } = usePagination(array, 9);
- * ...
- * return(
- *  <>
- *      {paginatedItems[pagination].map(item => <div>{item}</div>)}
- *      <Pagination {...paginationProps} />
- *  </>
- * );
- */
-export function usePagination<T>(itemsToPaginate: T[], itemsPerPage: number) {
+function usePagination<T>(itemsToPaginate: T[], itemsPerPage: number) {
   const [pagination, setPagination] = React.useState(0);
   const paginatedItems = chunk(itemsToPaginate, itemsPerPage);
 
   React.useDebugValue(paginatedItems);
+
+  interface Props {
+    fullWidth?:boolean;
+    max?:number;
+  }
+
+  const onPageChangeRequested = (selected:number) => setPagination(selected);
+
+  const paginationProps = {
+    pageCount: paginatedItems.length,
+    active: pagination,
+    onPageChange: onPageChangeRequested,
+  };
 
   return {
     paginatedItems,
@@ -30,8 +27,12 @@ export function usePagination<T>(itemsToPaginate: T[], itemsPerPage: number) {
     paginationProps: {
       length: paginatedItems.length,
       active: pagination,
-      toggle: setPagination,
+      toggle: onPageChangeRequested,
     },
-    Pagination: PagePagination,
+    Pagination: ({ fullWidth, max }: Props) => (
+      <PagePagination fullWidth={fullWidth} max={max} {...paginationProps} />
+    ),
   };
 }
+
+export default usePagination;

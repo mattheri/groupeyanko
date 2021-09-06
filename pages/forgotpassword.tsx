@@ -1,96 +1,49 @@
 import React from "react";
-import Container from "react-bootstrap/Container";
-import Form from "react-bootstrap/Form";
-import { Button } from "../components/Button/Button";
-import { useForm } from "../components/Hooks/useForm";
 import { useRouter } from "next/router";
-import { useBreadcrumbs } from "../components/Hooks/useBreadcrumbs";
-import Firebase from "../utils/Firebase";
+import ApiService from "services/ApiService";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import { FormikValues } from "types";
+import { hasErrors } from "utils/hasErrors";
+import EmailSent from "components/PasswordReset/molecule/EmailSent";
+import PasswordReset from "components/PasswordReset/organism/PasswordReset";
 
 export default function ForgotPassword() {
-  const [formData, setFormData] = React.useState({
-    email: "",
-  });
-
-  const { setNavigationState } = useBreadcrumbs();
-
-  React.useEffect(
-    () =>
-      setNavigationState([
-        "Réinitialisation de mot de passe",
-        "/forgotpassword",
-      ]),
-    []
-  );
-
-  const validation = {
-    email: [
-      {
-        pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-        message: "Entrer une adresse valide.",
-      },
-    ],
+  const initialValues = {
+    email: '',
   };
 
-  const { errors, handleChange } = useForm(validation, formData, setFormData);
-
-  const hasErrors = (fieldsToIgnore?: string[]) => {
-    const condition = fieldsToIgnore
-      ? Object.entries(formData)
-          .filter(([key, value]) =>
-            fieldsToIgnore.every((keys) => keys !== key)
-          )
-          .every(([key, value]) => value.length > 0)
-      : Object.entries(formData).every(([key, value]) => value.length > 0);
-
-    if (condition) {
-      return false;
-    }
-
-    return true;
-  };
   const [emailSent, setEmailSent] = React.useState(false);
   const router = useRouter();
 
-  const handleSendEmailReset = () => {
-    Firebase.auth().sendPasswordReset(formData.email);
-    setEmailSent(true);
+  const onSubmit = async (values:FormikValues<typeof initialValues>) => {
+    const response = await ApiService.post({
+      url: '/api/resetPassword',
+      data: {
+        email: values.email,
+      }
+    });
 
-    setTimeout(() => {
-      router.push("/");
-    }, 10000);
+    if (response.status === 200) {
+      setEmailSent(true);
+  
+      setTimeout(() => {
+        router.push("/");
+      }, 10000);
+    }
   };
 
-  return (
-    <Container className="py-5">
-      {!emailSent ? (
-        <h1>
-          <h1>Vous avez oublié votre mot de passe?</h1>
-          <Form onChange={handleChange}>
-            <Form.Group>
-              <Form.Label>Entrez votre courriel</Form.Label>
-              <Form.Control
-                required
-                isValid={formData.email && errors.email.length === 0}
-                isInvalid={formData.email && errors.email.length > 0}
-                name="email"
-                id="email"
-                type="email"
-                value={formData.email}
-              />
-              <Form.Control.Feedback as="small" type="invalid">
-                {errors.email}
-              </Form.Control.Feedback>
-            </Form.Group>
-          </Form>
-          <Button
-            onClick={handleSendEmailReset}
-            text="Réinitialiser mon mot de passe"
-          />
-        </h1>
-      ) : (
-        <h1>Un courriel a été envoyé à {formData.email}</h1>
-      )}
-    </Container>
-  );
+  const formik = useFormik({
+    initialValues,
+    onSubmit,
+    validationSchema: Yup.object({
+      email: Yup.string().required('Entrez une adresse valide.').matches(/^[^\s@]+@[^\s@]+\.[^\s@]+$/, {
+        message: 'Entrez une adresse valide.'
+      })
+    })
+  });
+
+  const validate = hasErrors(formik.values, formik.errors);
+
+  return emailSent ? <EmailSent email={formik.values.email} /> : <PasswordReset formik={formik} validate={validate} />;
 }
