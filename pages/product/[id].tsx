@@ -28,7 +28,7 @@ export const getStaticProps:GetStaticProps = async (context) => {
       product,
       relatedProducts
     },
-    revalidate: 1,
+    revalidate: 60,
   }
 };
 

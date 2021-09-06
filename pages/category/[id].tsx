@@ -28,7 +28,7 @@ export const getStaticProps:GetStaticProps = async (context) => {
       response,
       name,
     },
-    revalidate: 1,
+    revalidate: 60,
   }
 };
 
