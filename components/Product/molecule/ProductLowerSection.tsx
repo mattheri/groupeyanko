@@ -6,6 +6,7 @@ import ProductRelatedSection from "./ProductRelatedSection";
 import SectionRow from "./SectionRow";
 import styled from "styled-components";
 import theme from "theme/theme";
+import useRelatedProducts from "components/Hooks/useRelatedProducts";
 
 interface Props {
 	product:Product;
@@ -21,6 +22,8 @@ const Tab = styled.div`
 `;
 
 const ProductLowerSection:FC<Props> = ({ product }) => {
+	const relatedProducts = useRelatedProducts(product["jetpack-related-posts"]);
+	
 	return(
 		<>
 			<SectionRow>
@@ -37,7 +40,7 @@ const ProductLowerSection:FC<Props> = ({ product }) => {
 					</TabContainer>
 				</Col>
 			</SectionRow>
-			<ProductRelatedSection relatedProducts={product["jetpack-related-posts"]} />
+			<ProductRelatedSection relatedProducts={relatedProducts} />
 		</>
 	);
 };

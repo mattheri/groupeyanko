@@ -17,6 +17,7 @@ export function useAuth() {
   const handleAuth = async (
     { email, password }: UseAuthProps,
     onError?: (e:string) => void,
+    onSuccess?: () => void
   ) => {
     try {
       const response:ApiResponse<UserInformation> = await ApiService.post({
@@ -30,6 +31,7 @@ export function useAuth() {
       const user = response.data;
 
       if (response.status === 200) {
+        onSuccess && onSuccess();
         login(user);
       }
     } catch (e) {
@@ -41,7 +43,7 @@ export function useAuth() {
   const handleSignUp = async (
     formData: any,
     onError?: Dispatch<SetStateAction<string>>,
-    callback?: () => void
+    onSuccess?: () => void
   ) => {
     try {
       const response:ApiResponse<UserInformation> = await ApiService.post({
@@ -55,7 +57,7 @@ export function useAuth() {
         );
       }
       if (user) {
-        callback && callback();
+        onSuccess && onSuccess();
         login(user);
 
         return router.push("/");

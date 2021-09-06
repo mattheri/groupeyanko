@@ -31,6 +31,7 @@ const Carousel:FC<Props> = ({
 				nextIcon={<ChevronRightSquare color={theme.colors.primary} size="4rem" />} 
 				interval={interval}
 				fade={fade}
+				indicators={false}
 			>
 				{Children.map(children, (child, index) => (
 						<BootstrapCarousel.Item key={index}>
@@ -47,6 +48,7 @@ const Carousel:FC<Props> = ({
 			nextIcon={<ChevronRightSquare color={theme.colors.primary} size="4rem" />} 
 			interval={interval}
 			fade={fade}
+			indicators={false}
 		>
 			{Children.map(children, (child, index) => (
 					<BootstrapCarousel.Item key={index}>

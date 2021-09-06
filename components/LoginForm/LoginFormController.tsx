@@ -24,7 +24,8 @@ const LoginFormController:FC<Props> = ({ close }) => {
   const onSubmit = (values: FormikValues<typeof initialValues>) => {
     handleAuth(
       { email: values.email, password: values.password },
-      handleLoginError
+      handleLoginError,
+      close
     );
   };
 
