@@ -39,13 +39,28 @@ class ProductService {
     return response.data;
   }
 
+  public async fetchRelatedProducts(product:Product):Promise<Product[]> {
+    const relatedProductsList = product["jetpack-related-posts"];
+    let relatedProducts:Product[] = [];
+
+    if (relatedProductsList && relatedProductsList.length) {
+      relatedProducts = await Promise.all(
+        relatedProductsList.map(async (product) => {
+          return await this.fetchProduct(product.id);
+        })
+      );
+    }
+
+    return relatedProducts;
+  }
+
   public async fetchAllProducts():Promise<Product[]> {
     let page = 1;
     const pages:Product[] = [];
 
     while(page) {
       const { data, headers } = await this.fetchProductsPerPage(page);
-      pages.push(...data);
+      pages.push(...data.filter(product => product["catalog_visibility"] === "visible"));
 
       if (this.isAtEnd(headers, page)) {
         page = 0;

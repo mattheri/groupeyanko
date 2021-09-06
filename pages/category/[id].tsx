@@ -33,6 +33,7 @@ export const getStaticProps:GetStaticProps = async (context) => {
 };
 
 const ProductCategory:FC<Props> = ({ response, name }) => {
+  console.log(response);
   const isCategory = (obj: Category[] | Product[]): obj is Category[] => {
     return (obj as Category[]).some(
       (category) => category.parent !== undefined
