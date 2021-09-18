@@ -4,7 +4,7 @@ import useQuotes from '../hook/useQuotes';
 import { Accordion, Card, AccordionCollapse } from 'react-bootstrap';
 import ErrorAlert from 'components/ErrorAlert/atom/ErrorAlert';
 import AccordionTriggerController from '../molecule/AccordionTriggerController';
-import { Product } from 'services/domain/Quote';
+import { ClientQuote } from 'services/domain/Quote';
 import AccordionProduct from '../atom/AccordionProduct';
 import EmptyQuotes from '../atom/EmptyQuotes';
 import styles from './accordion.module.scss';
@@ -17,7 +17,7 @@ const MyQuotes:FC = () => {
   const { quotes, error } = useQuotes(userId);
   const { mergeToCart } = useCart();
 
-  const addQuoteToCart = (quote:{[x:string]:Product}) => mergeToCart(quote);
+  const addQuoteToCart = (quote:ClientQuote) => mergeToCart(quote);
 
   return (
     <>
@@ -28,7 +28,8 @@ const MyQuotes:FC = () => {
             <AccordionTriggerController
               eventKey={`${index}`}
               submittedOn={quote.submittedOn}
-              onAddToCart={() => addQuoteToCart(quote.products)}
+              onAddToCart={addQuoteToCart}
+              quote={quote.products}
             />
             <AccordionCollapse eventKey={`${index}`} className={styles.collapse}>
               <>

@@ -9,6 +9,10 @@ export interface Quote {
   };
 }
 
+export interface ClientQuote {
+  [x:string]:Product;
+}
+
 export interface Quotes {
   id:string;
   quotes:Quote[];

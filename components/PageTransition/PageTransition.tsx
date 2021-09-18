@@ -7,123 +7,75 @@ enum TransitionStage {
 	In = 'in',
 	Out = 'out',
 	Current = 'current',
-	FutureIn = 'futureIn',
 }
 
-const InKeyframes = keyframes`
+const transitionVeilKeyframes = (transitionStage:TransitionStage) => keyframes`
 	from {
-		transform: translate3d(100%, 0, 0);
-	}
-	to {
-		transform: translate3d(0, 0, 0);
-	}
-`;
-
-const OutKeyframes = keyframes`
-	from {
-		transform: scale3d(1, 1, 1);
-	}
-	to {
-		transform: scale3d(0.9, 0.9, 0.9);
+		opacity: ${transitionStage === TransitionStage.Out ? 0 : 1};
+	} to {
+		opacity: ${transitionStage === TransitionStage.Out ? 1 : 0};
 	}
 `;
 
-const In = css`
-	animation: ${InKeyframes} 0.5s cubic-bezier(0.87, 0, 0.13, 1) both;
-`;
-
-const Out = css`
-	animation: ${OutKeyframes} 0.2s cubic-bezier(0.87, 0, 0.13, 1) both;
-`;
-
-const Container = styled.div<{stage:TransitionStage}>`
-	${({ stage }) => stage === TransitionStage.Out && Out};
-`;
-
-const PreviousContainer = styled.div`
-	${Out}
-	z-index: -1;
-`;
-
-const FutureContainer = styled.div<{stage:TransitionStage}>`
-	position: absolute;
+const Veil = styled.div<{ transitionStage:TransitionStage }>`
+	position: fixed;
 	top: 0;
-	right: 0;
-	${In};
+	left: 0;
+	width: 100%;
+	height: 100%;
 	background-color: white;
-	height: 100vh;
-	width: 100vw;
+	z-index: 999999;
+	animation: ${({ transitionStage }) => transitionVeilKeyframes(transitionStage)} 0.5s ease-in-out forwards;
 `;
 
 const PageTransition:FC = ({ children }) => {
 	const [displayChildren, setDisplayChildren] = useState({
-		previous: null,
+		in: null,
+		out: null,
 		current: children,
-		future: null,
-	});
+	})
 	const [transitionStage, setTransitionStage] = useState(TransitionStage.Current);
 	const router = useRouter();
 
-	const transitionFutureIn = () => setTransitionStage(TransitionStage.FutureIn);
-	const transitionIn = () => setTransitionStage(TransitionStage.In);
-	const transitionOut:RouterEventCallback = (url) => {
-		if (url === router.pathname) return;
-		setTransitionStage(TransitionStage.Out);
-	};
-	const setPreviousAndFutureChildren = () => setDisplayChildren((state) => ({ previous: state.current, current: null, future: children }));
+	const onRouteChange:RouterEventCallback = (url) => {
+		const isCurrentPage = url === router.pathname;
 
-	const setCurrentChildren = () => setDisplayChildren((state) => ({ previous: null, current: state.future, future: null }));
+		if (isCurrentPage) return;
 
-	const cancelAnimation = () => {
-		setTransitionStage(TransitionStage.Current);
-		if (!displayChildren.previous) {
-			return setDisplayChildren((state) => ({ ...state, current: state.current }));
-		}
-
-		return setDisplayChildren((state) => ({ ...state, current: state.previous }));
-	};
-
-	const initiateInTransitionOnAnimationEnd = () => {
-		transitionFutureIn();
-		setPreviousAndFutureChildren();
+		const nextTransitionStage = transitionStage === TransitionStage.Current ? TransitionStage.Out : TransitionStage.In;
+		setTransitionStage(nextTransitionStage);
 	}
 
-	const swapFutureChildrenToCurrentOnAnimationEnd = () => {
-		transitionIn();
-		setCurrentChildren();
+	useRouterEvents('routeChangeComplete', onRouteChange);
+	useRouterEvents('routeChangeError', onRouteChange);
+
+	const onVeilAnimationEnd = () => {
+		if (transitionStage === TransitionStage.In) return setTransitionStage(TransitionStage.Current);
+
+		setTransitionStage(TransitionStage.In);
 	}
 
-	useEffect(() => {
-		if (transitionStage === TransitionStage.Out) initiateInTransitionOnAnimationEnd();
-	}, [transitionStage]);
+	useEffect(
+		() => {
+			if (transitionStage === TransitionStage.Current) return;
 
-	useRouterEvents('routeChangeComplete', transitionOut);
-	useRouterEvents('routeChangeError', cancelAnimation);
+			transitionStage === TransitionStage.Out && setDisplayChildren((state) => ({ 
+				in: children,
+				out: state.current,
+				current: children,
+			}));
+		},
+		[transitionStage]
+	)
+
+	const isTransitioning = transitionStage !== TransitionStage.Current;
 
 	return (
 		<>
-		{displayChildren.previous && (
-			<PreviousContainer>
-				{displayChildren.previous}
-			</PreviousContainer>
-		)}
-		{displayChildren.current && (
-			<Container
-				stage={transitionStage}
-			>
-				{displayChildren.current}
-			</Container>
-		)}
-		{displayChildren.future && (
-			<FutureContainer
-				onAnimationEnd={swapFutureChildrenToCurrentOnAnimationEnd}
-				stage={transitionStage}
-			>
-				{displayChildren.future}
-			</FutureContainer>
-		)}
+			{isTransitioning && <Veil transitionStage={transitionStage} onAnimationEnd={onVeilAnimationEnd} />}
+			{displayChildren[transitionStage]}
 		</>
-	);
+	)
 }
 
 export default PageTransition;

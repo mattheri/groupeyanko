@@ -2,15 +2,17 @@ import { FC, useContext } from 'react';
 import { AccordionContext, useAccordionToggle } from 'react-bootstrap';
 import useFormattedDate from '../hook/useFormattedDate';
 import AccordionTrigger from '../atom/AccordionTrigger';
+import { ClientQuote } from 'services/domain/Quote';
 
 interface Props {
   eventKey:string;
-  onAddToCart:() => void;
+  onAddToCart:(quote:ClientQuote) => void;
   submittedOn:number;
+  quote:ClientQuote;
   callback?:(eventKey:string) => void;
 }
 
-const AccordionTriggerController:FC<Props> = ({ eventKey, onAddToCart, submittedOn, callback }) => {
+const AccordionTriggerController:FC<Props> = ({ eventKey, onAddToCart, quote, submittedOn, callback }) => {
   const currentEventKey = useContext(AccordionContext);
   const formattedDate = useFormattedDate(submittedOn);
   const onTrigger = useAccordionToggle(
@@ -23,6 +25,7 @@ const AccordionTriggerController:FC<Props> = ({ eventKey, onAddToCart, submitted
   return <AccordionTrigger 
             canAddToCart={isDeployed}
             onAddToCart={onAddToCart}
+            quote={quote}
             submittedOn={formattedDate} 
             onTrigger={onTrigger} />;
 };
