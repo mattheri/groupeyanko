@@ -9,12 +9,12 @@ interface Props {
 }
 
 const ProductImagesController:FC<Props> = ({ images, placeholder }) => {
-	return images.length > 1 ? (
+	return images.length > 1 && images[0] ? (
 		<ProductCarousel images={images} placeholder={placeholder} />
 	) : (
 		<ProductImage
-			alt={images[0].alt}
-			src={images[0].src || placeholder}
+			alt={images[0]?.alt}
+			src={images[0]?.src || placeholder}
 		/>
 	);
 };

@@ -7,6 +7,8 @@ interface Props {
 	relatedProducts:Product[];
 }
 
+const DEFAULT_IMAGE_PLACEHOLDER = "/uploads/images/placeholder.png";
+
 const ProductCrossSell:FC<Props> = ({ relatedProducts }) => {
 
 	return(
@@ -16,7 +18,7 @@ const ProductCrossSell:FC<Props> = ({ relatedProducts }) => {
 					<Card
 						description={product.name}
 						url={`/product/${product.id}`}
-						src={product.images[0].src}
+						src={product.images[0]?.src || DEFAULT_IMAGE_PLACEHOLDER}
 						addToCart
 						product={product}
 					/>

@@ -30,7 +30,7 @@ const ProductLowerSection:FC<Props> = ({ product, relatedProducts }) => {
 					<TabContainer>
 						<Nav variant="tabs">
 							<Nav.Item>
-								<Nav.Link eventKey="description">Description</Nav.Link>
+								<Nav.Link aria-selected="true" className="active nav-link-active" eventKey="description">Description</Nav.Link>
 							</Nav.Item>
 						</Nav>
 							<Tab as={TabContent}>
