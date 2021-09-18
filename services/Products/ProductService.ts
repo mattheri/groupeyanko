@@ -44,11 +44,13 @@ class ProductService {
     let relatedProducts:Product[] = [];
 
     if (relatedProductsList && relatedProductsList.length) {
-      relatedProducts = await Promise.all(
-        relatedProductsList.map(async (product) => {
-          return await this.fetchProduct(product.id);
-        })
-      );
+      const response:AxiosResponse<Product[]> = await this.axios.get({
+        url: `products?include=${relatedProductsList.map(({ id }) => id).join(",")}`
+      });
+
+      if (response.status === 200) {
+        relatedProducts = response.data;
+      }
     }
 
     return relatedProducts;

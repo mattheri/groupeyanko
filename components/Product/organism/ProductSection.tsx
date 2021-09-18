@@ -12,6 +12,7 @@ interface Props {
 const DEFAULT_IMAGE_PLACEHOLDER = "/uploads/images/placeholder.png";
 
 const ProductSection:FC<Props> = ({ product, relatedProducts }) => {
+
   return (
     <ProductSectionContainer>
       <ProductUpperSection product={product} placeholder={DEFAULT_IMAGE_PLACEHOLDER} />

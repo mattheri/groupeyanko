@@ -26,7 +26,7 @@ export const getStaticProps:GetStaticProps = async (context) => {
   return {
     props: {
       product,
-      relatedProducts
+      relatedProducts,
     },
     revalidate: 60,
   }
