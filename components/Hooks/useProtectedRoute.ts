@@ -10,6 +10,7 @@ const useProtectedRoute = () => {
   const reRoute = () => router.push('/');
 
   useEffect(() => {
+    console.log(isAuthenticated);
     if (isAuthenticated) return;
 
     reRoute();

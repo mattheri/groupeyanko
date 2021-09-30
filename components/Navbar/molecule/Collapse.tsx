@@ -19,12 +19,11 @@ const NavbarCollapse = styled.div<{isOpen:boolean,height:number}>`
 	gap: 1rem;
 
 	@media only screen and (${theme.mediaQueries.lg}) {
-		grid-row: 1;
-		grid-column: 4;
 		height: 100%;
 		transition: none;
 		width: 100%;
 		display: flex;
+		grid-column: 4;
 	}
 `;
 

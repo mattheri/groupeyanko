@@ -1,5 +1,5 @@
 import { useAuth } from 'components/Hooks/useAuth';
-import Informations from 'components/Informations/Informations';
+import BasicInformations from 'components/Informations/BasicInformations';
 import MyQuotes from 'components/MyQuotes/organism/MyQuotes';
 import SideNavigation, { SidenavTab } from 'components/SideNavigation/organism/SideNavigation';
 import UpdatePassword from 'components/UpdatePassword/organism/UpdatePassword';
@@ -27,8 +27,8 @@ const Profile:FC = () => {
   return (
     <Container className='py-5'>
       <SideNavigation tabs={tabs}>
-        <Informations user={userInfo} userId={userId} onUpdate={update} />
-        <UpdatePassword userEmail={userInfo.email} />
+        <BasicInformations />
+        <UpdatePassword />
         <MyQuotes />
       </SideNavigation>
     </Container>

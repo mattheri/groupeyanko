@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import ApiService from 'services/ApiService';
 import { ApiResponse } from 'services/domain/Api';
 import { Quote, Quotes } from 'services/domain/Quote';
@@ -7,7 +7,7 @@ const useQuotes = (userId:string) => {
   const [error, setError] = useState('');
   const [quotes, setQuotes] = useState<Quote[]>([]);
 
-  const fetchQuotes = async () => {
+  const fetchQuotes = useCallback(async () => {
     try {
       const response:ApiResponse<Quotes[]> = await ApiService.get({
         url: `/api/quote/${userId}`,
@@ -20,7 +20,7 @@ const useQuotes = (userId:string) => {
     } catch (e) {
       setError(e);
     }
-  }
+  }, [userId])
 
   useEffect(() => {
     fetchQuotes();

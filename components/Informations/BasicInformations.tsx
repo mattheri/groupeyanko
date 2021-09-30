@@ -11,20 +11,16 @@ import { AxiosResponse } from 'axios';
 import Button from 'components/Button/Button'
 import ErrorAlert from 'components/ErrorAlert/atom/ErrorAlert';
 import SuccessAlert from 'components/SuccessAlert/atom/SuccessAlert';
-
-interface Props {
-  user:Omit<UserInformation, 'wooId' | 'id' | 'connected'>;
-  userId:string;
-  onUpdate:(userInformations:BasicUserInformation) => void;
-}
+import { useAuth } from 'components/Hooks/useAuth';
 
 const ALERT_FADE_DELAY = 3000;
 
-const Informations:FC<Props> = ({ user, userId, onUpdate }) => {
+const BasicInformations:FC = () => {
   const [updateSuccessful, setUpdateSuccessful] = useState('');
   const [error, setError] = useState('');
+  const { userInfo, userId, update } = useAuth();
 
-  const initialValues = user;
+  const initialValues = userInfo;
 
   const onSubmit = async (values: FormikValues<typeof initialValues>) => {
     try {
@@ -37,7 +33,7 @@ const Informations:FC<Props> = ({ user, userId, onUpdate }) => {
       });
 
       if (data.status === 200) {
-        onUpdate(values);
+        update(values);
         setUpdateSuccessful('Informations mises à jour');
 
         setTimeout(() => {
@@ -107,4 +103,4 @@ const Informations:FC<Props> = ({ user, userId, onUpdate }) => {
   );
 }
 
-export default Informations;
+export default BasicInformations;

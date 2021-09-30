@@ -1,5 +1,4 @@
 import { FC } from "react";
-import { Container } from "react-bootstrap";
 import styled from "styled-components";
 
 interface Props {
@@ -7,19 +6,30 @@ interface Props {
 }
 
 const Row = styled.div`
-  gap: 1rem;
   display: flex;
   flex-wrap: wrap;
-  margin-right: -15px;
-  margin-left: -15px;
-  justify-content: center;
+	max-width: min(100%, 1400px);
+	margin: 0 auto;
+	width: 100%;
+	flex: 1 0 90%;
+`;
+
+const Container = styled.section`
+	width: 100%;
+	padding-right: 15px;
+	padding-left: 15px;
+	margin-right: auto;
+	margin-left: auto;
+	display: flex;
+	flex-direction: column;
+	flex-grow: 1;
 `;
 
 const ProductGridContainer:FC<Props> = ({ pagination: Pagination, children }) => {
 
 	return (
 		<>
-			<Container fluid>
+			<Container>
 				<Row>
 					{children}
 				</Row>

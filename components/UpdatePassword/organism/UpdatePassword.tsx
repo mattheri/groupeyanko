@@ -7,14 +7,13 @@ import ApiService from 'services/ApiService';
 import { hasErrors } from 'utils/hasErrors';
 import regex from 'utils/regex';
 import UpdatePasswordForm from '../molecule/UpdatePasswordForm';
+import { useAuth } from 'components/Hooks/useAuth';
 
-interface Props {
-  userEmail:string;
-}
-
-const UpdatePassword:FC<Props> = ({ userEmail }) => {
+const UpdatePassword:FC = () => {
   const [success, setSuccess] = useState('');
   const [error, setError] = useState('');
+  const { userInfo: { email } } = useAuth();
+
   const initialValues = {
     oldPassword: '',
     newPassword: '',
@@ -26,7 +25,7 @@ const UpdatePassword:FC<Props> = ({ userEmail }) => {
       const response:AxiosResponse<QuerySuccessMessage> = await ApiService.post({
         url: '/api/updatePassword',
         data: {
-          email: userEmail,
+          email: email,
           oldPassword: values.oldPassword,
           newPassword: values.newPassword,
         }

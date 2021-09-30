@@ -9,16 +9,8 @@ import PageTransition from 'components/PageTransition/PageTransition';
 import styled from 'styled-components';
 import Head from 'next/head';
 
-const MainCol = styled(Col)`
-  position: relative;
-`;
+const App:FC = ({ children }) => {
 
-interface Props {
-  Component:any;
-  pageProps:any;
-}
-
-const App:FC<Props> = ({ Component, pageProps }) => {
   const loaderRef = useRef<LoaderRef>(null);
   
   useRouterEvents('routeChangeStart', loaderRef.current?.startLoading);
@@ -42,18 +34,12 @@ const App:FC<Props> = ({ Component, pageProps }) => {
         />
       </Head>
       <LoaderController ref={loaderRef} />
-        <Navbar />
-          <Main>
-            <Row>
-              <Col>
-                <MainCol className='p-0'>
-                  <PageTransition>
-                    <Component {...pageProps} />
-                  </PageTransition>
-                </MainCol>
-              </Col>
-            </Row>
-          </Main>
+      <Navbar />
+      <Main>
+        <PageTransition>
+          {children}
+        </PageTransition>
+      </Main>
     </>
   );
 }

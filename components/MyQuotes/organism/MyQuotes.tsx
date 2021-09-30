@@ -1,54 +1,58 @@
 import { useAuth } from 'components/Hooks/useAuth';
-import { FC } from 'react';
+import { FC, useEffect, useState } from 'react';
 import useQuotes from '../hook/useQuotes';
-import { Accordion, Card, AccordionCollapse } from 'react-bootstrap';
 import ErrorAlert from 'components/ErrorAlert/atom/ErrorAlert';
-import AccordionTriggerController from '../molecule/AccordionTriggerController';
-import { ClientQuote } from 'services/domain/Quote';
-import AccordionProduct from '../atom/AccordionProduct';
+import { ClientQuote, Quote } from 'services/domain/Quote';
 import EmptyQuotes from '../atom/EmptyQuotes';
-import styles from './accordion.module.scss';
 import useCart from 'components/Hooks/useCart';
-
-const DEFAULT_PLACEHOLDER_IMAGE = "/uploads/images/placeholder.png";
+import QuoteAccordion from '../molecule/QuoteAccordion';
+import QuotesAccordionsContainer from '../atom/QuotesAccordiontsContainer';
 
 const MyQuotes:FC = () => {
+  const [userQuotes, setUserQuotes] = useState<Quote[]>([]);
+  const [quotesAccordionsStatus, setQuotesAccordionsStatus] = useState<boolean[]>([]);
+
   const { userId } = useAuth();
   const { quotes, error } = useQuotes(userId);
   const { mergeToCart } = useCart();
 
   const addQuoteToCart = (quote:ClientQuote) => mergeToCart(quote);
 
-  return (
-    <>
+  const onDeployQuoteAccordion = (index:number) => {
+    const newStatus = userQuotes.map((_, i) => i === index ? !quotesAccordionsStatus[i] : false);
+
+    setQuotesAccordionsStatus(newStatus);
+  }
+
+  useEffect(
+    () => {
+      if (!quotes.length) return;
+
+      setUserQuotes(quotes);
+      setQuotesAccordionsStatus(quotes.map(() => false));
+    },
+    [quotes]
+  )
+
+  if (!userQuotes.length) return <EmptyQuotes />;
+
+  return(
+    <QuotesAccordionsContainer>
       <ErrorAlert error={error} />
-      <Accordion defaultActiveKey='0'>
-        {quotes.length ? quotes.map((quote, index) => (
-          <Card key={index}>
-            <AccordionTriggerController
-              eventKey={`${index}`}
-              submittedOn={quote.submittedOn}
-              onAddToCart={addQuoteToCart}
-              quote={quote.products}
-            />
-            <AccordionCollapse eventKey={`${index}`} className={styles.collapse}>
-              <>
-              {Object.entries(quote.products).map(([key, product]) => (
-                <AccordionProduct
-                  key={key}
-                  description={product.description}
-                  image={product.images.length ? product.images[0].src : DEFAULT_PLACEHOLDER_IMAGE}
-                  productName={product.name}
-                  numberOfItems={product.number}
-                  id={product.id}
-                />
-              ))}
-              </>
-            </AccordionCollapse>
-          </Card>
-        )) : <EmptyQuotes />}
-      </Accordion>
-    </>
+      {userQuotes.map((quote:Quote, index) => {
+        const products = Object.entries(quote.products).map(([_, product]) => (product));
+
+        return (
+          <QuoteAccordion
+            isDeployed={quotesAccordionsStatus[index]}
+            onAddQuoteToCartRequest={() => addQuoteToCart(quote.products)}
+            onDeployRequest={() => onDeployQuoteAccordion(index)}
+            quoteDate={quote.submittedOn}
+            productsInQuote={products}
+          />
+        )
+      })}
+    </QuotesAccordionsContainer>
   );
 };
 

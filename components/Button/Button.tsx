@@ -104,13 +104,13 @@ const Border = css<{secondary:boolean,tertiary:boolean}>`
   }};
 `;
 
-const Color = css<{tertiary:boolean}>`
-  color: ${({ tertiary }) => tertiary ? theme.colors.dark : 'white'};
+const Color = css<{tertiary:boolean, secondary:boolean}>`
+  color: ${({ tertiary, secondary }) => tertiary || secondary ? theme.colors.dark : 'white'};
 `;
 
 const BackgroundColor = css<{secondary:boolean,tertiary:boolean}>`
     background-color: ${({ secondary, tertiary }) => {
-    if (secondary) return 'transparent';
+    if (secondary) return 'white';
     if (tertiary) return 'transparent';
 
     return theme.colors.accent;

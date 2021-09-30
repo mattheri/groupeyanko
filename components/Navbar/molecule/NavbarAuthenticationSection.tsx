@@ -17,7 +17,7 @@ const NavbarAuthenticationSection:FC<Props> = ({ isAuthenticated, onLogout }) =>
   return (
     isAuthenticated ? (
       <>
-        <Button block='xs' fit='lg' tertiary href='/me'>Profil</Button>
+        <Button block='xs' fit='lg' tertiary href='/me/informations'>Profil</Button>
         <Button block='xs' fit='lg' onClick={onLogout}>Déconnexion</Button>
       </>
     ) : (

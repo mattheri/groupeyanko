@@ -15,6 +15,8 @@ const StyledContainer = styled.div<{fluid:boolean}>`
 	padding: 1rem 0;
 	margin-top: auto;
 	${FullWidthCSS}
+	height: 8rem;
+	margin-top: auto;
 `;
 
 const PaginationContainer:FC<Props> = ({ fullWidth, children }) => {

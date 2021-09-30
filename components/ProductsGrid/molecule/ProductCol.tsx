@@ -6,7 +6,7 @@ const ProductCol:FC = ({ children }) => {
 		<Col
 			xs={12}
 			md={6}
-			lg={3}
+			lg={4}
 			className="d-flex flex-wrap justify-content-center p-0"
 		>
 			{children}
